@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - Hazard & Risk</title>
+    <link rel="stylesheet" href="css/header.css">
+    <link rel="stylesheet" href="css/footer.css">
+    <link rel="stylesheet" href="css/sign_up.css">
+</head>
+<body>
+    <!-- Header -->
+    <div id="header-placeholder"></div>
+    <script>
+        fetch('header.html')
+        .then(res => res.text())
+        .then(data => {
+            document.getElementById('header-placeholder').innerHTML = data;
+        });
+    </script>
+
+    <!-- Main Content -->
+    <main class="signup-main">
+        <div class="signup-container">
+            <div class="signup-card">
+                <div class="signup-header">
+                    <h1>Join Hazard&Risk</h1>
+                    <p>Start assessing earthquake risks in minutes</p>
+                </div>
+
+                <form id="signupForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="firstName">First Name</label>
+                            <input type="text" id="firstName" name="firstName" class="form-control" placeholder="John" required>
+                            <div class="error-message" id="firstNameError"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="lastName">Last Name</label>
+                            <input type="text" id="lastName" name="lastName" class="form-control" placeholder="Doe" required>
+                            <div class="error-message" id="lastNameError"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" name="email" class="form-control" placeholder="john@example.com" required>
+                        <div class="error-message" id="emailError"></div>
+                        <div class="success-message" id="emailSuccess"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="company">Company (Optional)</label>
+                        <input type="text" id="company" name="company" class="form-control" placeholder="Your company name">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" name="password" class="form-control" placeholder="Create a strong password" required>
+                        <div class="password-strength" id="passwordStrength">
+                            <div class="strength-bar">
+                                <div class="strength-fill" id="strengthFill"></div>
+                            </div>
+                            <div class="strength-text" id="strengthText">Password strength</div>
+                        </div>
+                        <div class="error-message" id="passwordError"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="confirmPassword">Confirm Password</label>
+                        <input type="password" id="confirmPassword" name="confirmPassword" class="form-control" placeholder="Confirm your password" required>
+                        <div class="error-message" id="confirmPasswordError"></div>
+                        <div class="success-message" id="confirmPasswordSuccess"></div>
+                    </div>
+
+                    <div class="form-options">
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="terms" name="terms" required>
+                            <label for="terms">
+                                I agree to the <a href="#" target="_blank">Terms of Service</a> and <a href="#" target="_blank">Privacy Policy</a>
+                            </label>
+                        </div>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="newsletter" name="newsletter">
+                            <label for="newsletter">
+                                Send me updates about new features and earthquake risk insights
+                            </label>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="signup-button" id="signupButton">
+                        <div class="loading" id="loading"></div>
+                        <span id="buttonText">Create Account</span>
+                    </button>
+                </form>
+
+                <div class="divider">
+                    <span>or sign up with</span>
+                </div>
+
+                <div class="social-signup">
+                    <a href="#" class="social-button" data-provider="Google">
+                        <span>🔗 Google</span>
+                    </a>
+                    <a href="#" class="social-button" data-provider="Microsoft">
+                        <span>🔗 Microsoft</span>
+                    </a>
+                </div>
+
+                <div class="signin-link">
+                    Already have an account? <a href="sing_in.html">Sign in</a>
+                </div>
+
+                <div class="security-notice">
+                    🔒 Your data is protected with enterprise-grade encryption
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <div id="footer-placeholder"></div>
+    <script src="js/header.js"></script>
+    <script>
+        fetch('footer.html')
+        .then(res => res.text())
+        .then(data => {
+            document.getElementById('footer-placeholder').innerHTML = data;
+        });
+    </script>
+
+    <!-- JavaScript -->
+    <script>
+        // Form elements
+        const form = document.getElementById('signupForm');
+        const firstNameInput = document.getElementById('firstName');
+        const lastNameInput = document.getElementById('lastName');
+        const emailInput = document.getElementById('email');
+        const passwordInput = document.getElementById('password');
+        const confirmPasswordInput = document.getElementById('confirmPassword');
+        const submitButton = document.getElementById('signupButton');
+        const loading = document.getElementById('loading');
+        const buttonText = document.getElementById('buttonText');
+
+        // Password strength checker
+        function checkPasswordStrength(password) {
+            const strengthFill = document.getElementById('strengthFill');
+            const strengthText = document.getElementById('strengthText');
+            
+            let score = 0;
+            let feedback = [];
+
+            // Length check
+            if (password.length >= 8) score += 1;
+            else feedback.push('at least 8 characters');
+
+            // Uppercase check
+            if (/[A-Z]/.test(password)) score += 1;
+            else feedback.push('uppercase letter');
+
+            // Lowercase check
+            if (/[a-z]/.test(password)) score += 1;
+            else feedback.push('lowercase letter');
+
+            // Number check
+            if (/\d/.test(password)) score += 1;
+            else feedback.push('number');
+
+            // Special character check
+            if (/[!@#$%^&*]/.test(password)) score += 1;
+            else feedback.push('special character');
+
+            // Update visual feedback
+            const percentage = (score / 5) * 100;
+            strengthFill.style.width = percentage + '%';
+
+            if (score <= 2) {
+                strengthFill.className = 'strength-fill strength-weak';
+                strengthText.textContent = 'Weak - Add: ' + feedback.slice(0, 2).join(', ');
+                strengthText.style.color = '#ef4444';
+            } else if (score <= 3) {
+                strengthFill.className = 'strength-fill strength-medium';
+                strengthText.textContent = 'Medium - Add: ' + feedback.slice(0, 1).join(', ');
+                strengthText.style.color = '#f59e0b';
+            } else {
+                strengthFill.className = 'strength-fill strength-strong';
+                strengthText.textContent = 'Strong password';
+                strengthText.style.color = '#10b981';
+            }
+
+            return score >= 3;
+        }
+
+        // Email validation
+        function validateEmail(email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+
+        // Show error message
+        function showError(inputId, message) {
+            const input = document.getElementById(inputId);
+            const errorElement = document.getElementById(inputId + 'Error');
+            const successElement = document.getElementById(inputId + 'Success');
+            
+            input.classList.add('error');
+            input.classList.remove('success');
+            errorElement.textContent = message;
+            errorElement.style.display = 'block';
+            if (successElement) successElement.style.display = 'none';
+        }
+
+        // Show success message
+        function showSuccess(inputId, message = '') {
+            const input = document.getElementById(inputId);
+            const errorElement = document.getElementById(inputId + 'Error');
+            const successElement = document.getElementById(inputId + 'Success');
+            
+            input.classList.add('success');
+            input.classList.remove('error');
+            errorElement.style.display = 'none';
+            if (successElement) {
+                successElement.textContent = message;
+                successElement.style.display = 'block';
+            }
+        }
+
+        // Clear validation
+        function clearValidation(inputId) {
+            const input = document.getElementById(inputId);
+            const errorElement = document.getElementById(inputId + 'Error');
+            const successElement = document.getElementById(inputId + 'Success');
+            
+            input.classList.remove('error', 'success');
+            errorElement.style.display = 'none';
+            if (successElement) successElement.style.display = 'none';
+        }
+
+        // Real-time validation
+        passwordInput.addEventListener('input', function() {
+            const password = this.value;
+            if (password.length === 0) {
+                clearValidation('password');
+                return;
+            }
+            
+            if (checkPasswordStrength(password)) {
+                clearValidation('password');
+            } else {
+                showError('password', 'Password needs to be stronger');
+            }
+
+            // Revalidate confirm password if it has a value
+            if (confirmPasswordInput.value) {
+                validateConfirmPassword();
+            }
+        });
+
+        confirmPasswordInput.addEventListener('input', validateConfirmPassword);
+
+        function validateConfirmPassword() {
+            const password = passwordInput.value;
+            const confirmPassword = confirmPasswordInput.value;
+            
+            if (confirmPassword.length === 0) {
+                clearValidation('confirmPassword');
+                return;
+            }
+            
+            if (password === confirmPassword) {
+                showSuccess('confirmPassword', 'Passwords match');
+            } else {
+                showError('confirmPassword', 'Passwords do not match');
+            }
+        }
+
+        emailInput.addEventListener('blur', function() {
+            const email = this.value;
+            if (email.length === 0) {
+                clearValidation('email');
+                return;
+            }
+            
+            if (validateEmail(email)) {
+                showSuccess('email', 'Valid email address');
+            } else {
+                showError('email', 'Please enter a valid email address');
+            }
+        });
+
+        // Form submission
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Validate all fields
+            let isValid = true;
+            
+            // Check required fields
+            if (!firstNameInput.value.trim()) {
+                showError('firstName', 'First name is required');
+                isValid = false;
+            }
+            
+            if (!lastNameInput.value.trim()) {
+                showError('lastName', 'Last name is required');
+                isValid = false;
+            }
+            
+            if (!emailInput.value.trim()) {
+                showError('email', 'Email is required');
+                isValid = false;
+            } else if (!validateEmail(emailInput.value)) {
+                showError('email', 'Please enter a valid email address');
+                isValid = false;
+            }
+            
+            if (!passwordInput.value) {
+                showError('password', 'Password is required');
+                isValid = false;
+            } else if (!checkPasswordStrength(passwordInput.value)) {
+                showError('password', 'Password is too weak');
+                isValid = false;
+            }
+            
+            if (passwordInput.value !== confirmPasswordInput.value) {
+                showError('confirmPassword', 'Passwords do not match');
+                isValid = false;
+            }
+            
+            if (!document.getElementById('terms').checked) {
+                alert('Please accept the Terms of Service and Privacy Policy');
+                isValid = false;
+            }
+            
+            if (!isValid) return;
+            
+            // Show loading state
+            loading.style.display = 'inline-block';
+            buttonText.textContent = 'Creating Account...';
+            submitButton.disabled = true;
+            
+            // Simulate account creation
+            setTimeout(() => {
+                // Reset button state
+                loading.style.display = 'none';
+                buttonText.textContent = 'Create Account';
+                submitButton.disabled = false;
+                
+                // Show success message
+                document.querySelector('.signup-card').classList.add('success-animation');
+                alert('Account created successfully! Please check your email for verification.');
+                
+                // Here you would typically redirect to email verification or dashboard
+                // window.location.href = 'verify-email.html';
+            }, 2000);
+        });
+
+        // Social sign-up handlers
+        document.querySelectorAll('.social-button').forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
+                const provider = this.dataset.provider;
+                alert(`${provider} sign-up would be implemented here!`);
+            });
+        });
+
+        // Auto-focus first input
+        document.addEventListener('DOMContentLoaded', function() {
+            firstNameInput.focus();
+        });
+
+        // Clear validation on input
+        [firstNameInput, lastNameInput].forEach(input => {
+            input.addEventListener('input', function() {
+                if (this.value.trim()) {
+                    clearValidation(this.id);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

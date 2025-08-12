@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hazard and Risk - AI-Powered Earthquake Risk Assessment</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/footer.css">
+    <link rel="stylesheet" href="css/header.css">
+</head>
+<body>
+    <!-- Header -->
+   <div id="header-placeholder"></div>
+    <script>
+        (function () {
+            const mount = document.getElementById('header-placeholder');
+            fetch('header.html')
+            .then(res => res.text())
+            .then(html => {
+                mount.innerHTML = html;
+
+                // header yüklendikten sonra header.js'i yükle ve init et
+                const s = document.createElement('script');
+                s.src = 'js/header.js';              // yolun doğru olduğundan emin ol
+                s.defer = true;
+                s.onload = () => window.HeaderJS && window.HeaderJS.init();
+                document.body.appendChild(s);
+            });
+        })();
+    </script>
+    <!-- Hero Section -->
+    <section class="hero" id="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1 class="hero-title">
+                        Earthquake Hazard & Risk Prediction
+                        <span class="hero-subtitle">Reimagined</span>
+                    </h1>
+                    
+                    <p class="hero-description">
+                        Advanced AI-powered seismic risk prediction that transforms how experts assess building vulnerability to earthquakes.
+                    </p>
+                    
+                    <div class="hero-actions">
+                        <button class="btn btn-primary btn-large" onclick="scrollToSection('features')">
+                            Start Assessment
+                            <span class="btn-arrow">→</span>
+                        </button>
+                        <button class="btn btn-primary btn-large" onclick="scrollToSection('how-it-works')">
+                            View Documentation
+                        </button>
+                    </div>
+                    
+                    <div class="hero-stats">
+                        
+                        <div class="stat">
+                            <div class="stat-number">10,000+</div>
+                            <div class="stat-label">Buildings Assessed</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-number">100+</div>
+                            <div class="stat-label">Country Covered</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-number">24/7</div>
+                            <div class="stat-label">API Availability</div>
+                        </div>
+                    </div>
+                </div>
+                
+                
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Precision Meets Innovation</h2>
+                <p class="section-description">
+                    Comprehensive earthquake risk assessment powered by cutting-edge AI and validated 
+                    by industry-leading standards.
+                </p>
+            </div>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon feature-icon-blue">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                            <circle cx="12" cy="12" r="3"/>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">Visual Risk Assessment</h3>
+                    <p class="feature-description">
+                        Advanced computer vision analyzes satellite and street-level imagery to identify 
+                        structural vulnerabilities without on-site inspection.
+                    </p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon feature-icon-green">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                            <polyline points="14,2 14,8 20,8"/>
+                            <line x1="16" y1="13" x2="8" y2="13"/>
+                            <line x1="16" y1="17" x2="8" y2="17"/>
+                            <polyline points="10,9 9,9 8,9"/>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">FEMA P-154 Compliance</h3>
+                    <p class="feature-description">
+                        Full adherence to FEMA P-154 Rapid Visual Screening standards for comprehensive 
+                        earthquake risk evaluation.
+                    </p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon feature-icon-purple">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="4" y="4" width="16" height="16" rx="2" ry="2"/>
+                            <rect x="9" y="9" width="6" height="6"/>
+                            <line x1="9" y1="1" x2="9" y2="4"/>
+                            <line x1="15" y1="1" x2="15" y2="4"/>
+                            <line x1="9" y1="20" x2="9" y2="23"/>
+                            <line x1="15" y1="20" x2="15" y2="23"/>
+                            <line x1="20" y1="9" x2="23" y2="9"/>
+                            <line x1="20" y1="14" x2="23" y2="14"/>
+                            <line x1="1" y1="9" x2="4" y2="9"/>
+                            <line x1="1" y1="14" x2="4" y2="14"/>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">Machine Learning Engine</h3>
+                    <p class="feature-description">
+                        Continuously improving AI models trained on extensive structural engineering 
+                        datasets and real-world seismic events.
+                    </p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon feature-icon-orange">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                            <circle cx="12" cy="10" r="3"/>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">Geospatial Intelligence</h3>
+                    <p class="feature-description">
+                        Location-based risk factors including soil conditions, fault proximity, 
+                        and regional seismic history integration.
+                    </p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon feature-icon-red">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="18" y1="20" x2="18" y2="10"/>
+                            <line x1="12" y1="20" x2="12" y2="4"/>
+                            <line x1="6" y1="20" x2="6" y2="14"/>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">Real-Time Analytics</h3>
+                    <p class="feature-description">
+                        Instant risk scoring with interactive visualizations and actionable insights 
+                        for immediate decision-making.
+                    </p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon feature-icon-yellow">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="12" y1="1" x2="12" y2="23"/>
+                            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">Financial Impact Modeling</h3>
+                    <p class="feature-description">
+                        Quantify potential earthquake-related losses including structural damage, 
+                        business interruption, and recovery costs.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="api-section" id="how-it-works"> 
+        <div class="container">
+            <div class="api-content">
+                <div class="api-text">
+                    <h2 class="api-section-title">One Coordinate. Instant Earthquake Risk Prediction.</h2>
+                     <img src="images/coordinat.png" alt="Earthquake Risk Illustration" style="max-width:700px; width:100%; margin: 1.5rem auto; display:block;">
+                    <p class="api-section-description">
+                        With just a single coordinate, our system delivers a rapid earthquake risk prediction for any building — no architectural plans or on-site inspections needed. Powered by our Hazard & Risk Engine, the assessment is based on the FEMA P-154 Rapid Visual Screening methodology, digitally adapted to provide scalable and timely predictions. Within minutes, users receive a preliminary seismic risk profile that reflects potential vulnerability in the event of a major earthquake. While not a full engineering evaluation, this lightweight and transparent approach empowers planners, insurers, and policymakers with actionable insights — especially in large-scale or data-constrained environments.
+                    </p>
+
+    </section>
+
+    <!-- API Integration Section -->
+    <section class="api-section" id="how-it-works">
+        <video class="api-bg-video" autoplay muted loop playsinline>
+            <source src="videos/2.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <!-- <div class="container">
+            <div class="api-content">
+                <div class="api-text">
+                    <h2 class="api-section-title">Integrate in Minutes</h2>
+                    <p class="api-section-description">
+                        Simple, elegant API designed for seamless integration into your existing workflows. 
+                        Start predicting earthquake risks in minutes, not months.
+                    </p>
+                     -->
+                    
+                    
+            
+
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials" id="testimonials">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Industry Recognition</h2>
+                <p class="section-description">
+                    See what professionals are saying about our earthquake risk assessment platform.
+                </p>
+            </div>
+            
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="testimonial-stars">
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                    </div>
+                    <p class="testimonial-text">
+                        "Hazard and Risk has revolutionized our approach to seismic assessment. The AI-driven 
+                        analysis is remarkably accurate and saves us weeks of manual evaluation work."
+                    </p>
+                    <div class="testimonial-author">
+                        <div class="author-name">Dr. Elena Rodriguez</div>
+                        <div class="author-title">Chief Structural Engineer</div>
+                        <div class="author-company">Pacific Seismic Solutions</div>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <div class="testimonial-stars">
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                    </div>
+                    <p class="testimonial-text">
+                        "The platform's FEMA P-154 compliance gives us confidence in our risk assessments. 
+                        It's become an indispensable tool for our underwriting process."
+                    </p>
+                    <div class="testimonial-author">
+                        <div class="author-name">James Chen</div>
+                        <div class="author-title">Director of Risk Management</div>
+                        <div class="author-company">Metropolitan Insurance Group</div>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <div class="testimonial-stars">
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                    </div>
+                    <p class="testimonial-text">
+                        "Real-time analytics and detailed reporting have transformed our city planning initiatives. 
+                        Essential for any organization dealing with seismic risk."
+                    </p>
+                    <div class="testimonial-author">
+                        <div class="author-name">Sarah Kim</div>
+                        <div class="author-title">Urban Planning Manager</div>
+                        <div class="author-company">San Francisco Planning Department</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <div class="cta-content">
+                <h2 class="cta-title">Ready to Assess Earthquake Risk?</h2>
+                <p class="cta-description">
+                    Join experts and organizations using our AI-powered platform for rapid earthquake risk assessment.
+                </p>
+                
+                <div class="cta-form">
+                    <input type="email" placeholder="Enter your email address" class="cta-input" id="email-input">
+                    <button class="btn btn-white" onclick="handleGetStarted()">Get Started</button>
+                </div>
+                
+                <p class="cta-note">
+                    Start with a free assessment. No credit card required.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <div id="footer-placeholder"></div>
+    <script>
+        fetch('footer.html')
+        .then(res => res.text())
+        .then(data => {
+            document.getElementById('footer-placeholder').innerHTML = data;
+        });
+    </script>
+
+    <script src="js/script.js"></script>
+    
+    
+</body>
+</html>
+
