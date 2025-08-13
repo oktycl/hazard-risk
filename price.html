@@ -26,9 +26,10 @@
 
         <div class="model-switcher">
             <div class="switch-container">
-                <button class="switch-button active" onclick="switchModel('basic')">Model V1</button>
-                <button class="switch-button" onclick="switchModel('plus')">Model V1 Plus</button>
-                <button class="switch-button" onclick="switchModel('expert')">Expert Review</button>
+                <button class="switch-button active" onclick="switchModel('basic')">1 Report</button>
+                <button class="switch-button" onclick="switchModel('plus')">20 Report</button>
+                <button class="switch-button" onclick="switchModel('expert')">100 Report</button>
+                <button class="switch-button" onclick="switchModel('enterprise')">Enterprise</button>
             </div>
         </div>
 
@@ -43,192 +44,206 @@
         const pricingData = {
             basic: {
                 starter: {
-                    title: "Starter",
-                    subtitle: "Perfect for small projects",
-                    price: "$99",
+                    title: "Model V1",
+                    subtitle: "",
+                    price: "$10",
                     period: "per month",
                     features: [
-                        "Up to 10 building assessments",
-                        "Basic report generation",
-                        "Standard API access",
-                        "Email support"
+                        "Report in 20 seconds",
+                        "Reasonably accurate detection for prediction",
+                        "Email support",
+                        "Expires in a month",
+                        "1 report + 1 free report"
+
                     ],
                     cta: "Get Started",
                     type: "secondary"
                 },
                 professional: {
-                    title: "Professional",
-                    subtitle: "Growing teams & projects",
-                    price: "$299",
+                    title: "Model V1 Plus",
+                    subtitle: "",
+                    price: "$15",
                     period: "per month",
                     features: [
-                        "Up to 50 building assessments",
-                        "Advanced reporting",
-                        "Priority API access",
-                        "Phone & email support",
-                        "FEMA P-154 compliance"
+                        "Report in 30 seconds",
+                        "More accurate detection for prediction",
+                        "Email support",
+                        "Expires in a month",
+                        "1 report + 1 free report"
+
                     ],
-                    cta: "Start Free Trial",
+                    cta: "Get Started",
                     type: "primary",
                     popular: true
                 },
                 business: {
-                    title: "Business",
-                    subtitle: "For larger organizations",
-                    price: "$599",
+                    title: "Model V1 with Expert Review",
+                    subtitle: "",
+                    price: "$40",
                     period: "per month",
                     features: [
-                        "Up to 100 building assessments",
-                        "Custom report templates",
-                        "Dedicated API support",
-                        "24/7 priority support",
-                        "Advanced analytics"
+                        "Report in 24 hours",
+                        "Exact detection (inputs checked by supervisor) for prediction",
+                        "Email support",
+                        "Expires in a month",
+                        "1 report + 1 free report"
+
                     ],
                     cta: "Get Started",
                     type: "secondary"
                 },
-                enterprise: {
-                    title: "Enterprise",
-                    subtitle: "Unlimited scale & custom",
-                    price: "Custom",
-                    period: "contact us",
-                    features: [
-                        "Unlimited assessments",
-                        "White-label solutions",
-                        "Custom integrations",
-                        "Dedicated account manager",
-                        "SLA guarantee",
-                        "On-premise deployment"
-                    ],
-                    cta: "Contact Sales",
-                    type: "secondary"
-                }
+               
             },
             plus: {
-                starter: {
-                    title: "Starter Plus",
-                    subtitle: "Enhanced accuracy & speed",
-                    price: "$149",
+                 starter: {
+                    title: "Model V1",
+                    subtitle: "",
+                    price: "$100",
                     period: "per month",
                     features: [
-                        "Up to 10 building assessments",
-                        "Enhanced ML predictions",
-                        "Real-time analytics",
-                        "Email support"
+                        "Report in 20 seconds",
+                        "Reasonably accurate detection for prediction",
+                        "Email support",
+                        "Expires in a month",
+                        "20 report + 1 free report"
+
                     ],
                     cta: "Get Started",
                     type: "secondary"
                 },
                 professional: {
-                    title: "Professional Plus",
-                    subtitle: "Advanced AI insights",
-                    price: "$449",
+                    title: "Model V1 Plus",
+                    subtitle: "",
+                    price: "$150",
                     period: "per month",
                     features: [
-                        "Up to 50 building assessments",
-                        "Advanced ML engine",
-                        "Geospatial intelligence",
-                        "Priority support",
-                        "Financial impact modeling"
+                        "Report in 30 seconds",
+                        "More accurate detection for prediction",
+                        "Email support",
+                        "Expires in a month",
+                        "20 report + 1 free report"
+
                     ],
-                    cta: "Start Free Trial",
+                    cta: "Get Started",
                     type: "primary",
                     popular: true
                 },
                 business: {
-                    title: "Business Plus",
-                    subtitle: "Complete AI solution",
-                    price: "$899",
+                    title: "Model V1 with Expert Review",
+                    subtitle: "",
+                    price: "$400",
                     period: "per month",
                     features: [
-                        "Up to 100 building assessments",
-                        "Premium ML algorithms",
-                        "Advanced geospatial analysis",
-                        "Custom dashboards",
-                        "API rate optimization"
+                        "Report in 24 hours",
+                        "Exact detection (inputs checked by supervisor) for prediction",
+                        "Email support",
+                        "Expires in a month",
+                        "20 report + 1 free report"
+
                     ],
                     cta: "Get Started",
                     type: "secondary"
                 },
-                enterprise: {
-                    title: "Enterprise Plus",
-                    subtitle: "Maximum AI precision",
-                    price: "Custom",
-                    period: "contact us",
-                    features: [
-                        "Unlimited assessments",
-                        "Custom model training",
-                        "Dedicated ML infrastructure",
-                        "Advanced API features",
-                        "Multi-region deployment",
-                        "Custom algorithms"
-                    ],
-                    cta: "Contact Sales",
-                    type: "secondary"
-                }
             },
             expert: {
                 starter: {
-                    title: "Expert Starter",
-                    subtitle: "AI + Human validation",
-                    price: "$299",
+                    title: "Model V1",
+                    subtitle: "",
+                    price: "$400",
                     period: "per month",
                     features: [
-                        "Up to 10 building assessments",
-                        "Expert review process",
-                        "Certified reports",
-                        "Priority support"
+                        "Report in 20 seconds",
+                        "Reasonably accurate detection for prediction",
+                        "Email support",
+                        "Expires in a month",
+                        "100 report + 1 free report"
+
                     ],
                     cta: "Get Started",
                     type: "secondary"
                 },
                 professional: {
-                    title: "Expert Professional",
-                    subtitle: "Comprehensive oversight",
-                    price: "$799",
+                    title: "Model V1 Plus",
+                    subtitle: "",
+                    price: "$600",
                     period: "per month",
                     features: [
-                        "Up to 50 building assessments",
-                        "Senior engineer review",
-                        "Detailed validation reports",
-                        "Direct expert consultation",
-                        "Liability coverage"
+                        "Report in 30 seconds",
+                        "More accurate detection for prediction",
+                        "Email support",
+                        "Expires in a month",
+                        "100 report + 1 free report"
+
                     ],
-                    cta: "Start Free Trial",
+                    cta: "Get Started",
                     type: "primary",
                     popular: true
                 },
                 business: {
-                    title: "Expert Business",
-                    subtitle: "Full expert validation",
-                    price: "$1,499",
+                    title: "Model V1 with Expert Review",
+                    subtitle: "",
+                    price: "$1600",
                     period: "per month",
                     features: [
-                        "Up to 100 building assessments",
-                        "Lead engineer oversight",
-                        "Comprehensive peer review",
-                        "Expedited delivery",
-                        "Professional certification"
+                        "Report in 24 hours",
+                        "Exact detection (inputs checked by supervisor) for prediction",
+                        "Email support",
+                        "Expires in a month",
+                        "100 report + 1 free report"
+
                     ],
                     cta: "Get Started",
                     type: "secondary"
                 },
-                enterprise: {
-                    title: "Expert Enterprise",
-                    subtitle: "Premium expert team",
-                    price: "Custom",
-                    period: "contact us",
+            },
+            enterprise: {
+                starter: {
+                    title: "Model V1",
+                    subtitle: "",
+                    price: "",
+                    period: "",
                     features: [
-                        "Unlimited assessments",
-                        "Dedicated expert team",
-                        "24/7 expert hotline",
-                        "Custom validation protocols",
-                        "Regulatory compliance",
-                        "Legal liability coverage"
+                        "API integration to connect with your systems and meet your needs.",
+                        "Report in 10 seconds",
+                        "Reasonably accurate detection for prediction",
+                        "Email and phone support",
+                       
+
                     ],
                     cta: "Contact Sales",
                     type: "secondary"
-                }
+                },
+                professional: {
+                    title: "Model V1 Plus",
+                    subtitle: "",
+                    price: "",
+                    period: " ",
+                    features: [
+                        "API integration to connect with your systems and meet your needs.",
+                        "Report in 15 seconds",
+                        "More accurate detection for prediction",
+                        "Email and phone support",
+
+                    ],
+                    cta: "Contact Sales",
+                    type: "primary",
+                    popular: true
+                },
+                business: {
+                    title: "Model V1 with Expert Review",
+                    subtitle: "",
+                    price: "",
+                    period: " ",
+                    features: [
+                        "API integration to connect with your systems and meet your needs.",
+                        "Report in 24 hours",
+                        "Exact detection (inputs checked by supervisor) for prediction",
+                        "Email and phone support",
+
+                    ],
+                    cta: "Contact Sales",
+                    type: "secondary"
+                },
             }
         };
 
