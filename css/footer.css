@@ -26,9 +26,16 @@
 
 .footer-logo {
   display: flex;
-  align-items: center;
+  align-items: top;
   gap: 0.5rem;
-  margin-bottom: 1rem;
+  margin-bottom: 0.1rem;
+}
+
+.footer-logo-img {
+  height: 200px;
+  width: auto;
+  max-width: 100%;
+  object-fit: contain; /* Orantıları korur */
 }
 
 .footer-logo svg {
@@ -252,5 +259,24 @@
   
   .footer-copyright {
     font-size: 0.8rem;
+  }
+}
+
+/* Responsive için */
+@media (max-width: 768px) {
+  .footer-logo-img {
+    height: 150px; /* Mobilde biraz küçült */
+  }
+  
+  .footer-brand {
+    max-width: 100%;
+    align-items: center;
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .footer-logo-img {
+    height: 120px; /* Çok küçük ekranlarda daha da küçült */
   }
 }
