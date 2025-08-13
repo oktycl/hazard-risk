@@ -1,4 +1,4 @@
-# Hazard and Risk - Vanilla JavaScript Website
+# Hazard and Risk - Vanilla JavaScript Website.
 
 A modern, responsive website for earthquake risk assessment built with vanilla HTML, CSS, and JavaScript. Designed for easy integration into existing Express.js/EJS projects.
 
