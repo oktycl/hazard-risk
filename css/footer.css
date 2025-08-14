@@ -56,8 +56,8 @@
 
 .footer-links {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 2rem;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10rem;
 }
 
 .footer-column {
@@ -88,6 +88,8 @@
   transition: color 0.3s ease;
   font-size: 0.875rem;
   line-height: 1.5;
+    white-space: nowrap; /* ← Bu satırı ekleyin */
+
 }
 
 .footer-link:hover {
