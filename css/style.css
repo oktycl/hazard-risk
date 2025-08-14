@@ -627,14 +627,8 @@ body {
     }
 
     .hero {
-        background-size: cover; /* alanı tamamen kapla */
-        background-position: center top; /* üstten hizala */
-        background-attachment: scroll; /* iOS uyumu */
-        background-repeat: no-repeat;
-        min-height: 100vh; /* tam ekran */
-        padding: 0;
+        padding: 6rem 0 3rem;
     }
-
 
     .hero-content {
         grid-template-columns: 1fr;
