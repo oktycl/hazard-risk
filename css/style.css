@@ -310,6 +310,14 @@ body {
     overflow: hidden;
     min-height: 900px;
 }
+
+.video-section {
+    position: relative;
+    padding: 0; /* 5rem yerine sıfır */
+    background: #000; /* video arka planı */
+    overflow: hidden;
+}
+
 .api-bg-video {
     position: absolute;
     top: 0;
@@ -570,6 +578,26 @@ body {
 
 .hero-visual {
     animation: slideInRight 0.8s ease-out 0.2s both;
+
+}
+
+
+
+/* Masaüstü - yüksek alan */
+@media (min-width: 769px) {
+    .video-section {
+        min-height: 100vh; /* ekranın tamamını kapla */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #1f2937; /* kenarlarda boşluk olursa siyah */
+    }
+
+    .video-section .api-bg-video {
+        width: 100%;
+        height: 100%;
+        object-fit: contain; /* orantılı, kırpmasız ölçekle */
+    }
 }
 
 /* Responsive Design */
@@ -643,6 +671,21 @@ body {
     .footer-links {
         grid-template-columns: 1fr;
         gap: 1.5rem;
+    }
+    .video-section {
+        padding: 0;
+    }
+    
+    .video-section .api-bg-video {
+        position: relative; /* absolute değil ki taşma olmasın */
+        display: block; /* inline default davranışı engelle */
+
+        width: 100%;
+        height: auto; /* orantıyı koru */
+        max-height: 100vh; /* ekran yüksekliğini aşma */
+        object-fit: contain; /* videoyu kırpmadan sığdır */
+        background-color: #1f2937; /* boş kenarlar olursa siyah */
+        margin: 0 auto; /* ortala */
     }
 }
 
