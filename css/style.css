@@ -644,6 +644,15 @@ body {
         grid-template-columns: 1fr;
         gap: 1.5rem;
     }
+    .api-section {
+        min-height: 200px; /* Sadece yüksekliği değiştir */
+    }
+    
+    .api-bg-video {
+        position: relative; /* Sadece position'ı değiştir */
+        object-fit: contain; /* Sadece object-fit'i değiştir */
+        opacity: 1;
+    }
 }
 
 @media (max-width: 480px) {
