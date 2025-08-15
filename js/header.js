@@ -1,5 +1,5 @@
 /**
- * Header.js - Async Loading Compatible
+ * Header.js - Async Loading Compatible with Dropdown Support
  * Bu dosya header HTML'i dinamik yüklendiğinde de çalışır
  */
 
@@ -19,6 +19,7 @@
         const navToggle = document.getElementById('nav-toggle');
         const navMenu = document.getElementById('nav-menu');
         const navLinks = document.querySelectorAll('.nav-link');
+        const dropdownItems = document.querySelectorAll('.dropdown-item-main');
         
         // Element kontrolü
         if (!header || !navToggle || !navMenu) {
@@ -44,15 +45,18 @@
             if (navMenu.classList.contains('active')) {
                 navMenu.style.display = 'flex';
                 navMenu.style.flexDirection = 'column';
-                navMenu.style.position = 'absolute';
-                navMenu.style.top = '100%';
+                navMenu.style.position = 'fixed';
+                navMenu.style.top = '3.5rem';
                 navMenu.style.left = '0';
                 navMenu.style.right = '0';
                 navMenu.style.background = 'white';
-                navMenu.style.padding = '1rem';
-                navMenu.style.boxShadow = '0 4px 6px -1px rgba(0,0,0,0.1)';
+                navMenu.style.padding = '2rem 1.5rem';
+                navMenu.style.boxShadow = '0 8px 25px rgba(0,0,0,0.15)';
                 navMenu.style.borderTop = '1px solid #e5e7eb';
-                navMenu.style.zIndex = '1000';
+                navMenu.style.zIndex = '1001';
+                navMenu.style.minHeight = '70vh';
+                navMenu.style.maxHeight = '85vh';
+                navMenu.style.overflowY = 'auto';
                 console.log('✅ Menü açıldı');
             } else {
                 navMenu.style.display = 'none';
@@ -65,24 +69,65 @@
             // Hamburger animasyonu
             const spans = navToggle.querySelectorAll('span');
             if (navMenu.classList.contains('active')) {
-                spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
+                spans[0].style.transform = 'rotate(45deg) translate(6px, 6px)';
                 spans[1].style.opacity = '0';
-                spans[2].style.transform = 'rotate(-45deg) translate(7px, -6px)';
+                spans[1].style.transform = 'scale(0)';
+                spans[2].style.transform = 'rotate(-45deg) translate(6px, -6px)';
             } else {
                 spans[0].style.transform = 'none';
                 spans[1].style.opacity = '1';
+                spans[1].style.transform = 'scale(1)';
                 spans[2].style.transform = 'none';
             }
         });
         
-        // 2. Menü linklerine tıklayınca menüyü kapat
+        // 2. Dropdown menü için mobil desteği - DOĞRU YER
+        dropdownItems.forEach(function(item) {
+            const link = item.querySelector('.nav-link');
+            const dropdown = item.querySelector('.dropdown-menu');
+            
+            if (dropdown && link) {
+                link.addEventListener('click', function(e) {
+                    // Mobilde dropdown tıklamasını engelle ve toggle et
+                    if (window.innerWidth <= 768) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        
+                        console.log('Mobil dropdown tıklandı');
+                        
+                        // Diğer açık dropdown'ları kapat
+                        dropdownItems.forEach(function(otherItem) {
+                            if (otherItem !== item) {
+                                otherItem.classList.remove('active');
+                                console.log('Diğer dropdown kapatıldı');
+                            }
+                        });
+                        
+                        // Bu dropdown'ı toggle et
+                        item.classList.toggle('active');
+                        
+                        if (item.classList.contains('active')) {
+                            console.log('✅ Dropdown açıldı');
+                        } else {
+                            console.log('❌ Dropdown kapandı');
+                        }
+                    }
+                    // Desktop'ta normal link davranışı (href'e git veya dropdown aç)
+                });
+            }
+        });
+        
+        // 3. Menü linklerine tıklayınca menüyü kapat
         navLinks.forEach(function(link) {
             link.addEventListener('click', function() {
-                closeMenu();
+                // Dropdown link değilse menüyü kapat
+                if (!link.closest('.dropdown-item-main') || window.innerWidth > 768) {
+                    closeMenu();
+                }
             });
         });
         
-        // 3. Menü dışına tıklayınca kapat (Event Delegation)
+        // 4. Menü dışına tıklayınca kapat (Event Delegation)
         document.addEventListener('click', function(e) {
             if (navToggle && navMenu && 
                 !navToggle.contains(e.target) && 
@@ -91,15 +136,14 @@
             }
         });
         
-        // 4. ESC tuşu ile menüyü kapat
+        // 5. ESC tuşu ile menüyü kapat
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') {
                 closeMenu();
             }
         });
         
-        // 5. Scroll efekti
-        // 5. Scroll efekti - İYİLEŞTİRİLMİŞ VERSİYON
+        // 6. Scroll efekti - İYİLEŞTİRİLMİŞ VERSİYON
         let ticking = false;
         let scrollTimeout;
         let lastScrollY = 0;
@@ -111,7 +155,6 @@
                 // Scroll yapılıyorsa geçici olarak opak yap
                 header.classList.add('scrolled');
                 header.classList.remove('scroll-stopped');
-                
                 
                 // Scroll timeout'u temizle
                 clearTimeout(scrollTimeout);
@@ -150,10 +193,14 @@
             }
         });
         
-        // 6. Pencere boyutu değişince menüyü kapat
+        // 7. Pencere boyutu değişince menüyü kapat ve dropdown'ları temizle
         window.addEventListener('resize', function() {
             if (window.innerWidth > 768) {
                 closeMenu();
+                // Desktop'ta dropdown'ları temizle
+                dropdownItems.forEach(function(item) {
+                    item.classList.remove('active');
+                });
             }
         });
         
@@ -169,7 +216,15 @@
                 const spans = navToggle.querySelectorAll('span');
                 spans[0].style.transform = 'none';
                 spans[1].style.opacity = '1';
+                spans[1].style.transform = 'scale(1)';
                 spans[2].style.transform = 'none';
+                
+                // Dropdown'ları kapat
+                dropdownItems.forEach(function(item) {
+                    item.classList.remove('active');
+                });
+                
+                console.log('Menü ve dropdown\'lar kapatıldı');
             }
         }
         
@@ -215,7 +270,7 @@
     
     // Global erişim
     window.HeaderJS = {
-        version: '2.0.0',
+        version: '3.0.0',
         init: initHeader,
         isInitialized: function() { return isInitialized; }
     };
@@ -237,6 +292,17 @@
             
             .nav-toggle span {
                 transition: all 0.3s ease;
+            }
+            
+            .dropdown-menu {
+                transition: all 0.3s ease;
+            }
+        }
+        
+        /* Dropdown hover effects for desktop */
+        @media (min-width: 769px) {
+            .dropdown-menu {
+                transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             }
         }
     `;
