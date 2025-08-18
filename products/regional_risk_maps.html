@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Regional Risk Maps - Hazard and Risk</title>
+    <link rel="stylesheet" href="../css/header.css">
+    <link rel="stylesheet" href="../css/footer.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            line-height: 1.6;
+            color: #1f2937;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Natural Palette Colors */
+        :root {
+            --dark-slate: #1f2937;
+            --bright-blue: #0097fb;
+            --light-blue: #f2faff;
+            --cream-white: #f1f1e6;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            margin-top: 4rem; /* Desktop header height */
+        }
+
+        /* Hero Section */
+        .hero {
+            background: var(--dark-slate);
+            padding: 4rem 0 6rem;
+            position: relative;
+            overflow: hidden;
+            color: white;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="%23ffffff" stroke-width="0.5" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+            opacity: 0.1;
+        }
+
+        .hero-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .hero-text {
+            max-width: 600px;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            margin-bottom: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: white;
+            margin-bottom: 1.5rem;
+            line-height: 1.1;
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .btn-hero-primary {
+            background: var(--bright-blue);
+            color: white;
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 0.75rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(0, 151, 251, 0.3);
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-hero-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(0, 151, 251, 0.4);
+        }
+
+        .btn-hero-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 0.75rem;
+            text-decoration: none;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .btn-hero-secondary:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: white;
+        }
+
+        .hero-visual {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .hero-image {
+            width: 100%;
+            max-width: 500px;
+            height: 400px;
+            background: linear-gradient(135deg, var(--bright-blue), #2563eb);
+            border-radius: 2rem;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 151, 251, 0.3);
+            animation: float 6s ease-in-out infinite;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .region-icon {
+            width: 140px;
+            height: 120px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .region-container {
+            width: 120px;
+            height: 100px;
+            background: white;
+            border-radius: 12px;
+            position: relative;
+            overflow: hidden;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .district {
+            position: absolute;
+            border-radius: 4px;
+            border: 1px solid rgba(31, 41, 55, 0.2);
+        }
+
+        .district:nth-child(1) { 
+            top: 8px; left: 8px; 
+            width: 25px; height: 20px;
+            background: #ef4444;
+            animation: districtPulse 3s ease-in-out infinite;
+        }
+        .district:nth-child(2) { 
+            top: 8px; left: 38px; 
+            width: 30px; height: 20px;
+            background: #f97316;
+            animation: districtPulse 3s ease-in-out infinite 0.3s;
+        }
+        .district:nth-child(3) { 
+            top: 8px; right: 8px; 
+            width: 25px; height: 20px;
+            background: #eab308;
+            animation: districtPulse 3s ease-in-out infinite 0.6s;
+        }
+        .district:nth-child(4) { 
+            top: 33px; left: 8px; 
+            width: 35px; height: 25px;
+            background: #22c55e;
+            animation: districtPulse 3s ease-in-out infinite 0.9s;
+        }
+        .district:nth-child(5) { 
+            top: 33px; right: 8px; 
+            width: 32px; height: 25px;
+            background: #3b82f6;
+            animation: districtPulse 3s ease-in-out infinite 1.2s;
+        }
+        .district:nth-child(6) { 
+            bottom: 8px; left: 8px; 
+            width: 45px; height: 22px;
+            background: #8b5cf6;
+            animation: districtPulse 3s ease-in-out infinite 1.5s;
+        }
+        .district:nth-child(7) { 
+            bottom: 8px; right: 8px; 
+            width: 38px; height: 22px;
+            background: #ec4899;
+            animation: districtPulse 3s ease-in-out infinite 1.8s;
+        }
+
+        @keyframes districtPulse {
+            0%, 100% { 
+                opacity: 0.8;
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.4);
+            }
+            50% { 
+                opacity: 1;
+                transform: scale(1.05);
+                box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.1);
+            }
+        }
+
+        .analysis-circle {
+            width: 50px;
+            height: 50px;
+            background: white;
+            border-radius: 50%;
+            position: absolute;
+            bottom: -10px;
+            right: -10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .analysis-indicator {
+            width: 28px;
+            height: 16px;
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .data-bars {
+            display: flex;
+            align-items: end;
+            gap: 2px;
+            width: 100%;
+            height: 100%;
+        }
+
+        .bar {
+            background: var(--bright-blue);
+            border-radius: 1px;
+            animation: dataFlow 2s ease-in-out infinite;
+        }
+
+        .bar:nth-child(1) { 
+            width: 3px; 
+            height: 40%;
+            animation-delay: 0s;
+        }
+        .bar:nth-child(2) { 
+            width: 3px; 
+            height: 70%;
+            animation-delay: 0.2s;
+        }
+        .bar:nth-child(3) { 
+            width: 3px; 
+            height: 90%;
+            animation-delay: 0.4s;
+        }
+        .bar:nth-child(4) { 
+            width: 3px; 
+            height: 60%;
+            animation-delay: 0.6s;
+        }
+        .bar:nth-child(5) { 
+            width: 3px; 
+            height: 80%;
+            animation-delay: 0.8s;
+        }
+        .bar:nth-child(6) { 
+            width: 3px; 
+            height: 50%;
+            animation-delay: 1s;
+        }
+
+        @keyframes dataFlow {
+            0%, 100% { 
+                opacity: 0.7;
+                transform: scaleY(1);
+            }
+            50% { 
+                opacity: 1;
+                transform: scaleY(1.2);
+            }
+        }
+
+        .hero-image::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.1) 50%, transparent 70%);
+            animation: shimmer 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes shimmer {
+            0%, 100% { transform: translateX(-100%); }
+            50% { transform: translateX(100%); }
+        }
+
+        /* Details Section */
+        .details {
+            padding: 6rem 0;
+            background: white;
+        }
+
+        .details-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .details-content {
+            background: white;
+            padding: 3rem;
+            border-radius: 2rem;
+        }
+
+        .details-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .details-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #1f2937;
+            text-align: justify;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 6rem 0;
+            background: var(--dark-slate);
+        }
+
+        .features-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .features-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .features-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 1rem;
+        }
+
+        .features-subtitle {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.7);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 1.5rem;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(0, 151, 251, 0.1);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 151, 251, 0.15);
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--bright-blue);
+            border-radius: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .feature-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 1rem;
+        }
+
+        .feature-description {
+            color: #6b7280;
+            line-height: 1.6;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .main-content {
+                margin-top: 3.5rem; /* Mobile header height */
+            }
+
+            .hero {
+                padding: 3rem 0 4rem;
+            }
+
+            .hero-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+                text-align: center;
+            }
+
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .hero-cta {
+                justify-content: center;
+            }
+
+            .features {
+                padding: 4rem 0;
+            }
+
+            .features-title {
+                font-size: 2rem;
+            }
+
+            .details {
+                padding: 4rem 0;
+            }
+
+            .details-content {
+                padding: 2rem;
+            }
+
+            .details-title {
+                font-size: 1.5rem;
+            }
+
+            .details-text {
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-title {
+                font-size: 2rem;
+            }
+
+            .hero-cta {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn-hero-primary,
+            .btn-hero-secondary {
+                width: 100%;
+                max-width: 300px;
+                text-align: center;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header will be included here -->
+    <div id="header-placeholder"></div>
+
+    <main class="main-content">
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-container">
+                <div class="hero-content">
+                    <div class="hero-text">
+                        <div class="hero-badge">
+                            📍 District-Scale Analysis
+                        </div>
+                        <h1 class="hero-title">Regional Risk Maps</h1>
+                        <p class="hero-subtitle">
+                            Comprehensive seismic risk assessments at the district scale for municipalities and government agencies, providing building-by-building analysis across defined geographic areas.
+                        </p>
+                        <div class="hero-cta">
+                            <a href="#" class="btn-hero-primary">Analyze Region</a>
+                            <a href="#" class="btn-hero-secondary">View Demo</a>
+                        </div>
+                    </div>
+                    <div class="hero-visual">
+                        <div class="hero-image">
+                            <div class="region-icon">
+                                <div class="region-container">
+                                    <div class="district"></div>
+                                    <div class="district"></div>
+                                    <div class="district"></div>
+                                    <div class="district"></div>
+                                    <div class="district"></div>
+                                    <div class="district"></div>
+                                    <div class="district"></div>
+                                </div>
+                                <div class="analysis-circle">
+                                    <div class="analysis-indicator">
+                                        <div class="data-bars">
+                                            <div class="bar"></div>
+                                            <div class="bar"></div>
+                                            <div class="bar"></div>
+                                            <div class="bar"></div>
+                                            <div class="bar"></div>
+                                            <div class="bar"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Details Section -->
+        <section class="details">
+            <div class="details-container">
+                <div class="details-content">
+                    <h2 class="details-title">Advanced Regional Risk Assessment Technology</h2>
+                    <div class="details-text">
+                        The Regional Risk Maps product leverages our advanced hybrid AI algorithms to provide municipalities, government agencies, and other public stakeholders with comprehensive seismic risk assessments at the district scale. By defining a geographic area through a polygon, decision-makers can request building-by-building risk evaluations, resulting in a complete spatial risk distribution across the chosen region.
+                        <br><br>
+                        Our platform applies FEMA P-154 methodology to detect critical building attributes such as construction material, structural system, year built, number of stories, irregularities, adjacency, and soil class. Each building within the polygon is analyzed using this framework, with collapse probability estimates and contents risk indicators generated automatically. The aggregation of these individual assessments forms a high-resolution regional risk profile that reflects both micro- and macro-scale vulnerabilities.
+                        <br><br>
+                        For municipalities and emergency authorities, these risk maps offer critical functionality. They support risk accumulation analysis, showing where vulnerabilities are concentrated within the urban fabric. They inform the development of mitigation roadmaps, guiding retrofit programs and resource allocation toward the most at-risk structures or districts. They also enable inventory-scale screening, allowing large building stocks to be rapidly classified and prioritized for intervention. In addition, the maps are a powerful tool for emergency planning, providing evidence-based input for disaster response strategies, evacuation planning, and resilience-building initiatives.
+                        <br><br>
+                        By combining geospatial modeling, engineering-based risk screening, and artificial intelligence, Regional Risk Maps transform seismic hazard data into actionable intelligence for urban safety and resilience. This ensures that local governments and public institutions can make proactive, cost-effective, and scientifically grounded decisions to protect both people and infrastructure in their jurisdictions.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section class="features">
+            <div class="features-container">
+                <div class="features-header">
+                    <h2 class="features-title">Key Capabilities</h2>
+                    <p class="features-subtitle">
+                        Comprehensive district-scale risk analysis for informed municipal decision-making
+                    </p>
+                </div>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">🏙️</div>
+                        <h3 class="feature-title">Building-by-Building Analysis</h3>
+                        <p class="feature-description">
+                            Comprehensive risk evaluation for every structure within defined polygon areas using FEMA P-154 methodology and AI detection.
+                        </p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">📊</div>
+                        <h3 class="feature-title">Risk Accumulation Analysis</h3>
+                        <p class="feature-description">
+                            Identifies vulnerability concentrations within urban fabric to support strategic planning and resource allocation.
+                        </p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🛠️</div>
+                        <h3 class="feature-title">Mitigation Roadmaps</h3>
+                        <p class="feature-description">
+                            Guides retrofit programs and infrastructure investments toward the most at-risk structures and districts.
+                        </p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🏢</div>
+                        <h3 class="feature-title">Inventory-Scale Screening</h3>
+                        <p class="feature-description">
+                            Rapidly classifies and prioritizes large building stocks for intervention using automated assessment protocols.
+                        </p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🚨</div>
+                        <h3 class="feature-title">Emergency Planning</h3>
+                        <p class="feature-description">
+                            Provides evidence-based input for disaster response strategies, evacuation planning, and resilience initiatives.
+                        </p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🎯</div>
+                        <h3 class="feature-title">Municipal Intelligence</h3>
+                        <p class="feature-description">
+                            Transforms seismic hazard data into actionable intelligence for urban safety and public infrastructure protection.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer will be included here -->
+    <div id="footer-placeholder"></div>
+
+    <script>
+        // Load header
+        fetch('../header.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('header-placeholder').innerHTML = data;
+            });
+
+        // Load footer
+        fetch('../footer.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('footer-placeholder').innerHTML = data;
+            });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Animate elements on scroll
+        document.querySelectorAll('.feature-card, .details-content').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'all 0.6s ease';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
