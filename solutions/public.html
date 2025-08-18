@@ -29,7 +29,7 @@
             min-height: 100vh;
         }
 
-        /* Hero Section - Using Palette Colors */
+        /* Hero Section - Blue Theme */
         .hero {
             background: #1f2937;
             color: white;
@@ -208,11 +208,12 @@
 
         .features-grid {
             display: grid;
-            grid-template-columns: 1fr;
-            gap: 3rem;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
             margin-top: 4rem;
             align-items: stretch;
-            max-width: 800px;
+            justify-content: center;
+            max-width: 400px; /* 2 kart için optimal genişlik */
             margin-left: auto;
             margin-right: auto;
         }
@@ -220,7 +221,7 @@
         .feature-card {
             background: white;
             border-radius: 16px;
-            padding: 4rem;
+            padding: 2rem;
             border: 1px solid #f1f1e6;
             box-shadow: 0 4px 20px rgba(31, 41, 55, 0.1);
             transition: all 0.3s ease;
@@ -229,7 +230,6 @@
             height: 100%;
             display: flex;
             flex-direction: column;
-            text-align: center;
         }
 
         .feature-card::before {
@@ -249,39 +249,37 @@
         }
 
         .feature-icon {
-            width: 100px;
-            height: 100px;
+            width: 60px;
+            height: 60px;
             background: #1f2937;
             border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 0 auto 2rem;
-            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
             color: white;
         }
 
         .feature-card h3 {
-            font-size: 2.2rem;
+            font-size: 1.5rem;
             font-weight: 600;
             color: #1f2937;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
         }
 
         .feature-card p {
             color: #1f2937;
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
             opacity: 0.8;
-            font-size: 1.2rem;
         }
 
         .feature-details {
-            font-size: 1.1rem;
+            font-size: 0.9rem;
             color: #1f2937;
             line-height: 1.6;
             opacity: 0.7;
             margin-top: auto;
-            text-align: left;
         }
 
         /* CTA Section */
@@ -327,6 +325,13 @@
         }
 
         /* Responsive Design */
+        @media (max-width: 1024px) {
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1.5rem;
+            }
+        }
+
         @media (max-width: 768px) {
             .hero-content {
                 grid-template-columns: 1fr;
@@ -338,6 +343,11 @@
                 font-size: 2.5rem;
             }
 
+            .features-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
             .cta-buttons {
                 flex-direction: column;
                 align-items: center;
@@ -346,28 +356,6 @@
             .btn {
                 width: 100%;
                 max-width: 300px;
-            }
-
-            .feature-card {
-                padding: 2.5rem;
-            }
-
-            .feature-icon {
-                width: 80px;
-                height: 80px;
-                font-size: 2rem;
-            }
-
-            .feature-card h3 {
-                font-size: 1.8rem;
-            }
-
-            .feature-card p {
-                font-size: 1rem;
-            }
-
-            .feature-details {
-                font-size: 0.95rem;
             }
         }
 
@@ -393,6 +381,8 @@
             animation: float 4s ease-in-out infinite;
             animation-delay: -3s;
         }
+
+        
     </style>
 </head>
 <body>
@@ -434,12 +424,14 @@
 
                 <div class="features-grid">
                     <div class="feature-card">
-                        <div class="feature-icon">🗺️</div>
-                        <h3>Regional Risk Maps</h3>
-                        <p>Risk maps for buildings of a demanded district by a policy for risk accumulation, mitigation roadmaps, inventory-scale screening, and emergency planning.</p>
-                        <div class="feature-details">
-                            <strong>Government Applications:</strong> Comprehensive regional seismic risk assessment for urban planning, emergency response coordination, public safety resource allocation, and disaster preparedness strategies. Enables government agencies to identify high-risk areas, develop evacuation plans, optimize emergency service locations, and create evidence-based policies for building codes and zoning regulations. Essential for municipal planning departments, emergency management agencies, civil defense organizations, and public safety departments to protect citizens and critical infrastructure through informed decision-making and strategic risk mitigation planning.
+                        <div class="feature-icon">
+                            <svg width="32" height="32" fill="none">
+                                <use href="../images/icons.svg#icon-regional-risk"></use>
+                            </svg>
                         </div>
+                        <h3>Regional Risk Maps</h3>
+                        <p>Regional risk maps are generated by our hybrid AI algorithms from polygon-defined districts to provide building-level seismic risk distributions for accumulation analysis, mitigation planning, and emergency management.</p>
+                        
                     </div>
                 </div>
             </div>

@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+
+  <symbol id="icon-building-report" viewBox="0 0 24 24">
+    <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <path fill="#f2faff" stroke="#f2faff" stroke-width="2" d="M8 21V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v16H8z"/>
+      <path stroke="#0097FB" stroke-width="2.5" d="M4 21h16m-13-9l4-4 4 4 3-3"/>
+    </g>
+  </symbol>
+
+  <symbol id="icon-hazard-map" viewBox="0 0 24 24">
+    <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <path fill="#f2faff" stroke="#f2faff" stroke-width="2" d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+      <path stroke="#0097FB" stroke-width="2.5" d="M7.5 12.5l3-3 3 3 3-3"/>
+    </g>
+  </symbol>
+
+  <symbol id="icon-financial-loss" viewBox="0 0 24 24">
+    <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+       <path fill="#0097FB" stroke="#0097FB" stroke-width="2" d="M12 3l-8 8h5v8h6v-8h5L12 3z" transform="rotate(180 12 12)"/>
+       <path stroke="#f2faff" stroke-width="2.5" d="M12 13V8m-2 7h4"/>
+    </g>
+  </symbol>
+  
+  <symbol id="icon-investment-tool" viewBox="0 0 24 24">
+    <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <path fill="#f2faff" stroke="#f2faff" stroke-width="2" d="M4 21V10.08a2 2 0 0 1 .79-1.58l6-5.45a2 2 0 0 1 2.42 0l6 5.45A2 2 0 0 1 20 10.08V21H4z"/>
+      <path stroke="#0097FB" stroke-width="2.5" d="M8 17l4-4 4 4m-4-10v10"/>
+    </g>
+  </symbol>
+
+  <symbol id="icon-regional-risk" viewBox="0 0 24 24">
+    <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <path stroke="#f2faff" stroke-width="2" d="M9 4v16M15 4v16M4 9h16M4 15h16"/>
+      <path stroke="#0097FB" stroke-width="2.5" d="M8 8l8 2-3 7-7-2 2-7z"/>
+      <path stroke="#0097FB" stroke-width="2" d="M9.5 11.5h.01m2 1.5h.01m-1-2h.01"/>
+    </g>
+  </symbol>
+
+</svg>

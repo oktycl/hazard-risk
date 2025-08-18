@@ -7,7 +7,7 @@
     <meta name="description" content="Advanced financial loss prediction and building risk assessment tools for investment funds and asset management companies.">
     <link rel="stylesheet" href="../css/header.css">
     <link rel="stylesheet" href="../css/footer.css">
-    <style>
+     <style>
         /* Base Styles */
         * {
             margin: 0;
@@ -29,9 +29,9 @@
             min-height: 100vh;
         }
 
-        /* Hero Section - Using Palette Colors */
+        /* Hero Section - Blue Theme */
         .hero {
-            background: #1f2937; /* Dark from palette */
+            background: #1f2937;
             color: white;
             padding: 6rem 0 4rem;
             position: relative;
@@ -177,7 +177,7 @@
         /* Features Section */
         .features {
             padding: 6rem 0;
-            background: white; /* White background for contrast */
+            background: white;
         }
 
         .container {
@@ -208,8 +208,8 @@
 
         .features-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 3rem;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
             margin-top: 4rem;
             align-items: stretch;
         }
@@ -217,7 +217,7 @@
         .feature-card {
             background: white;
             border-radius: 16px;
-            padding: 3rem;
+            padding: 2rem;
             border: 1px solid #f1f1e6;
             box-shadow: 0 4px 20px rgba(31, 41, 55, 0.1);
             transition: all 0.3s ease;
@@ -245,34 +245,33 @@
         }
 
         .feature-icon {
-            width: 80px;
-            height: 80px;
+            width: 60px;
+            height: 60px;
             background: #1f2937;
             border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 2rem;
-            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
             color: white;
         }
 
         .feature-card h3 {
-            font-size: 1.8rem;
+            font-size: 1.5rem;
             font-weight: 600;
             color: #1f2937;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
         }
 
         .feature-card p {
             color: #1f2937;
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
             opacity: 0.8;
-            font-size: 1.1rem;
         }
 
         .feature-details {
-            font-size: 1rem;
+            font-size: 0.9rem;
             color: #1f2937;
             line-height: 1.6;
             opacity: 0.7;
@@ -324,8 +323,8 @@
         /* Responsive Design */
         @media (max-width: 1024px) {
             .features-grid {
-                grid-template-columns: 1fr;
-                gap: 2rem;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1.5rem;
             }
         }
 
@@ -354,16 +353,6 @@
                 width: 100%;
                 max-width: 300px;
             }
-
-            .feature-card {
-                padding: 2rem;
-            }
-
-            .feature-icon {
-                width: 60px;
-                height: 60px;
-                font-size: 1.5rem;
-            }
         }
 
         /* Animations */
@@ -389,7 +378,7 @@
             animation-delay: -3s;
         }
 
-       
+        
     </style>
 </head>
 <body>
@@ -433,21 +422,32 @@
 
                 <div class="features-grid">
                     <div class="feature-card">
-                        <div class="feature-icon">📈</div>
-                        <h3>Financial Loss and Downtime Prediction</h3>
-                        <p>A simplified FEMA P-58 methodology is used to predict financial loss and downtime, requiring only the building's coordinates as an initial input.</p>
-                        <div class="feature-details">
-                            <strong>Investment Applications:</strong> Advanced probabilistic assessment using FEMA P-58 standards for portfolio risk management, providing expected annual loss calculations, probable maximum loss estimates, business interruption forecasts, and ROI impact analysis. Essential for investment decision-making, portfolio optimization, asset valuation adjustments, and insurance cost planning for real estate investment funds.
+                        <div class="feature-icon">
+                            <svg width="32" height="32" fill="none">
+                                <use href="../images/icons.svg#icon-building-report"></use>
+                            </svg>
                         </div>
-                    </div>
-
-                    <div class="feature-card">
-                        <div class="feature-icon">📊</div>
                         <h3>Building Risk Reports</h3>
-                        <p>Seismic risk prediction for individual structures with rapid visual screening. This product is also for global portfolio risk analysis.</p>
-                        <div class="feature-details">
-                            <strong>Portfolio Management:</strong> Structural system and material analysis, spectral accelerations and soil class assessment, adjacency (pounding risk) evaluation, year built and design code verification, vertical and plan irregularity detection using our AI models. FEMA 154 methodology provides probability of collapse calculations. Critical for asset managers to assess portfolio concentration risk, diversification strategies, and individual property valuations within investment portfolios.
+                        <p>Building risk reports are generated by our hybrid AI algorithms using rapid visual screening and FEMA P-154 methodology to predict collapse probability and contents risk from only geographic coordinates.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <svg width="32" height="32" fill="none">
+                                <use href="../images/icons.svg#icon-hazard-map"></use>
+                            </svg>
                         </div>
+                        <h3>Hazard Maps</h3>
+                        <p>Seismic hazard maps for buildings and contents are produced by integrating earthquake hazard data with site-specific soil amplification to improve risk assessment accuracy.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <svg width="32" height="32" fill="none">
+                                <use href="../images/icons.svg#icon-financial-loss"></use>
+                            </svg>
+                        </div>
+                        <h3>Financial Loss & Downtime Prediction</h3>
+                        <p>Financial loss and downtime are predicted by our hybrid AI algorithms using a simplified FEMA P-58 methodology from only geographic coordinates, with accuracy further enhanced through user-provided building and contents data.</p>
+                        
                     </div>
                 </div>
             </div>
