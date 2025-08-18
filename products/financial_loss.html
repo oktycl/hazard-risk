@@ -168,157 +168,126 @@
             justify-content: center;
         }
 
-        .financial-icon {
-            width: 140px;
-            height: 120px;
+        /* --- BAŞLANGIç: YENİ GÖRSEL ANİMASYON CSS KODLARI --- */
+        .prediction-flow {
+            width: 200px;
+            height: 150px;
             position: relative;
-            z-index: 2;
-        }
-
-        .calculator-body {
-            width: 100px;
-            height: 80px;
-            background: white;
-            border-radius: 8px;
-            position: relative;
-            border: 2px solid rgba(255, 255, 255, 0.3);
             display: flex;
-            flex-direction: column;
-            padding: 8px;
+            justify-content: center;
+            align-items: center;
         }
 
-        .calculator-screen {
-            width: 100%;
-            height: 20px;
-            background: #1f2937;
+        .building-outline {
+            width: 70px;
+            height: 90px;
+            border: 2px solid rgba(255, 255, 255, 0.8);
             border-radius: 4px;
-            margin-bottom: 6px;
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            opacity: 0;
+            animation: fadeIn 1s ease-out 0.5s forwards;
+        }
+
+        .building-outline::before {
+            content: 'AI';
+            font-weight: 600;
+            font-size: 14px;
+            color: white;
+            position: absolute;
+            top: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .result-chart {
+            width: 100px;
+            height: 100px;
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            align-items: flex-end;
+            gap: 5px;
+            padding: 5px;
+        }
+
+        .chart-bar {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 3px 3px 0 0;
             position: relative;
             overflow: hidden;
+            transform-origin: bottom;
+            animation: growBaseline 1s ease-out 1.5s forwards;
         }
 
-        .screen-text {
-            color: #00ff41;
-            font-family: 'Courier New', monospace;
-            font-size: 8px;
+        .chart-bar::after {
+            content: '';
             position: absolute;
-            top: 50%;
-            left: 4px;
-            transform: translateY(-50%);
-            animation: calculating 3s ease-in-out infinite;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 0%;
+            background: white;
+            border-radius: 3px 3px 0 0;
+            animation: growRefined 1s ease-out 3.5s forwards;
         }
 
-        @keyframes calculating {
-            0%, 20% { content: '$0.00'; opacity: 0.5; }
-            25%, 45% { content: '$127,450'; opacity: 1; }
-            50%, 70% { content: '$198,320'; opacity: 1; }
-            75%, 95% { content: '$245,890'; opacity: 1; }
-            100% { content: '$267,120'; opacity: 1; }
-        }
+        .chart-bar:nth-child(1) { height: 50%; }
+        .chart-bar:nth-child(1)::after { animation-name: growRefined1; }
+        .chart-bar:nth-child(2) { height: 70%; animation-delay: 1.6s; }
+        .chart-bar:nth-child(2)::after { animation-name: growRefined2; }
+        .chart-bar:nth-child(3) { height: 40%; animation-delay: 1.7s; }
+        .chart-bar:nth-child(3)::after { animation-name: growRefined3; }
 
-        .calculator-buttons {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 2px;
-            flex: 1;
-        }
-
-        .calc-button {
-            background: #e5e7eb;
-            border-radius: 2px;
-            font-size: 6px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            animation: buttonPress 4s ease-in-out infinite;
-        }
-
-        .calc-button:nth-child(3) { animation-delay: 0.5s; }
-        .calc-button:nth-child(7) { animation-delay: 1s; }
-        .calc-button:nth-child(11) { animation-delay: 1.5s; }
-        .calc-button:nth-child(15) { animation-delay: 2s; }
-
-        @keyframes buttonPress {
-            0%, 90% { 
-                background: #e5e7eb;
-                transform: scale(1);
-            }
-            5%, 10% { 
-                background: var(--bright-blue);
-                transform: scale(0.95);
-            }
-        }
-
-        .loss-indicator {
-            width: 50px;
-            height: 50px;
+        .user-input {
+            width: 30px;
+            height: 30px;
             background: white;
             border-radius: 50%;
             position: absolute;
-            bottom: -10px;
-            right: -10px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            color: var(--bright-blue);
+            font-size: 24px;
+            font-weight: bold;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 0 15px white;
+            animation: popIn 0.5s ease-out 2.8s forwards;
         }
+        
+        .result-label {
+            position: absolute;
+            bottom: 0px;
+            right: 5px;
+            font-size: 10px;
+            font-weight: 500;
+            color: white;
+            opacity: 0;
+        }
+        .baseline-label { animation: fadeLabelIn 1s ease 1.5s forwards, fadeLabelOut 1s ease 3s forwards; }
+        .refined-label { animation: fadeLabelIn 1s ease 3.5s forwards; }
 
-        .trend-chart {
-            width: 28px;
-            height: 16px;
-            position: relative;
-            display: flex;
-            align-items: end;
-            gap: 1px;
-        }
 
-        .trend-bar {
-            background: var(--bright-blue);
-            border-radius: 1px 1px 0 0;
-            animation: trendFlow 2.5s ease-in-out infinite;
-        }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes growBaseline { from { transform: scaleY(0); } to { transform: scaleY(1); } }
+        @keyframes popIn { from { transform: translate(-50%, -50%) scale(0); } to { transform: translate(-50%, -50%) scale(1); } }
+        
+        @keyframes growRefined1 { from { height: 0%; } to { height: 80%; } }
+        @keyframes growRefined2 { from { height: 0%; } to { height: 95%; } }
+        @keyframes growRefined3 { from { height: 0%; } to { height: 70%; } }
 
-        .trend-bar:nth-child(1) { 
-            width: 3px; 
-            height: 6px;
-            animation-delay: 0s;
-        }
-        .trend-bar:nth-child(2) { 
-            width: 3px; 
-            height: 10px;
-            animation-delay: 0.3s;
-        }
-        .trend-bar:nth-child(3) { 
-            width: 3px; 
-            height: 14px;
-            animation-delay: 0.6s;
-        }
-        .trend-bar:nth-child(4) { 
-            width: 3px; 
-            height: 12px;
-            animation-delay: 0.9s;
-        }
-        .trend-bar:nth-child(5) { 
-            width: 3px; 
-            height: 8px;
-            animation-delay: 1.2s;
-        }
-        .trend-bar:nth-child(6) { 
-            width: 3px; 
-            height: 16px;
-            animation-delay: 1.5s;
-        }
+        @keyframes fadeLabelIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes fadeLabelOut { from { opacity: 1; } to { opacity: 0; } }
 
-        @keyframes trendFlow {
-            0%, 100% { 
-                opacity: 0.7;
-                transform: scaleY(1);
-            }
-            50% { 
-                opacity: 1;
-                transform: scaleY(1.2);
-            }
-        }
+        /* --- BİTİŞ: YENİ GÖRSEL ANİMASYON CSS KODLARI --- */
 
         .hero-image::after {
             content: '';
@@ -521,11 +490,9 @@
     </style>
 </head>
 <body>
-    <!-- Header will be included here -->
     <div id="header-placeholder"></div>
 
     <main class="main-content">
-        <!-- Hero Section -->
         <section class="hero">
             <div class="hero-container">
                 <div class="hero-content">
@@ -544,48 +511,23 @@
                     </div>
                     <div class="hero-visual">
                         <div class="hero-image">
-                            <div class="financial-icon">
-                                <div class="calculator-body">
-                                    <div class="calculator-screen">
-                                        <div class="screen-text">$267,120</div>
-                                    </div>
-                                    <div class="calculator-buttons">
-                                        <div class="calc-button">7</div>
-                                        <div class="calc-button">8</div>
-                                        <div class="calc-button">9</div>
-                                        <div class="calc-button">÷</div>
-                                        <div class="calc-button">4</div>
-                                        <div class="calc-button">5</div>
-                                        <div class="calc-button">6</div>
-                                        <div class="calc-button">×</div>
-                                        <div class="calc-button">1</div>
-                                        <div class="calc-button">2</div>
-                                        <div class="calc-button">3</div>
-                                        <div class="calc-button">-</div>
-                                        <div class="calc-button">0</div>
-                                        <div class="calc-button">.</div>
-                                        <div class="calc-button">=</div>
-                                        <div class="calc-button">+</div>
-                                    </div>
+                            <div class="prediction-flow">
+                                <div class="building-outline"></div>
+                                <div class="result-chart">
+                                    <div class="chart-bar"></div>
+                                    <div class="chart-bar"></div>
+                                    <div class="chart-bar"></div>
                                 </div>
-                                <div class="loss-indicator">
-                                    <div class="trend-chart">
-                                        <div class="trend-bar"></div>
-                                        <div class="trend-bar"></div>
-                                        <div class="trend-bar"></div>
-                                        <div class="trend-bar"></div>
-                                        <div class="trend-bar"></div>
-                                        <div class="trend-bar"></div>
-                                    </div>
-                                </div>
+                                <div class="user-input">+</div>
+                                <div class="result-label baseline-label">AI Baseline</div>
+                                <div class="result-label refined-label">Refined Prediction</div>
                             </div>
-                        </div>
+                            </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Details Section -->
         <section class="details">
             <div class="details-container">
                 <div class="details-content">
@@ -603,7 +545,6 @@
             </div>
         </section>
 
-        <!-- Features Section -->
         <section class="features">
             <div class="features-container">
                 <div class="features-header">
@@ -660,7 +601,6 @@
         </section>
     </main>
 
-    <!-- Footer will be included here -->
     <div id="footer-placeholder"></div>
 
     <script>
@@ -677,18 +617,6 @@
             .then(data => {
                 document.getElementById('footer-placeholder').innerHTML = data;
             });
-
-        // Dynamic calculator screen text
-        const screenTexts = ['$0.00', '$127,450', '$198,320', '$245,890', '$267,120'];
-        let currentIndex = 0;
-
-        setInterval(() => {
-            const screenElement = document.querySelector('.screen-text');
-            if (screenElement) {
-                screenElement.textContent = screenTexts[currentIndex];
-                currentIndex = (currentIndex + 1) % screenTexts.length;
-            }
-        }, 600);
 
         // Smooth scrolling for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {

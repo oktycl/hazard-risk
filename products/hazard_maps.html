@@ -168,139 +168,104 @@
             justify-content: center;
         }
 
-        .map-icon {
-            width: 120px;
-            height: 120px;
+        /* --- BAŞLANGIÇ: YENİ GÖRSEL ANİMASYON CSS KODLARI --- */
+        .map-animation-container {
+            width: 250px;
+            height: 200px;
             position: relative;
-            z-index: 2;
+            color: var(--dark-slate); /* For text inside */
         }
 
-        .map-container {
-            width: 100px;
-            height: 80px;
-            background: white;
-            border-radius: 8px;
-            position: relative;
-            margin-right: 15px;
-            overflow: hidden;
-        }
-
-        .map-area {
-            width: 20px;
-            height: 15px;
+        .map-layer {
             position: absolute;
-            border-radius: 3px;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            border-radius: 1rem;
+            opacity: 0;
         }
 
-        .map-area:nth-child(1) { 
-            top: 10px; left: 10px; 
-            background: #ef4444;
-            animation: hazardPulse 2s ease-in-out infinite;
-        }
-        .map-area:nth-child(2) { 
-            top: 10px; left: 40px; 
-            background: #f97316;
-            animation: hazardPulse 2s ease-in-out infinite 0.2s;
-        }
-        .map-area:nth-child(3) { 
-            top: 10px; right: 10px; 
-            background: #eab308;
-            animation: hazardPulse 2s ease-in-out infinite 0.4s;
-        }
-        .map-area:nth-child(4) { 
-            top: 35px; left: 10px; 
-            background: #22c55e;
-            animation: hazardPulse 2s ease-in-out infinite 0.6s;
-        }
-        .map-area:nth-child(5) { 
-            top: 35px; left: 40px; 
-            background: #3b82f6;
-            animation: hazardPulse 2s ease-in-out infinite 0.8s;
-        }
-        .map-area:nth-child(6) { 
-            top: 35px; right: 10px; 
-            background: #8b5cf6;
-            animation: hazardPulse 2s ease-in-out infinite 1s;
+        .base-map {
+            background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 80"><path d="M10 10 L30 5 L50 15 L70 10 L90 20 V70 L70 75 L50 65 L30 70 L10 60 Z" fill="none" stroke="%23ffffff" stroke-width="1" opacity="0.3"/><path d="M10 35 L90 45" fill="none" stroke="%23ffffff" stroke-width="0.5" opacity="0.3"/><path d="M50 15 V65" fill="none" stroke="%23ffffff" stroke-width="0.5" opacity="0.3"/></svg>');
+            background-size: cover;
+            animation: fadeIn 1s ease-out 0.5s forwards;
         }
 
-        @keyframes hazardPulse {
-            0%, 100% { 
-                opacity: 0.7;
-                transform: scale(1);
-            }
-            50% { 
-                opacity: 1;
-                transform: scale(1.1);
-            }
+        .hazard-heatmap {
+            background: linear-gradient(45deg, rgba(250, 180, 20, 0.6), rgba(239, 68, 68, 0.7));
+            animation: expandIn 1s ease-out 1.5s forwards;
+            transform-origin: center;
         }
+        
+        .soil-patch {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background: rgba(34, 197, 94, 0.8);
+            border-radius: 50%;
+            border: 2px solid rgba(255,255,255,0.9);
+            transform: scale(0);
+            opacity: 0;
+            box-shadow: 0 0 15px rgba(34, 197, 94, 0.6);
+        }
+        
+        .soil-patch:nth-child(1) { top: 20%; left: 30%; animation: popIn 0.5s ease-out 2.5s forwards; }
+        .soil-patch:nth-child(2) { top: 55%; left: 60%; animation: popIn 0.5s ease-out 2.7s forwards; background: rgba(239, 68, 68, 0.8); box-shadow: 0 0 15px rgba(239, 68, 68, 0.6); }
+        .soil-patch:nth-child(3) { top: 40%; left: 15%; animation: popIn 0.5s ease-out 2.9s forwards; }
 
-        .wave-circle {
-            width: 50px;
-            height: 50px;
+        .analysis-pin {
+            position: absolute;
+            top: 55%; left: 60%;
+            width: 30px;
+            height: 30px;
+            opacity: 0;
+            animation: dropIn 0.5s ease-out 3.5s forwards;
+        }
+        
+        .pin-dot {
+            width: 10px;
+            height: 10px;
             background: white;
             border-radius: 50%;
             position: absolute;
-            bottom: -10px;
-            right: -10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            top: 10px; left: 10px;
+            box-shadow: 0 0 0 4px var(--dark-slate), 0 0 0 6px white;
+        }
+        
+        .pin-popup {
+            position: absolute;
+            bottom: 35px;
+            left: 50%;
+            transform: translateX(-50%) scale(0);
+            background: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            white-space: nowrap;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            animation: showInfo 0.5s ease-out 4s forwards;
+            transform-origin: bottom center;
         }
 
-        .seismic-indicator {
-            width: 28px;
-            height: 12px;
-            position: relative;
-            display: flex;
-            align-items: center;
-        }
-
-        .wave-pattern {
-            width: 100%;
-            height: 2px;
-            background: var(--bright-blue);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .wave-pattern::before {
+        .pin-popup::after {
             content: '';
             position: absolute;
-            left: 0;
-            top: -4px;
-            width: 100%;
-            height: 10px;
-            background: var(--bright-blue);
-            clip-path: polygon(
-                0% 60%, 
-                8% 30%, 
-                15% 80%, 
-                22% 20%, 
-                30% 70%, 
-                38% 40%, 
-                45% 85%, 
-                52% 15%, 
-                60% 75%, 
-                68% 35%, 
-                75% 65%, 
-                82% 45%, 
-                90% 55%, 
-                100% 60%
-            );
-            animation: waveFlow 1.8s ease-in-out infinite;
+            bottom: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0; height: 0;
+            border-left: 5px solid transparent;
+            border-right: 5px solid transparent;
+            border-top: 5px solid white;
         }
 
-        @keyframes waveFlow {
-            0%, 100% { 
-                opacity: 1;
-                transform: scaleY(1);
-            }
-            50% { 
-                opacity: 0.8;
-                transform: scaleY(1.3);
-            }
-        }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes expandIn { from { transform: scale(0); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        @keyframes popIn { from { transform: scale(0); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        @keyframes dropIn { from { transform: translateY(-50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        @keyframes showInfo { from { transform: translateX(-50%) scale(0); opacity: 0; } to { transform: translateX(-50%) scale(1); opacity: 1; } }
+        /* --- BİTİŞ: YENİ GÖRSEL ANİMASYON CSS KODLARI --- */
+
 
         .hero-image::after {
             content: '';
@@ -513,11 +478,9 @@
     </style>
 </head>
 <body>
-    <!-- Header will be included here -->
     <div id="header-placeholder"></div>
 
     <main class="main-content">
-        <!-- Hero Section -->
         <section class="hero">
             <div class="hero-container">
                 <div class="hero-content">
@@ -536,28 +499,27 @@
                     </div>
                     <div class="hero-visual">
                         <div class="hero-image">
-                            <div class="map-icon">
-                                <div class="map-container">
-                                    <div class="map-area"></div>
-                                    <div class="map-area"></div>
-                                    <div class="map-area"></div>
-                                    <div class="map-area"></div>
-                                    <div class="map-area"></div>
-                                    <div class="map-area"></div>
+                            <div class="map-animation-container">
+                                <div class="map-layer base-map"></div>
+                                <div class="map-layer hazard-heatmap"></div>
+                                <div class="soil-patches">
+                                    <div class="soil-patch"></div>
+                                    <div class="soil-patch"></div>
+                                    <div class="soil-patch"></div>
                                 </div>
-                                <div class="wave-circle">
-                                    <div class="seismic-indicator">
-                                        <div class="wave-pattern"></div>
+                                <div class="analysis-pin">
+                                    <div class="pin-dot"></div>
+                                    <div class="pin-popup">
+                                        Site-Specific Analysis
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                            </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Details Section -->
         <section class="details">
             <div class="details-container">
                 <div class="details-content">
@@ -567,7 +529,7 @@
                         <br><br>
                         A key enhancement to standard hazard mapping is our integration of soil amplification effects. Local soil conditions can significantly influence ground shaking intensity due to differences in soil type, density, and layering. To capture this, we use detailed geotechnical information, either from USGS soil classification data or from municipal and regional engineering surveys, to determine the amplification factors that modify the baseline hazard values. By applying these corrections, we ensure that the hazard levels are not only regionally representative but also tailored to the specific conditions of each site.
                         <br><br>
-                        For building coverage, the adjusted hazard maps help insurers, engineers, and policymakers understand the expected seismic demand on structures under varying earthquake magnitudes. For contents coverage, we extend the hazard assessment to account for floor-level accelerations and dynamic amplification within buildings, providing insight into the vulnerability of non-structural elements and valuable assets.
+                        For contents coverage, we extend the hazard assessment to account for floor-level accelerations and dynamic amplification within buildings, providing insight into the vulnerability of non-structural elements and valuable assets.
                         <br><br>
                         The resulting hazard maps are scenario-based, allowing users to explore seismic risks under multiple earthquake return periods or design-level events. This multi-level approach improves decision-making in structural design, retrofitting strategies, insurance underwriting, and disaster preparedness. Ultimately, by merging macro-scale seismic hazard data with micro-scale soil response information, we deliver hazard maps that more accurately reflect the true seismic exposure, thereby enabling more effective risk mitigation for both buildings and their contents.
                     </div>
@@ -575,7 +537,6 @@
             </div>
         </section>
 
-        <!-- Features Section -->
         <section class="features">
             <div class="features-container">
                 <div class="features-header">
@@ -632,7 +593,6 @@
         </section>
     </main>
 
-    <!-- Footer will be included here -->
     <div id="footer-placeholder"></div>
 
     <script>

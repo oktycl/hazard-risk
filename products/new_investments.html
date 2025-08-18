@@ -168,125 +168,121 @@
             justify-content: center;
         }
 
-        .investment-icon {
-            width: 140px;
-            height: 120px;
+        /* --- BAŞLANGIÇ: YENİ GÖRSEL ANİMASYON CSS KODLARI --- */
+        .investment-viz {
+            width: 280px;
+            height: 200px;
             position: relative;
-            z-index: 2;
         }
 
-        .blueprint-container {
-            width: 110px;
-            height: 90px;
-            background: white;
+        .viz-map {
+            width: 150px;
+            height: 150px;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
             border-radius: 8px;
-            position: relative;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            padding: 8px;
-            overflow: hidden;
-        }
-
-        .blueprint-grid {
             position: absolute;
-            top: 0;
             left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(90deg, #e5e7eb 1px, transparent 1px),
-                        linear-gradient(#e5e7eb 1px, transparent 1px);
-            background-size: 8px 8px;
-            opacity: 0.3;
+            top: 50%;
+            transform: translateY(-50%) scale(0.8);
+            opacity: 0;
+            animation: slideIn 1s ease-out 0.5s forwards;
         }
 
-        .building-outline {
-            position: relative;
-            z-index: 2;
-            width: 100%;
-            height: 100%;
-        }
-
-        .foundation {
+        .footprint {
+            width: 60px;
+            height: 80px;
+            border: 2px solid white;
             position: absolute;
-            bottom: 5px;
-            left: 20px;
-            right: 20px;
-            height: 4px;
-            background: #1f2937;
-            border-radius: 1px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border-radius: 4px;
+            box-shadow: 0 0 10px white;
         }
 
-        .floor {
+        .data-layer {
             position: absolute;
-            left: 15px;
-            right: 15px;
-            height: 12px;
-            background: rgba(31, 41, 55, 0.1);
-            border: 1px solid #1f2937;
-            border-radius: 2px;
-            animation: floorConstruction 4s ease-in-out infinite;
-        }
-
-        .floor:nth-child(2) { bottom: 12px; animation-delay: 0s; }
-        .floor:nth-child(3) { bottom: 26px; animation-delay: 0.5s; }
-        .floor:nth-child(4) { bottom: 40px; animation-delay: 1s; }
-        .floor:nth-child(5) { bottom: 54px; animation-delay: 1.5s; }
-
-        @keyframes floorConstruction {
-            0%, 80% { 
-                opacity: 0.3;
-                transform: scaleY(0.8);
-            }
-            10%, 90% { 
-                opacity: 1;
-                transform: scaleY(1);
-                background: rgba(0, 151, 251, 0.2);
-            }
-        }
-
-        .cost-calculator {
-            width: 50px;
-            height: 50px;
-            background: white;
+            left: 100%;
+            width: 30px;
+            height: 30px;
+            background: rgba(255,255,255,0.8);
             border-radius: 50%;
-            position: absolute;
-            bottom: -10px;
-            right: -10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-        }
-
-        .cost-display {
-            width: 28px;
-            height: 16px;
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .dollar-sign {
-            color: var(--bright-blue);
-            font-weight: bold;
             font-size: 14px;
-            animation: costCalculation 3s ease-in-out infinite;
+            color: var(--dark-slate);
+            box-shadow: 0 0 10px white;
+            opacity: 0;
         }
 
-        @keyframes costCalculation {
-            0%, 30% { 
-                opacity: 0.5;
-                transform: scale(1);
-            }
-            50%, 80% { 
-                opacity: 1;
-                transform: scale(1.2);
-            }
-            100% { 
-                opacity: 0.7;
-                transform: scale(1);
-            }
+        .seismic-layer { top: 20px; animation: flyIn 1s ease-out 1.5s forwards; }
+        .soil-layer { top: 60px; animation: flyIn 1s ease-out 1.7s forwards; }
+        .slope-layer { top: 100px; animation: flyIn 1s ease-out 1.9s forwards; }
+
+        .cost-chart {
+            width: 100px;
+            height: 150px;
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column-reverse; /* Stack from bottom */
+            border-radius: 8px;
+            background: rgba(255,255,255,0.1);
+            padding: 5px;
+            border: 1px solid rgba(255,255,255,0.2);
         }
+        
+        .cost-segment {
+            width: 100%;
+            border-radius: 4px;
+            margin-top: 5px;
+            position: relative;
+            transform-origin: bottom;
+            transform: scaleY(0);
+            text-align: center;
+            font-size: 10px;
+            font-weight: 500;
+            color: white;
+            padding: 2px 0;
+        }
+
+        .base-cost { background: #22c55e; animation: stackBar 0.5s ease-out 3s forwards; }
+        .foundation-cost { background: #eab308; animation: stackBar 0.5s ease-out 3.5s forwards; }
+        .seismic-cost { background: #ef4444; animation: stackBar 0.5s ease-out 4s forwards; }
+
+        .total-cost {
+            position: absolute;
+            top: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 14px;
+            font-weight: bold;
+            color: white;
+            opacity: 0;
+            animation: showTotal 1s ease-out 4.5s forwards;
+        }
+        
+
+        @keyframes slideIn {
+            from { transform: translateY(-50%) translateX(-50px) scale(0.8); opacity: 0; }
+            to { transform: translateY(-50%) translateX(0) scale(1); opacity: 1; }
+        }
+        @keyframes flyIn {
+            0% { transform: translateX(50px); opacity: 0; }
+            50% { transform: translateX(-10px); opacity: 1; }
+            100% { transform: translateX(0); opacity: 0; } /* Disappears after 'merging' */
+        }
+        @keyframes stackBar {
+            from { transform: scaleY(0); }
+            to { transform: scaleY(1); }
+        }
+        @keyframes showTotal { from { opacity: 0; } to { opacity: 1; } }
+
+        /* --- BİTİŞ: YENİ GÖRSEL ANİMASYON CSS KODLARI --- */
 
         .hero-image::after {
             content: '';
@@ -489,11 +485,9 @@
     </style>
 </head>
 <body>
-    <!-- Header will be included here -->
     <div id="header-placeholder"></div>
 
     <main class="main-content">
-        <!-- Hero Section -->
         <section class="hero">
             <div class="hero-container">
                 <div class="hero-content">
@@ -512,30 +506,28 @@
                     </div>
                     <div class="hero-visual">
                         <div class="hero-image">
-                            <div class="investment-icon">
-                                <div class="blueprint-container">
-                                    <div class="blueprint-grid"></div>
-                                    <div class="building-outline">
-                                        <div class="foundation"></div>
-                                        <div class="floor"></div>
-                                        <div class="floor"></div>
-                                        <div class="floor"></div>
-                                        <div class="floor"></div>
-                                    </div>
+                            <div class="investment-viz">
+                                <div class="viz-map">
+                                    <div class="footprint"></div>
                                 </div>
-                                <div class="cost-calculator">
-                                    <div class="cost-display">
-                                        <div class="dollar-sign">$</div>
-                                    </div>
+                                <div class="data-layers">
+                                    <div class="data-layer seismic-layer">🌊</div>
+                                    <div class="data-layer soil-layer">⛰️</div>
+                                    <div class="data-layer slope-layer">📐</div>
+                                </div>
+                                <div class="cost-chart">
+                                     <div class="total-cost">$2.1M</div>
+                                    <div class="cost-segment seismic-cost" style="flex-basis: 25%;">Risk</div>
+                                    <div class="cost-segment foundation-cost" style="flex-basis: 30%;">Foundation</div>
+                                    <div class="cost-segment base-cost" style="flex-basis: 45%;">Base</div>
                                 </div>
                             </div>
-                        </div>
+                            </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Details Section -->
         <section class="details">
             <div class="details-container">
                 <div class="details-content">
@@ -553,7 +545,6 @@
             </div>
         </section>
 
-        <!-- Features Section -->
         <section class="features">
             <div class="features-container">
                 <div class="features-header">
@@ -610,7 +601,6 @@
         </section>
     </main>
 
-    <!-- Footer will be included here -->
     <div id="footer-placeholder"></div>
 
     <script>
