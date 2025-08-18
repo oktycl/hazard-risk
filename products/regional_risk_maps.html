@@ -168,162 +168,84 @@
             justify-content: center;
         }
 
-        .region-icon {
-            width: 140px;
-            height: 120px;
+        /* --- BAŞLANGIÇ: YENİ GÖRSEL ANİMASYON CSS KODLARI --- */
+        .regional-viz {
+            width: 250px;
+            height: 200px;
             position: relative;
-            z-index: 2;
         }
 
-        .region-container {
-            width: 120px;
-            height: 100px;
-            background: white;
-            border-radius: 12px;
-            position: relative;
-            overflow: hidden;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-        }
-
-        .district {
+        .map-background {
             position: absolute;
-            border-radius: 4px;
-            border: 1px solid rgba(31, 41, 55, 0.2);
+            width: 100%;
+            height: 100%;
+            background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 80"><path d="M10 10 L30 5 L50 15 L70 10 L90 20 V70 L70 75 L50 65 L30 70 L10 60 Z" fill="%23fff" fill-opacity="0.1" /><path d="M10 35 L90 45" fill="none" stroke="%23fff" stroke-width="0.5" opacity="0.3"/><path d="M50 15 V65" fill="none" stroke="%23fff" stroke-width="0.5" opacity="0.3"/></svg>');
+            background-size: cover;
+            border-radius: 1rem;
+            opacity: 0;
+            animation: fadeIn 1s ease-out 0.5s forwards;
         }
 
-        .district:nth-child(1) { 
-            top: 8px; left: 8px; 
-            width: 25px; height: 20px;
-            background: #ef4444;
-            animation: districtPulse 3s ease-in-out infinite;
-        }
-        .district:nth-child(2) { 
-            top: 8px; left: 38px; 
-            width: 30px; height: 20px;
-            background: #f97316;
-            animation: districtPulse 3s ease-in-out infinite 0.3s;
-        }
-        .district:nth-child(3) { 
-            top: 8px; right: 8px; 
-            width: 25px; height: 20px;
-            background: #eab308;
-            animation: districtPulse 3s ease-in-out infinite 0.6s;
-        }
-        .district:nth-child(4) { 
-            top: 33px; left: 8px; 
-            width: 35px; height: 25px;
-            background: #22c55e;
-            animation: districtPulse 3s ease-in-out infinite 0.9s;
-        }
-        .district:nth-child(5) { 
-            top: 33px; right: 8px; 
-            width: 32px; height: 25px;
-            background: #3b82f6;
-            animation: districtPulse 3s ease-in-out infinite 1.2s;
-        }
-        .district:nth-child(6) { 
-            bottom: 8px; left: 8px; 
-            width: 45px; height: 22px;
-            background: #8b5cf6;
-            animation: districtPulse 3s ease-in-out infinite 1.5s;
-        }
-        .district:nth-child(7) { 
-            bottom: 8px; right: 8px; 
-            width: 38px; height: 22px;
-            background: #ec4899;
-            animation: districtPulse 3s ease-in-out infinite 1.8s;
-        }
-
-        @keyframes districtPulse {
-            0%, 100% { 
-                opacity: 0.8;
-                transform: scale(1);
-                box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.4);
-            }
-            50% { 
-                opacity: 1;
-                transform: scale(1.05);
-                box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.1);
-            }
-        }
-
-        .analysis-circle {
-            width: 50px;
-            height: 50px;
-            background: white;
-            border-radius: 50%;
+        .region-polygon {
             position: absolute;
-            bottom: -10px;
-            right: -10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-        }
-
-        .analysis-indicator {
-            width: 28px;
-            height: 16px;
-            position: relative;
-            display: flex;
-            align-items: center;
-        }
-
-        .data-bars {
-            display: flex;
-            align-items: end;
-            gap: 2px;
             width: 100%;
             height: 100%;
         }
 
-        .bar {
-            background: var(--bright-blue);
-            border-radius: 1px;
-            animation: dataFlow 2s ease-in-out infinite;
+        .region-polygon path {
+            stroke: white;
+            stroke-width: 3;
+            fill: rgba(255, 255, 255, 0.1);
+            stroke-dasharray: 1000;
+            stroke-dashoffset: 1000;
+            animation: drawPolygon 2s ease-out 1s forwards;
+        }
+        
+        .building-dots {
+            position: absolute;
+            width: 100%;
+            height: 100%;
         }
 
-        .bar:nth-child(1) { 
-            width: 3px; 
-            height: 40%;
-            animation-delay: 0s;
+        .dot {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            background: white;
+            border-radius: 50%;
+            opacity: 0;
+            transform: scale(0);
+            animation: populateDot 0.5s ease-out forwards, colorCodeDot 1.5s ease-in-out 3.5s forwards;
         }
-        .bar:nth-child(2) { 
-            width: 3px; 
-            height: 70%;
-            animation-delay: 0.2s;
-        }
-        .bar:nth-child(3) { 
-            width: 3px; 
-            height: 90%;
-            animation-delay: 0.4s;
-        }
-        .bar:nth-child(4) { 
-            width: 3px; 
-            height: 60%;
-            animation-delay: 0.6s;
-        }
-        .bar:nth-child(5) { 
-            width: 3px; 
-            height: 80%;
-            animation-delay: 0.8s;
-        }
-        .bar:nth-child(6) { 
-            width: 3px; 
-            height: 50%;
-            animation-delay: 1s;
+        
+        .scanner {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: linear-gradient(to bottom, transparent, rgba(255,255,255,0.7), transparent);
+            box-shadow: 0 0 10px white;
+            opacity: 0;
+            animation: scanRegion 1.5s ease-in-out 3s forwards;
         }
 
-        @keyframes dataFlow {
-            0%, 100% { 
-                opacity: 0.7;
-                transform: scaleY(1);
-            }
-            50% { 
-                opacity: 1;
-                transform: scaleY(1.2);
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 0.5; } }
+        @keyframes drawPolygon { to { stroke-dashoffset: 0; } }
+        @keyframes scanRegion {
+            from { transform: translateX(0px); opacity: 1; }
+            to { transform: translateX(250px); opacity: 0; }
+        }
+
+        @keyframes populateDot { to { opacity: 1; transform: scale(1); } }
+        
+        @keyframes colorCodeDot {
+            to {
+                background: var(--risk-color, #22c55e); /* Green by default */
             }
         }
+        
+        /* --- BİTİŞ: YENİ GÖRSEL ANİMASYON CSS KODLARI --- */
 
         .hero-image::after {
             content: '';
@@ -526,11 +448,9 @@
     </style>
 </head>
 <body>
-    <!-- Header will be included here -->
     <div id="header-placeholder"></div>
 
     <main class="main-content">
-        <!-- Hero Section -->
         <section class="hero">
             <div class="hero-container">
                 <div class="hero-content">
@@ -549,36 +469,20 @@
                     </div>
                     <div class="hero-visual">
                         <div class="hero-image">
-                            <div class="region-icon">
-                                <div class="region-container">
-                                    <div class="district"></div>
-                                    <div class="district"></div>
-                                    <div class="district"></div>
-                                    <div class="district"></div>
-                                    <div class="district"></div>
-                                    <div class="district"></div>
-                                    <div class="district"></div>
-                                </div>
-                                <div class="analysis-circle">
-                                    <div class="analysis-indicator">
-                                        <div class="data-bars">
-                                            <div class="bar"></div>
-                                            <div class="bar"></div>
-                                            <div class="bar"></div>
-                                            <div class="bar"></div>
-                                            <div class="bar"></div>
-                                            <div class="bar"></div>
-                                        </div>
-                                    </div>
-                                </div>
+                            <div class="regional-viz">
+                                <div class="map-background"></div>
+                                <div class="building-dots" id="building-dots-container"></div>
+                                <svg class="region-polygon" viewBox="0 0 250 200">
+                                    <path d="M 50 30 L 200 40 L 220 150 L 80 180 L 30 100 Z" />
+                                </svg>
+                                <div class="scanner"></div>
                             </div>
-                        </div>
+                             </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Details Section -->
         <section class="details">
             <div class="details-container">
                 <div class="details-content">
@@ -596,7 +500,6 @@
             </div>
         </section>
 
-        <!-- Features Section -->
         <section class="features">
             <div class="features-container">
                 <div class="features-header">
@@ -653,7 +556,6 @@
         </section>
     </main>
 
-    <!-- Footer will be included here -->
     <div id="footer-placeholder"></div>
 
     <script>
@@ -707,6 +609,58 @@
             el.style.transition = 'all 0.6s ease';
             observer.observe(el);
         });
+
+        // --- BAŞLANGIÇ: YENİ ANİMASYON İÇİN JAVASCRIPT ---
+        document.addEventListener('DOMContentLoaded', () => {
+            const container = document.getElementById('building-dots-container');
+            if (!container) return;
+
+            const polygonPoints = [
+                {x: 50, y: 30}, {x: 200, y: 40}, {x: 220, y: 150},
+                {x: 80, y: 180}, {x: 30, y: 100}
+            ];
+
+            function isPointInPolygon(point, vs) {
+                let x = point.x, y = point.y;
+                let inside = false;
+                for (let i = 0, j = vs.length - 1; i < vs.length; j = i++) {
+                    let xi = vs[i].x, yi = vs[i].y;
+                    let xj = vs[j].x, yj = vs[j].y;
+                    let intersect = ((yi > y) !== (yj > y)) && (x < (xj - xi) * (y - yi) / (yj - yi) + xi);
+                    if (intersect) inside = !inside;
+                }
+                return inside;
+            }
+
+            const numberOfDots = 150;
+            const riskColors = ['#ef4444', '#f97316', '#eab308', '#22c55e'];
+
+            for (let i = 0; i < numberOfDots; i++) {
+                let x, y, point;
+                do {
+                    x = Math.random() * 250;
+                    y = Math.random() * 200;
+                    point = {x, y};
+                } while (!isPointInPolygon(point, polygonPoints));
+                
+                const dot = document.createElement('div');
+                dot.className = 'dot';
+                dot.style.left = `${x}px`;
+                dot.style.top = `${y}px`;
+                
+                // Animation delays
+                const populateDelay = 3 + (x / 250) * 1.5; // Dots populate as scanner moves
+                dot.style.animationDelay = `${populateDelay}s, 5s`;
+                
+                // Set risk color for the second animation
+                const riskColor = riskColors[Math.floor(Math.random() * riskColors.length)];
+                dot.style.setProperty('--risk-color', riskColor);
+
+                container.appendChild(dot);
+            }
+        });
+         // --- BİTİŞ: YENİ ANİMASYON İÇİN JAVASCRIPT ---
+
     </script>
 </body>
 </html>
