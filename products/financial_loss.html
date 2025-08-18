@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Financial Loss and Downtime Prediction - Hazard and Risk</title>
+    <link rel="stylesheet" href="../css/header.css">
+    <link rel="stylesheet" href="../css/footer.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            line-height: 1.6;
+            color: #1f2937;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Natural Palette Colors */
+        :root {
+            --dark-slate: #1f2937;
+            --bright-blue: #0097fb;
+            --light-blue: #f2faff;
+            --cream-white: #f1f1e6;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            margin-top: 4rem; /* Desktop header height */
+        }
+
+        /* Hero Section */
+        .hero {
+            background: var(--dark-slate);
+            padding: 4rem 0 6rem;
+            position: relative;
+            overflow: hidden;
+            color: white;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="%23ffffff" stroke-width="0.5" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+            opacity: 0.1;
+        }
+
+        .hero-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .hero-text {
+            max-width: 600px;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            margin-bottom: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: white;
+            margin-bottom: 1.5rem;
+            line-height: 1.1;
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .btn-hero-primary {
+            background: var(--bright-blue);
+            color: white;
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 0.75rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(0, 151, 251, 0.3);
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-hero-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(0, 151, 251, 0.4);
+        }
+
+        .btn-hero-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 0.75rem;
+            text-decoration: none;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .btn-hero-secondary:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: white;
+        }
+
+        .hero-visual {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .hero-image {
+            width: 100%;
+            max-width: 500px;
+            height: 400px;
+            background: linear-gradient(135deg, var(--bright-blue), #2563eb);
+            border-radius: 2rem;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 151, 251, 0.3);
+            animation: float 6s ease-in-out infinite;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .financial-icon {
+            width: 140px;
+            height: 120px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .calculator-body {
+            width: 100px;
+            height: 80px;
+            background: white;
+            border-radius: 8px;
+            position: relative;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            display: flex;
+            flex-direction: column;
+            padding: 8px;
+        }
+
+        .calculator-screen {
+            width: 100%;
+            height: 20px;
+            background: #1f2937;
+            border-radius: 4px;
+            margin-bottom: 6px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .screen-text {
+            color: #00ff41;
+            font-family: 'Courier New', monospace;
+            font-size: 8px;
+            position: absolute;
+            top: 50%;
+            left: 4px;
+            transform: translateY(-50%);
+            animation: calculating 3s ease-in-out infinite;
+        }
+
+        @keyframes calculating {
+            0%, 20% { content: '$0.00'; opacity: 0.5; }
+            25%, 45% { content: '$127,450'; opacity: 1; }
+            50%, 70% { content: '$198,320'; opacity: 1; }
+            75%, 95% { content: '$245,890'; opacity: 1; }
+            100% { content: '$267,120'; opacity: 1; }
+        }
+
+        .calculator-buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2px;
+            flex: 1;
+        }
+
+        .calc-button {
+            background: #e5e7eb;
+            border-radius: 2px;
+            font-size: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: buttonPress 4s ease-in-out infinite;
+        }
+
+        .calc-button:nth-child(3) { animation-delay: 0.5s; }
+        .calc-button:nth-child(7) { animation-delay: 1s; }
+        .calc-button:nth-child(11) { animation-delay: 1.5s; }
+        .calc-button:nth-child(15) { animation-delay: 2s; }
+
+        @keyframes buttonPress {
+            0%, 90% { 
+                background: #e5e7eb;
+                transform: scale(1);
+            }
+            5%, 10% { 
+                background: var(--bright-blue);
+                transform: scale(0.95);
+            }
+        }
+
+        .loss-indicator {
+            width: 50px;
+            height: 50px;
+            background: white;
+            border-radius: 50%;
+            position: absolute;
+            bottom: -10px;
+            right: -10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .trend-chart {
+            width: 28px;
+            height: 16px;
+            position: relative;
+            display: flex;
+            align-items: end;
+            gap: 1px;
+        }
+
+        .trend-bar {
+            background: var(--bright-blue);
+            border-radius: 1px 1px 0 0;
+            animation: trendFlow 2.5s ease-in-out infinite;
+        }
+
+        .trend-bar:nth-child(1) { 
+            width: 3px; 
+            height: 6px;
+            animation-delay: 0s;
+        }
+        .trend-bar:nth-child(2) { 
+            width: 3px; 
+            height: 10px;
+            animation-delay: 0.3s;
+        }
+        .trend-bar:nth-child(3) { 
+            width: 3px; 
+            height: 14px;
+            animation-delay: 0.6s;
+        }
+        .trend-bar:nth-child(4) { 
+            width: 3px; 
+            height: 12px;
+            animation-delay: 0.9s;
+        }
+        .trend-bar:nth-child(5) { 
+            width: 3px; 
+            height: 8px;
+            animation-delay: 1.2s;
+        }
+        .trend-bar:nth-child(6) { 
+            width: 3px; 
+            height: 16px;
+            animation-delay: 1.5s;
+        }
+
+        @keyframes trendFlow {
+            0%, 100% { 
+                opacity: 0.7;
+                transform: scaleY(1);
+            }
+            50% { 
+                opacity: 1;
+                transform: scaleY(1.2);
+            }
+        }
+
+        .hero-image::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.1) 50%, transparent 70%);
+            animation: shimmer 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes shimmer {
+            0%, 100% { transform: translateX(-100%); }
+            50% { transform: translateX(100%); }
+        }
+
+        /* Details Section */
+        .details {
+            padding: 6rem 0;
+            background: white;
+        }
+
+        .details-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .details-content {
+            background: white;
+            padding: 3rem;
+            border-radius: 2rem;
+        }
+
+        .details-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .details-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #1f2937;
+            text-align: justify;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 6rem 0;
+            background: var(--dark-slate);
+        }
+
+        .features-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .features-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .features-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 1rem;
+        }
+
+        .features-subtitle {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.7);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 1.5rem;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(0, 151, 251, 0.1);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 151, 251, 0.15);
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--bright-blue);
+            border-radius: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .feature-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 1rem;
+        }
+
+        .feature-description {
+            color: #6b7280;
+            line-height: 1.6;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .main-content {
+                margin-top: 3.5rem; /* Mobile header height */
+            }
+
+            .hero {
+                padding: 3rem 0 4rem;
+            }
+
+            .hero-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+                text-align: center;
+            }
+
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .hero-cta {
+                justify-content: center;
+            }
+
+            .features {
+                padding: 4rem 0;
+            }
+
+            .features-title {
+                font-size: 2rem;
+            }
+
+            .details {
+                padding: 4rem 0;
+            }
+
+            .details-content {
+                padding: 2rem;
+            }
+
+            .details-title {
+                font-size: 1.5rem;
+            }
+
+            .details-text {
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-title {
+                font-size: 2rem;
+            }
+
+            .hero-cta {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn-hero-primary,
+            .btn-hero-secondary {
+                width: 100%;
+                max-width: 300px;
+                text-align: center;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header will be included here -->
+    <div id="header-placeholder"></div>
+
+    <main class="main-content">
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-container">
+                <div class="hero-content">
+                    <div class="hero-text">
+                        <div class="hero-badge">
+                            💰 Economic Impact Analysis
+                        </div>
+                        <h1 class="hero-title">Financial Loss and Downtime Prediction</h1>
+                        <p class="hero-subtitle">
+                            AI-powered economic consequence estimation combining FEMA P-58 methodology with minimal input requirements for rapid financial loss and downtime predictions.
+                        </p>
+                        <div class="hero-cta">
+                            <a href="#" class="btn-hero-primary">Calculate Losses</a>
+                            <a href="#" class="btn-hero-secondary">View Demo</a>
+                        </div>
+                    </div>
+                    <div class="hero-visual">
+                        <div class="hero-image">
+                            <div class="financial-icon">
+                                <div class="calculator-body">
+                                    <div class="calculator-screen">
+                                        <div class="screen-text">$267,120</div>
+                                    </div>
+                                    <div class="calculator-buttons">
+                                        <div class="calc-button">7</div>
+                                        <div class="calc-button">8</div>
+                                        <div class="calc-button">9</div>
+                                        <div class="calc-button">÷</div>
+                                        <div class="calc-button">4</div>
+                                        <div class="calc-button">5</div>
+                                        <div class="calc-button">6</div>
+                                        <div class="calc-button">×</div>
+                                        <div class="calc-button">1</div>
+                                        <div class="calc-button">2</div>
+                                        <div class="calc-button">3</div>
+                                        <div class="calc-button">-</div>
+                                        <div class="calc-button">0</div>
+                                        <div class="calc-button">.</div>
+                                        <div class="calc-button">=</div>
+                                        <div class="calc-button">+</div>
+                                    </div>
+                                </div>
+                                <div class="loss-indicator">
+                                    <div class="trend-chart">
+                                        <div class="trend-bar"></div>
+                                        <div class="trend-bar"></div>
+                                        <div class="trend-bar"></div>
+                                        <div class="trend-bar"></div>
+                                        <div class="trend-bar"></div>
+                                        <div class="trend-bar"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Details Section -->
+        <section class="details">
+            <div class="details-container">
+                <div class="details-content">
+                    <h2 class="details-title">Advanced Financial Impact Assessment Technology</h2>
+                    <div class="details-text">
+                        The Financial Loss and Downtime Prediction product combines our hybrid AI algorithms with a simplified implementation of the FEMA P-58 methodology to estimate the economic consequences of earthquakes at both the building and operational level. Designed to operate with minimal input, the system requires only the geographic coordinates of a building to automatically infer structural characteristics and hazard parameters. Based on these, it produces rapid baseline estimates of financial loss (repair costs) and downtime (expected recovery duration).
+                        <br><br>
+                        To enhance accuracy, the platform provides an interactive user adjustment interface. Since detailed knowledge of a building's interior or non-structural inventory cannot always be captured automatically, users are invited to supplement the baseline model with their own data. For example, an industrial facility can upload or enter an inventory of critical machinery, high-value equipment, or sensitive contents. Once integrated, this information enables the model to deliver far more accurate predictions of both direct repair costs and indirect business interruption impacts.
+                        <br><br>
+                        The product is designed for flexibility across user groups. Insurers gain a fast yet robust tool for underwriting, premium calculation, and claims preparedness. Asset owners and operators receive a decision-support system for understanding financial exposure and planning resilience investments. Public institutions can use aggregated results for sector-wide or region-wide loss estimation and recovery planning.
+                        <br><br>
+                        By merging AI-driven rapid screening with user-controlled refinement, the Financial Loss and Downtime Prediction product delivers both speed and adaptability. It empowers decision-makers to act with confidence—offering instant, coordinate-based loss estimates while still allowing for deeper customization to reflect the unique realities of each building or portfolio.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section class="features">
+            <div class="features-container">
+                <div class="features-header">
+                    <h2 class="features-title">Key Features</h2>
+                    <p class="features-subtitle">
+                        Comprehensive economic impact analysis with AI-driven automation and user refinement capabilities
+                    </p>
+                </div>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">💵</div>
+                        <h3 class="feature-title">Financial Loss Estimation</h3>
+                        <p class="feature-description">
+                            Rapid baseline estimates of repair costs using FEMA P-58 methodology with minimal coordinate-based input requirements.
+                        </p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">⏰</div>
+                        <h3 class="feature-title">Downtime Prediction</h3>
+                        <p class="feature-description">
+                            Expected recovery duration analysis for operational planning and business continuity assessment.
+                        </p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🎛️</div>
+                        <h3 class="feature-title">Interactive Adjustment Interface</h3>
+                        <p class="feature-description">
+                            User-controlled refinement system allowing custom inventory input for enhanced accuracy and specific asset protection.
+                        </p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🏭</div>
+                        <h3 class="feature-title">Industrial Asset Integration</h3>
+                        <p class="feature-description">
+                            Critical machinery and high-value equipment inventory support for comprehensive business interruption analysis.
+                        </p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">📊</div>
+                        <h3 class="feature-title">Multi-User Flexibility</h3>
+                        <p class="feature-description">
+                            Tailored functionality for insurers, asset owners, and public institutions with sector-specific analytical capabilities.
+                        </p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">⚡</div>
+                        <h3 class="feature-title">Rapid AI Screening</h3>
+                        <p class="feature-description">
+                            Instant coordinate-based analysis with automatic structural inference and hazard parameter detection.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer will be included here -->
+    <div id="footer-placeholder"></div>
+
+    <script>
+        // Load header
+        fetch('../header.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('header-placeholder').innerHTML = data;
+            });
+
+        // Load footer
+        fetch('../footer.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('footer-placeholder').innerHTML = data;
+            });
+
+        // Dynamic calculator screen text
+        const screenTexts = ['$0.00', '$127,450', '$198,320', '$245,890', '$267,120'];
+        let currentIndex = 0;
+
+        setInterval(() => {
+            const screenElement = document.querySelector('.screen-text');
+            if (screenElement) {
+                screenElement.textContent = screenTexts[currentIndex];
+                currentIndex = (currentIndex + 1) % screenTexts.length;
+            }
+        }, 600);
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Animate elements on scroll
+        document.querySelectorAll('.feature-card, .details-content').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'all 0.6s ease';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
