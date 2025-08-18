@@ -15,7 +15,7 @@ A modern, responsive website for earthquake risk assessment built with vanilla H
 
 ```
 hazard-risk-vanilla/
-├── index.html          # Main HTML file
+├── index.html          # Main HTML file.
 ├── css/
 │   └── style.css       # All CSS styles
 ├── js/
