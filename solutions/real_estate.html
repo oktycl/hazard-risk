@@ -7,7 +7,7 @@
     <meta name="description" content="Advanced construction cost prediction and investment risk assessment tools for real estate and construction industry.">
     <link rel="stylesheet" href="../css/header.css">
     <link rel="stylesheet" href="../css/footer.css">
-    <style>
+     <style>
         /* Base Styles */
         * {
             margin: 0;
@@ -29,7 +29,7 @@
             min-height: 100vh;
         }
 
-        /* Hero Section - Using Palette Colors */
+        /* Hero Section - Blue Theme */
         .hero {
             background: #1f2937;
             color: white;
@@ -86,7 +86,7 @@
             justify-content: center;
         }
 
-        /* Green Flow Lines - Based on the image using palette colors */
+        /* Flow Lines - Using palette colors */
         .flow-container {
             position: relative;
             width: 100%;
@@ -116,7 +116,7 @@
             top: 40%;
             right: 20%;
             transform: rotate(30deg);
-            border-color: #0097FB; /* Blue from palette */
+            border-color: #0097FB; /* Dark from palette */
         }
 
         .flow-line-3 {
@@ -208,16 +208,20 @@
 
         .features-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 3rem;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
             margin-top: 4rem;
             align-items: stretch;
+            justify-content: center;
+            max-width: 800px; /* 2 kart için optimal genişlik */
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .feature-card {
             background: white;
             border-radius: 16px;
-            padding: 3rem;
+            padding: 2rem;
             border: 1px solid #f1f1e6;
             box-shadow: 0 4px 20px rgba(31, 41, 55, 0.1);
             transition: all 0.3s ease;
@@ -245,48 +249,37 @@
         }
 
         .feature-icon {
-            width: 80px;
-            height: 80px;
+            width: 60px;
+            height: 60px;
             background: #1f2937;
             border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 2rem;
-            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
             color: white;
         }
 
         .feature-card h3 {
-            font-size: 1.8rem;
+            font-size: 1.5rem;
             font-weight: 600;
             color: #1f2937;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
         }
 
         .feature-card p {
             color: #1f2937;
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
             opacity: 0.8;
-            font-size: 1.1rem;
         }
 
         .feature-details {
-            font-size: 1rem;
+            font-size: 0.9rem;
             color: #1f2937;
             line-height: 1.6;
             opacity: 0.7;
             margin-top: auto;
-        }
-
-        /* Investment Tool Highlight */
-        .investment-tool-card {
-            background: linear-gradient(135deg, #f2faff 0%, #e6f3ff 100%);
-            border: 2px solid #0097FB;
-        }
-
-        .investment-tool-card .feature-icon {
-            background: #0097FB;
         }
 
         /* CTA Section */
@@ -334,8 +327,8 @@
         /* Responsive Design */
         @media (max-width: 1024px) {
             .features-grid {
-                grid-template-columns: 1fr;
-                gap: 2rem;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1.5rem;
             }
         }
 
@@ -364,16 +357,6 @@
                 width: 100%;
                 max-width: 300px;
             }
-
-            .feature-card {
-                padding: 2rem;
-            }
-
-            .feature-icon {
-                width: 60px;
-                height: 60px;
-                font-size: 1.5rem;
-            }
         }
 
         /* Animations */
@@ -399,6 +382,7 @@
             animation-delay: -3s;
         }
 
+        
     </style>
 </head>
 <body>
@@ -436,45 +420,30 @@
         <section class="features">
             <div class="container">
                 <div class="section-header">
-                    <h2>New Investments Tool</h2>
+                    <h2>Specialized Solutions for Real Estate & Construction</h2>
                     <p>Comprehensive construction cost prediction and investment risk assessment for real estate development</p>
                 </div>
 
                 <div class="features-grid">
-                    <div class="feature-card investment-tool-card">
-                        <div class="feature-icon">🏗️</div>
-                        <h3>Construction Cost Prediction</h3>
-                        <p>Advanced algorithms that analyze building footprint, roofprint, materials, number of stories, terrain slope and soil conditions to provide accurate cost estimates.</p>
-                        <div class="feature-details">
-                            <strong>Analysis Factors:</strong> Building footprint and roofprint analysis, material cost optimization, story-by-story cost breakdown, terrain slope impact assessment, soil condition analysis, local labor costs, permit and regulatory costs, timeline predictions, and market-based pricing adjustments.
+                    <div class="feature-card ">
+                        <div class="feature-icon">
+                            <svg width="32" height="32" fill="none">
+                                <use href="../images/icons.svg#icon-hazard-map"></use>
+                            </svg>
                         </div>
+                        <h3>Hazard Maps</h3>
+                        <p>Seismic hazard maps for buildings and contents are produced by integrating earthquake hazard data with site-specific soil amplification to improve risk assessment accuracy.</p>
                     </div>
 
                     <div class="feature-card">
-                        <div class="feature-icon">📊</div>
-                        <h3>Investment Risk Assessment</h3>
-                        <p>Comprehensive analysis of investment viability, market conditions, and financial projections for real estate development projects.</p>
-                        <div class="feature-details">
-                            <strong>Risk Factors:</strong> Market volatility analysis, location-based risk assessment, regulatory compliance evaluation, environmental impact studies, seismic risk considerations, cost overrun predictions, timeline risk analysis, and ROI optimization strategies.
+                        <div class="feature-icon">
+                            <svg width="32" height="32" fill="none">
+                                <use href="../images/icons.svg#icon-investment-tool"></use>
+                            </svg>
                         </div>
-                    </div>
-
-                    <div class="feature-card">
-                        <div class="feature-icon">🌍</div>
-                        <h3>Site Selection Optimization</h3>
-                        <p>Data-driven site analysis considering geological, environmental, and economic factors to identify optimal development locations.</p>
-                        <div class="feature-details">
-                            <strong>Selection Criteria:</strong> Geological stability assessment, environmental compliance checks, infrastructure availability, market demand analysis, zoning regulations review, utility access evaluation, transportation connectivity, and long-term growth potential assessment.
-                        </div>
-                    </div>
-
-                    <div class="feature-card">
-                        <div class="feature-icon">💰</div>
-                        <h3>Financial Feasibility Studies</h3>
-                        <p>Complete financial modeling and feasibility analysis for construction and development projects with detailed ROI projections.</p>
-                        <div class="feature-details">
-                            <strong>Financial Modeling:</strong> Cash flow projections, break-even analysis, sensitivity analysis, scenario planning, financing options evaluation, tax implications assessment, profit margin optimization, and investment timeline modeling for maximum return potential.
-                        </div>
+                        <h3>New Investment Tool</h3>
+                        <p>Construction costs are predicted by our hybrid AI algorithms using building footprint, roofprint, number of stories, and soil and slope conditions, with global seismicity and soil maps enabling accurate investment insights from simple user inputs.</p>
+                       
                     </div>
                 </div>
             </div>
