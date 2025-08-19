@@ -145,15 +145,7 @@
 }
 
 .nav-link .dropdown-arrow {
-  width: 8px;
-  height: 8px;
-  border: 2px solid currentColor;
-  border-left: none;
-  border-top: none;
-  transform: rotate(45deg);
-  transition: transform 0.3s ease;
-  margin-top: -2px;
-  margin-left: 0.5rem;
+  display: none !important;
 }
 
 .nav-item:hover .dropdown-arrow {
