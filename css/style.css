@@ -22,8 +22,6 @@ body {
     padding: 0 1rem;
 }
 
-
-
 /* Button Styles */
 .btn {
     display: inline-flex;
@@ -93,29 +91,57 @@ body {
     transform: translateX(4px);
 }
 
-/* Hero Section */
+/* Hero Section with Video Background */
 .hero {
     position: relative;
-    padding: 0 0 5rem; /* Üst padding'i kaldırdık */
-    margin-top: 0; /* Margin top sıfır */
-    background: url("../images/3.png") no-repeat center center fixed;
-    background-size: cover;
-    min-height: 100vh; /* Tam ekran yüksekliği */
+    padding: 0 0 5rem;
+    margin-top: 0;
+    min-height: 100vh;
+    overflow: hidden;
 }
 
+/* Video Background Container */
+.hero-video-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+}
+
+.hero-video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    transform: translate(-50%, -50%);
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 1.5s ease-in-out;
+}
+
+.hero-video.active {
+    opacity: 1;
+}
+
+/* Overlay for better text readability */
 .hero::before {
     content: "";
     position: absolute;
     inset: 0;
     background: linear-gradient(
-        rgba(143, 141, 138, 0.35),
-        rgba(7, 132, 182, 0.25)
+        rgba(31, 41, 55, 0.4),
+        rgba(31, 41, 55, 0.6)
     );
     z-index: 1;
     pointer-events: none;
 }
 
-/* Hero content'e padding ekleyin */
+/* Hero content */
 .hero-content {
     position: relative;
     z-index: 2;
@@ -123,27 +149,30 @@ body {
     grid-template-columns: 1fr 1fr;
     gap: 3rem;
     align-items: center;
-    padding-top: 8rem; /* Header için space */
-    min-height: 100vh; /* İçerik tam yükseklik */
+    padding-top: 8rem;
+    min-height: 100vh;
 }
+
 .hero-title {
     font-size: 3.5rem;
     font-weight: 700;
     line-height: 1.1;
     margin-bottom: 1.5rem;
-    color: #1f2937;
+    color: #ffffff;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 .hero-subtitle {
     display: block;
-    color: #1f2937;
+    color: #ffffff;
 }
 
 .hero-description {
     font-size: 1.25rem;
-    color: #1f2937;
+    color: #f9fafb;
     margin-bottom: 2rem;
     line-height: 1.6;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
 }
 
 .hero-actions {
@@ -165,13 +194,43 @@ body {
 .stat-number {
     font-size: 2rem;
     font-weight: 700;
-    color: #1f2937;
+    color: #ffffff;
     margin-bottom: 0.25rem;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
 }
 
 .stat-label {
     font-size: 0.875rem;
-    color: #1f2937;
+    color: #e5e7eb;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+/* Video Controls */
+.video-controls {
+    position: absolute;
+    bottom: 2rem;
+    right: 2rem;
+    z-index: 3;
+    display: flex;
+    gap: 0.5rem;
+}
+
+.video-indicator {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.video-indicator.active {
+    background: #ffffff;
+    transform: scale(1.2);
+}
+
+.video-indicator:hover {
+    background: rgba(255, 255, 255, 0.8);
 }
 
 .hero-visual {
@@ -310,6 +369,7 @@ body {
     overflow: hidden;
     min-height: 900px;
 }
+
 .api-bg-video {
     position: absolute;
     top: 0;
@@ -318,7 +378,7 @@ body {
     height: 100%;
     object-fit: cover;
     z-index: 0;
-    opacity: 0.7; /* Arka plan efekti için */
+    opacity: 0.7;
     pointer-events: none;
 }
 
@@ -336,7 +396,6 @@ body {
     max-width: 48rem;
     margin: 0 auto;
 }
-
 
 .api-content {
     display: flex;
@@ -540,7 +599,6 @@ body {
     color: #9ca3af;
 }
 
-
 /* Animations */
 @keyframes fadeInUp {
     from {
@@ -598,27 +656,64 @@ body {
         display: none;
     }
 
-    .hero {
-        padding: 6rem 0 3rem;
+   .hero {
+        min-height: 70vh; /* Mobilde daha kısa hero */
     }
-
+    
+    .hero-video {
+        /* Mobile'da daha iyi kapsama için */
+        min-width: 120%;
+        min-height: 120%;
+        transform: translate(-50%, -50%) scale(1.1);
+    }
+    
     .hero-content {
-        grid-template-columns: 1fr;
-        gap: 2rem;
-        text-align: center;
+        padding-top: 4rem; /* Header için daha az space */
+        min-height: 70vh;
+        justify-content: center;
     }
-
+    
     .hero-title {
-        font-size: 2.5rem;
+        font-size: 2.2rem; /* Daha okunaklı boyut */
+        line-height: 1.2;
+        margin-bottom: 1rem;
     }
-
-    .hero-actions {
-        flex-direction: column;
-        align-items: center;
+    
+    .hero-description {
+        font-size: 1.1rem;
+        margin-bottom: 1.5rem;
     }
-
+    
     .hero-stats {
         grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+        margin-top: 2rem;
+    }
+    
+    .stat-number {
+        font-size: 1.5rem;
+    }
+    
+    .video-controls {
+        bottom: 1rem;
+        right: 50%;
+        transform: translateX(50%); /* Ortada konumlandır */
+        background: rgba(0, 0, 0, 0.3);
+        padding: 0.5rem;
+        border-radius: 1rem;
+    }
+    
+    .video-indicator {
+        width: 10px;
+        height: 10px;
+    }
+    
+    /* Hero overlay'i mobile'da daha koyu yap */
+    .hero::before {
+        background: linear-gradient(
+            rgba(31, 41, 55, 0.6),
+            rgba(31, 41, 55, 0.7)
+        );
     }
 
     .section-title {
@@ -644,8 +739,9 @@ body {
         grid-template-columns: 1fr;
         gap: 1.5rem;
     }
+
     .api-section {
-        min-height: 200px; /* Sadece yüksekliği değiştir */
+        min-height: 200px;
     }
     
     #api-video .api-bg-video {
@@ -656,6 +752,11 @@ body {
         object-fit: contain;
         opacity: 1;
     }
+
+    .video-controls {
+        bottom: 1rem;
+        right: 1rem;
+    }
 }
 
 @media (max-width: 480px) {
@@ -663,8 +764,34 @@ body {
         padding: 0 0.75rem;
     }
 
+    .hero {
+        min-height: 60vh; /* Küçük ekranlarda daha da kısa */
+    }
+    
+    .hero-content {
+        padding-top: 3rem;
+        min-height: 60vh;
+        gap: 1.5rem;
+    }
+    
     .hero-title {
-        font-size: 2rem;
+        font-size: 1.8rem;
+        margin-bottom: 0.8rem;
+    }
+    
+    .hero-description {
+        font-size: 1rem;
+        margin-bottom: 1.2rem;
+    }
+    
+    .hero-actions {
+        margin-bottom: 2rem;
+    }
+    
+    .hero-stats {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+        text-align: center;
     }
 
     .section-title {
@@ -676,9 +803,53 @@ body {
         grid-template-columns: 1fr;
     }
 
+    
+}
+/* Landscape mode mobile optimizations */
+@media (max-width: 768px) and (orientation: landscape) {
+    .hero {
+        min-height: 100vh;
+    }
+    
+    .hero-content {
+        padding-top: 2rem;
+        min-height: 100vh;
+    }
+    
+    .hero-title {
+        font-size: 2rem;
+        margin-bottom: 0.5rem;
+    }
+    
+    .hero-description {
+        font-size: 0.95rem;
+        margin-bottom: 1rem;
+    }
+    
     .hero-stats {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(4, 1fr);
         gap: 1rem;
+    }
+    
+    .stat-number {
+        font-size: 1.2rem;
+    }
+    
+    .stat-label {
+        font-size: 0.7rem;
+    }
+}
+
+/* Video performance optimizations for mobile */
+@media (max-width: 768px) {
+    .hero-video {
+        /* Mobilde daha az CPU kullanımı için */
+        will-change: opacity;
+    }
+    
+    /* Touch cihazlarda hover efektlerini kaldır */
+    .video-indicator:hover {
+        background: rgba(255, 255, 255, 0.5);
     }
 }
 
