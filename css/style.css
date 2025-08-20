@@ -36,6 +36,8 @@ body {
     cursor: pointer;
     transition: all 0.3s ease;
     font-size: 0.875rem;
+    position: relative;
+    overflow: hidden;
 }
 
 .btn-primary {
@@ -91,6 +93,23 @@ body {
     transform: translateX(4px);
 }
 
+/* Ripple effect for buttons */
+.ripple {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transform: scale(0);
+    animation: ripple-animation 0.6s linear;
+    pointer-events: none;
+}
+
+@keyframes ripple-animation {
+    to {
+        transform: scale(4);
+        opacity: 0;
+    }
+}
+
 /* Hero Section with Video Background */
 .hero {
     position: relative;
@@ -98,6 +117,21 @@ body {
     margin-top: 0;
     min-height: 100vh;
     overflow: hidden;
+    
+    /* Fallback background - video yüklenmezse bu görünür */
+    background: linear-gradient(135deg, 
+        #1f2937 0%, 
+        #374151 25%, 
+        #4b5563 50%, 
+        #374151 75%, 
+        #1f2937 100%
+    );
+    
+    /* Pattern overlay ekle */
+    background-image: 
+        radial-gradient(circle at 25% 25%, rgba(255,255,255,0.1) 2px, transparent 2px),
+        radial-gradient(circle at 75% 75%, rgba(255,255,255,0.05) 1px, transparent 1px);
+    background-size: 50px 50px, 30px 30px;
 }
 
 /* Video Background Container */
@@ -107,7 +141,7 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: 0;
+    z-index: 1;
 }
 
 .hero-video {
@@ -122,10 +156,41 @@ body {
     object-fit: cover;
     opacity: 0;
     transition: opacity 1.5s ease-in-out;
+    will-change: opacity;
 }
 
 .hero-video.active {
-    opacity: 1;
+    opacity: 0.9;
+}
+
+/* Loading shimmer for video container */
+.hero-video-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        45deg,
+        rgba(255,255,255,0.1) 0%,
+        rgba(255,255,255,0.2) 50%,
+        rgba(255,255,255,0.1) 100%
+    );
+    background-size: 200% 200%;
+    animation: shimmer 3s ease-in-out infinite;
+    z-index: 0;
+}
+
+@keyframes shimmer {
+    0% { background-position: -200% -200%; }
+    50% { background-position: 200% 200%; }
+    100% { background-position: -200% -200%; }
+}
+
+/* Video yüklendiğinde shimmer'ı gizle */
+.hero-video.active ~ .hero-video-container::before {
+    opacity: 0;
 }
 
 /* Overlay for better text readability */
@@ -141,10 +206,23 @@ body {
     pointer-events: none;
 }
 
+/* Additional overlay */
+.hero::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        rgba(31, 41, 55, 0.3),
+        rgba(31, 41, 55, 0.5)
+    );
+    z-index: 2;
+    pointer-events: none;
+}
+
 /* Hero content */
 .hero-content {
     position: relative;
-    z-index: 2;
+    z-index: 3;
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 3rem;
@@ -162,9 +240,16 @@ body {
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
+.hero-title-main,
+.hero-subtitle {
+    transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    display: inline-block;
+}
+
 .hero-subtitle {
     display: block;
     color: #ffffff;
+    opacity: 0.9;
 }
 
 .hero-description {
@@ -173,22 +258,97 @@ body {
     margin-bottom: 2rem;
     line-height: 1.6;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
+/* CTA Section with conditional display */
 .hero-actions {
     display: flex;
     gap: 1rem;
     margin-bottom: 3rem;
+    transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    overflow: hidden;
+}
+
+/* CTA visible state */
+.cta-visible {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    max-height: 100px;
+    margin-bottom: 3rem;
+}
+
+/* CTA hidden state */
+.cta-hidden {
+    opacity: 0;
+    transform: translateY(-20px) scale(0.9);
+    max-height: 0;
+    margin-bottom: 0;
+    pointer-events: none;
+}
+
+/* Smooth height transition */
+.hero-actions.transitioning {
+    max-height: 100px;
+    transition: max-height 0.3s ease, opacity 0.3s ease, transform 0.3s ease;
+}
+
+/* CTA butonunun kendisi için animasyon */
+.hero-actions .btn {
+    transition: all 0.3s ease;
+}
+
+.cta-hidden .btn {
+    transform: scale(0.8);
+    opacity: 0;
+}
+
+.cta-visible .btn {
+    transform: scale(1);
+    opacity: 1;
+}
+
+#hero-cta-text {
+    transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .hero-stats {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 2rem;
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+/* Stats hidden state */
+.stats-hidden {
+    opacity: 0;
+    transform: translateY(20px);
+    pointer-events: none;
+}
+
+/* Stats visible state */
+.hero-stats:not(.stats-hidden) {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Hero stats adjustment when CTA is hidden */
+.hero-content:has(.cta-hidden) .hero-stats {
+    margin-top: 1rem;
+}
+
+/* Fallback for browsers that don't support :has() */
+.no-cta .hero-stats {
+    margin-top: 1rem;
 }
 
 .stat {
     text-align: center;
+}
+
+.stat-number,
+.stat-label {
+    transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .stat-number {
@@ -203,6 +363,16 @@ body {
     font-size: 0.875rem;
     color: #e5e7eb;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+/* Stats updating animation */
+.stat-updating .stat-number {
+    color: #60a5fa;
+    transform: scale(1.1);
+}
+
+.stat-updating .stat-label {
+    opacity: 0.7;
 }
 
 /* Video Controls */
@@ -231,6 +401,82 @@ body {
 
 .video-indicator:hover {
     background: rgba(255, 255, 255, 0.8);
+}
+
+/* Text transition animations */
+.text-fade-out {
+    opacity: 0;
+    transform: translateY(-20px);
+}
+
+.text-fade-in {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.text-slide-out-left {
+    opacity: 0;
+    transform: translateX(-50px);
+}
+
+.text-slide-out-right {
+    opacity: 0;
+    transform: translateX(50px);
+}
+
+.text-slide-in {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.text-scale-out {
+    opacity: 0;
+    transform: scale(0.8);
+}
+
+.text-scale-in {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* Loading state styling */
+.hero-title-main:empty,
+.hero-subtitle:empty,
+.hero-description:empty,
+#hero-cta-text:empty,
+.stat-number:empty,
+.stat-label:empty {
+    background: linear-gradient(90deg, #e5e7eb 25%, #f3f4f6 50%, #e5e7eb 75%);
+    background-size: 200% 100%;
+    animation: loading-shimmer 1.5s infinite;
+    border-radius: 4px;
+    min-height: 1.2em;
+    display: inline-block;
+    min-width: 150px;
+}
+
+@keyframes loading-shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+}
+
+/* Loading state için özel genişlikler */
+.hero-title-main:empty { min-width: 400px; }
+.hero-subtitle:empty { min-width: 200px; }
+.hero-description:empty { min-width: 500px; min-height: 3em; }
+#hero-cta-text:empty { min-width: 120px; }
+.stat-number:empty { min-width: 60px; }
+.stat-label:empty { min-width: 100px; }
+
+/* Content loaded state - animasyonları kaldır */
+.content-loaded .hero-title-main,
+.content-loaded .hero-subtitle,
+.content-loaded .hero-description,
+.content-loaded #hero-cta-text,
+.content-loaded .stat-number,
+.content-loaded .stat-label {
+    background: none;
+    animation: none;
 }
 
 .hero-visual {
@@ -656,32 +902,79 @@ body {
         display: none;
     }
 
-   .hero {
-        min-height: 70vh; /* Mobilde daha kısa hero */
+    .hero {
+        min-height: 70vh;
+        /* Mobile'da daha dramatik gradient */
+        background: linear-gradient(45deg, 
+            #0f172a 0%, 
+            #1e293b 30%, 
+            #334155 60%, 
+            #1e293b 100%
+        );
+        
+        /* Animated pattern */
+        background-image: 
+            linear-gradient(45deg, rgba(255,255,255,0.1) 25%, transparent 25%), 
+            linear-gradient(-45deg, rgba(255,255,255,0.1) 25%, transparent 25%),
+            linear-gradient(45deg, transparent 75%, rgba(255,255,255,0.05) 75%), 
+            linear-gradient(-45deg, transparent 75%, rgba(255,255,255,0.05) 75%);
+        background-size: 40px 40px;
+        background-position: 0 0, 0 20px, 20px -20px, -20px 0px;
+        
+        max-height: 100vh;
     }
     
     .hero-video {
-        /* Mobile'da daha iyi kapsama için */
-        min-width: 120%;
-        min-height: 120%;
-        transform: translate(-50%, -50%) scale(1.1);
+        /* Mobile'da video daha büyük, kenarları kırpılır ama tam kaplar */
+        width: 120vw;
+        height: 120vh;
+        left: -10vw;
+        top: -10vh;
+        transform: none;
+        object-fit: cover;
+        object-position: center center;
+        will-change: opacity;
+    }
+    
+    .hero-video.active {
+        opacity: 0.8; /* Mobile'da biraz daha transparan */
     }
     
     .hero-content {
-        padding-top: 4rem; /* Header için daha az space */
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        text-align: center;
+        padding-top: 4rem;
         min-height: 70vh;
         justify-content: center;
     }
     
     .hero-title {
-        font-size: 2.2rem; /* Daha okunaklı boyut */
+        font-size: 2.2rem;
         line-height: 1.2;
         margin-bottom: 1rem;
+    }
+    
+    .hero-title-main,
+    .hero-subtitle {
+        transition-duration: 0.6s;
     }
     
     .hero-description {
         font-size: 1.1rem;
         margin-bottom: 1.5rem;
+        transition-duration: 0.7s;
+    }
+
+    .hero-actions {
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 2rem;
+    }
+
+    .cta-visible {
+        margin-bottom: 2rem;
+        max-height: 80px;
     }
     
     .hero-stats {
@@ -697,7 +990,7 @@ body {
     .video-controls {
         bottom: 1rem;
         right: 50%;
-        transform: translateX(50%); /* Ortada konumlandır */
+        transform: translateX(50%);
         background: rgba(0, 0, 0, 0.3);
         padding: 0.5rem;
         border-radius: 1rem;
@@ -715,6 +1008,11 @@ body {
             rgba(31, 41, 55, 0.7)
         );
     }
+
+    /* Loading state mobile adjustments */
+    .hero-title-main:empty { min-width: 250px; }
+    .hero-subtitle:empty { min-width: 150px; }
+    .hero-description:empty { min-width: 300px; min-height: 2.5em; }
 
     .section-title {
         font-size: 2rem;
@@ -753,9 +1051,9 @@ body {
         opacity: 1;
     }
 
-    .video-controls {
-        bottom: 1rem;
-        right: 1rem;
+    /* Touch cihazlarda hover efektlerini kaldır */
+    .video-indicator:hover {
+        background: rgba(255, 255, 255, 0.5);
     }
 }
 
@@ -765,7 +1063,16 @@ body {
     }
 
     .hero {
-        min-height: 60vh; /* Küçük ekranlarda daha da kısa */
+        min-height: 60vh;
+        max-height: 100vh;
+    }
+    
+    .hero-video {
+        /* Daha agresif scaling */
+        width: 130vw;
+        height: 130vh;
+        left: -15vw;
+        top: -15vh;
     }
     
     .hero-content {
@@ -794,6 +1101,33 @@ body {
         text-align: center;
     }
 
+    .stat {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        max-width: 200px;
+        margin: 0 auto;
+    }
+    
+    .stat-number {
+        font-size: 1.3rem;
+        margin-bottom: 0;
+    }
+    
+    .stat-label {
+        font-size: 0.8rem;
+    }
+    
+    .video-controls {
+        bottom: 0.5rem;
+        gap: 0.3rem;
+    }
+    
+    .video-indicator {
+        width: 8px;
+        height: 8px;
+    }
+
     .section-title {
         font-size: 1.75rem;
     }
@@ -802,9 +1136,8 @@ body {
     .testimonials-grid {
         grid-template-columns: 1fr;
     }
-
-    
 }
+
 /* Landscape mode mobile optimizations */
 @media (max-width: 768px) and (orientation: landscape) {
     .hero {
@@ -814,6 +1147,14 @@ body {
     .hero-content {
         padding-top: 2rem;
         min-height: 100vh;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 100%;
+        max-width: 1200px;
+        padding: 0 1rem;
+        min-height: auto;
     }
     
     .hero-title {
@@ -840,17 +1181,40 @@ body {
     }
 }
 
-/* Video performance optimizations for mobile */
-@media (max-width: 768px) {
+/* Ultra wide ekranlar için (Galaxy S21+, vb.) */
+@media (max-width: 768px) and (min-aspect-ratio: 19/9) {
     .hero-video {
-        /* Mobilde daha az CPU kullanımı için */
-        will-change: opacity;
+        /* Çok uzun ekranlar için */
+        height: 120vh;
+        top: -10vh;
+        object-position: center 40%; /* Video'nun üst kısmını göster */
     }
-    
-    /* Touch cihazlarda hover efektlerini kaldır */
-    .video-indicator:hover {
-        background: rgba(255, 255, 255, 0.5);
+}
+
+/* Notch'lu telefonlar için (iPhone X+) */
+@supports (padding-top: env(safe-area-inset-top)) {
+    @media (max-width: 768px) {
+        .hero {
+            padding-top: env(safe-area-inset-top);
+        }
+        
+        .hero-content {
+            padding-top: calc(2rem + env(safe-area-inset-top));
+        }
     }
+}
+
+/* Video quality fallback - düşük performanslı cihazlar */
+@media (max-width: 768px) and (max-resolution: 150dpi) {
+    .hero-video {
+        /* Düşük çözünürlük ekranlar için optimize */
+        filter: brightness(1.1) contrast(1.05);
+    }
+}
+
+/* Touch device styling */
+.touch-device .video-indicator:hover {
+    background: rgba(255, 255, 255, 0.5);
 }
 
 /* Accessibility */
@@ -860,6 +1224,19 @@ body {
         animation-iteration-count: 1 !important;
         transition-duration: 0.01ms !important;
     }
+    
+    .hero-video {
+        transition: none !important;
+    }
+    
+    .hero-title-main,
+    .hero-subtitle,
+    .hero-description,
+    #hero-cta-text,
+    .stat-number,
+    .stat-label {
+        transition: none !important;
+    }
 }
 
 /* High contrast mode */
@@ -867,5 +1244,15 @@ body {
     .feature-card,
     .testimonial-card {
         border: 2px solid #000;
+    }
+    
+    .video-indicator {
+        border: 2px solid #ffffff;
+    }
+    
+    .hero-title,
+    .hero-subtitle,
+    .hero-description {
+        text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.8);
     }
 }
