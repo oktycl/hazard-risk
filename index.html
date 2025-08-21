@@ -33,46 +33,85 @@
             });
         })();
     </script>
-    <!-- Hero Section -->
+    
+    <!-- Hero Section with Video Background -->
     <section class="hero" id="hero">
+        <!-- Video Background Container -->
+        <div class="hero-video-container">
+            <!-- Video 1 -->
+            <video class="hero-video active" autoplay muted loop playsinline>
+                <source src="videos/video1.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            
+            <!-- Video 2 -->
+            <video class="hero-video" autoplay muted loop playsinline>
+                <source src="videos/video3.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            
+            <!-- Video 3 -->
+            <video class="hero-video" autoplay muted loop playsinline>
+                <source src="videos/video2.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            
+            <!-- Video 4 -->
+            <video class="hero-video" autoplay muted loop playsinline>
+                <source src="videos/video4.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            
+            <!-- Video 5 -->
+            <video class="hero-video" autoplay muted loop playsinline>
+                <source src="videos/video5.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+
+        <!-- Video Controls (Optional) -->
+        <div class="video-controls">
+            <div class="video-indicator active" data-video="0"></div>
+            <div class="video-indicator" data-video="1"></div>
+            <div class="video-indicator" data-video="2"></div>
+            <div class="video-indicator" data-video="3"></div>
+            <div class="video-indicator" data-video="4"></div>
+        </div>
+
         <div class="container">
             <div class="hero-content">
-                <div class="hero-text">
+               <div class="hero-text">
+                    <!-- Dynamic Title - Loading texti kaldırıldı -->
                     <h1 class="hero-title">
-                        Earthquake Hazard & Risk Prediction
-                        <span class="hero-subtitle">Reimagined</span>
+                        <span class="hero-title-main" id="hero-title-main"></span>
+                        <span class="hero-subtitle" id="hero-subtitle"></span>
                     </h1>
                     
-                    <p class="hero-description">
-                        Advanced AI-powered seismic risk prediction that transforms how experts assess building vulnerability to earthquakes.
-                    </p>
+                    <!-- Dynamic Description - Loading texti kaldırıldı -->
+                    <p class="hero-description" id="hero-description"></p>
                     
                     <div class="hero-actions">
                         <button class="btn btn-primary btn-large" onclick="scrollToSection('features')">
-                            Start Assessment
-                            
+                            <span id="hero-cta-text"></span>
                         </button>
-                        
                     </div>
                     
-                    <div class="hero-stats">
-                        
+                    <!-- Dynamic Stats - Loading textleri kaldırıldı -->
+                    <div class="hero-stats" id="hero-stats">
                         <div class="stat">
-                            <div class="stat-number">3,000+</div>
-                            <div class="stat-label">Buildings Assessed</div>
+                            <div class="stat-number" id="stat1-number"></div>
+                            <div class="stat-label" id="stat1-label"></div>
                         </div>
                         <div class="stat">
-                            <div class="stat-number">100+</div>
-                            <div class="stat-label">Country Covered</div>
+                            <div class="stat-number" id="stat2-number"></div>
+                            <div class="stat-label" id="stat2-label"></div>
                         </div>
                         <div class="stat">
-                            <div class="stat-number">24/7</div>
-                            <div class="stat-label">API Availability</div>
+                            <div class="stat-number" id="stat3-number"></div>
+                            <div class="stat-label" id="stat3-label"></div>
                         </div>
                     </div>
                 </div>
-                
-                
             </div>
         </div>
     </section>
@@ -201,8 +240,9 @@
                         Powered by our Hazard & Risk Engine, the assessment is based on the FEMA P-154 Rapid Visual Screening methodology, digitally adapted to provide scalable and timely predictions.<br> 
                         Within minutes, users receive a preliminary seismic risk profile that reflects potential vulnerability in the event of a major earthquake. While not a full engineering evaluation, this lightweight and transparent approach empowers planners, insurers, and policymakers with actionable insights — especially in large-scale or data-constrained environments.
                     </p>
-                
-
+                </div>
+            </div>
+        </div>
     </section>
 
     <!-- API Integration Section -->
@@ -211,19 +251,6 @@
             <source src="videos/2.mp4" type="video/mp4">
             Your browser does not support the video tag.
         </video>
-        <!-- <div class="container">
-            <div class="api-content">
-                <div class="api-text">
-                    <h2 class="api-section-title">Integrate in Minutes</h2>
-                    <p class="api-section-description">
-                        Simple, elegant API designed for seamless integration into your existing workflows. 
-                        Start predicting earthquake risks in minutes, not months.
-                    </p>
-                     -->
-                    
-                    
-            
-
     </section>
 
     <!-- Testimonials Section -->
@@ -333,4 +360,3 @@
     
 </body>
 </html>
-
