@@ -14,7 +14,7 @@ class HeroVideoCarousel {
         
         this.duration = this.isMobileDevice ? 10000 : 12000;
         
-        // Content for each video
+        // Content for each video - 5 video için restore edildi
         this.contentData = [
             {
                 title: "Seismic Risk Predictor",
@@ -95,84 +95,17 @@ class HeroVideoCarousel {
     }
 
     preloadAndOptimizeVideos() {
+        // BASIT VERSİYON - Sadece playback rate ayarla
         this.videos.forEach((video, index) => {
-            video.addEventListener('loadstart', () => {
-                console.log(`Video ${index} loading started`);
-            });
-            
+            // Sadece hızı ayarla, başka bir şey yapma
             video.addEventListener('canplay', () => {
-                console.log(`Video ${index} can play`);
                 video.playbackRate = 0.8;
             });
-            
-            video.addEventListener('canplaythrough', () => {
-                console.log(`Video ${index} can play through`);
-            });
-            
-            video.addEventListener('error', (e) => {
-                console.error(`Video ${index} error:`, e);
-                this.handleVideoError(video, index);
-            });
-            
-            video.addEventListener('stalled', () => {
-                console.warn(`Video ${index} stalled`);
-                this.handleVideoStall(video, index);
-            });
-            
-            video.addEventListener('suspend', () => {
-                console.warn(`Video ${index} suspended`);
-            });
-            
-            video.addEventListener('waiting', () => {
-                console.warn(`Video ${index} waiting for data`);
-            });
-            
-            // Preload settings
-            video.preload = 'metadata';
-            video.muted = true;
-            video.loop = true;
-            video.playsInline = true;
-            
-            if (video.buffered && video.buffered.length > 0) {
-                console.log(`Video ${index} buffer length:`, video.buffered.length);
-            }
         });
     }
 
-    handleVideoError(video, index) {
-        console.error(`Video ${index} failed to load`);
-        
-        // Fallback: Video yerine statik görsel göster
-        const fallbackDiv = document.createElement('div');
-        fallbackDiv.className = 'video-fallback hero-video';
-        fallbackDiv.style.cssText = `
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, #1f2937 0%, #374151 100%);
-            z-index: 1;
-        `;
-        
-        video.parentNode.insertBefore(fallbackDiv, video.nextSibling);
-        video.style.display = 'none';
-    }
-
-    handleVideoStall(video, index) {
-        setTimeout(() => {
-            if (video.readyState < 3) {
-                console.log(`Attempting to restart stalled video ${index}`);
-                video.load();
-                
-                if (index === this.currentIndex && video.classList.contains('active')) {
-                    video.play().catch(e => {
-                        console.error('Failed to restart video:', e);
-                    });
-                }
-            }
-        }, 1000);
-    }
+    // Bu metodları kaldır - gereksiz karmaşıklık
+    // handleVideoError ve handleVideoStall metodları kaldırıldı
 
     findTextElements() {
         this.textElements = {
@@ -295,24 +228,9 @@ class HeroVideoCarousel {
     }
 
     optimizeForMobile() {
+        // SADECE PLAYBACK RATE AYARLA - Başka hiçbir şeyi değiştirme
         this.videos.forEach(video => {
-            video.preload = 'none';
             video.playbackRate = 0.9;
-            video.controls = false;
-            video.setAttribute('webkit-playsinline', 'true');
-            video.setAttribute('playsinline', 'true');
-            
-            video.addEventListener('progress', () => {
-                if (video.buffered.length > 0) {
-                    const bufferedEnd = video.buffered.end(video.buffered.length - 1);
-                    const duration = video.duration;
-                    const bufferedPercent = (bufferedEnd / duration) * 100;
-                    
-                    if (bufferedPercent > 50) {
-                        video.preload = 'none';
-                    }
-                }
-            });
         });
     }
 
@@ -429,7 +347,6 @@ class HeroVideoCarousel {
                 nextVideo.classList.add('active');
                 nextVideo.play().catch(e => {
                     console.error('Failed to play new video:', e);
-                    this.handleVideoError(nextVideo, index);
                 });
             }
             this.indicators[this.currentIndex].classList.add('active');
