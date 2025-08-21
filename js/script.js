@@ -1,4 +1,4 @@
-// Video Carousel with Dynamic Text Content System - COMPLETE FINAL VERSION
+// Video Carousel with Performance Optimizations - LOADING SKELETON'LARI KALDIRILDI
 
 class HeroVideoCarousel {
     constructor() {
@@ -6,17 +6,16 @@ class HeroVideoCarousel {
         this.indicators = document.querySelectorAll('.video-indicator');
         this.currentIndex = 0;
         this.interval = null;
+        this.isTransitioning = false;
         
         // Mobile detection and optimizations
         this.isMobileDevice = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
         this.isLowPowerMode = this.detectLowPowerMode();
         
-        // Mobile'da daha uzun süre, desktop'ta daha kısa
-        this.duration = this.isMobileDevice ? 10000 : 8000;
+        this.duration = this.isMobileDevice ? 10000 : 12000;
         
-        // Content for each video - VİRGÜLSÜZ FORMAT
+        // Content for each video
         this.contentData = [
-            // Video 1 Content - Stats var
             {
                 title: "Seismic Risk Predictor",
                 subtitle: "",
@@ -28,19 +27,17 @@ class HeroVideoCarousel {
                     { number: "24/7", label: "API Availability" }
                 ]
             },
-            // Video 2 Content - Stats boş
             {
                 title: "Hazard Maps",
                 subtitle: "",
                 description: "Seismic hazard maps for buildings and their contents, integrating earthquake hazard data with site-specific soil conditions for use by insurance companies.",
-                ctaText: null, // CTA gizli
+                ctaText: null,
                 stats: [
                     { number: "50+", label: "City Mapped" },
                     { number: "100+", label: "Countries Covered" },
                     { number: "24/7", label: "API Availability" }
                 ]
             },
-            // Video 3 Content - Stats var
             {
                 title: "Regional Risk Maps",
                 subtitle: "",
@@ -52,15 +49,13 @@ class HeroVideoCarousel {
                     { number: "24/7", label: "API Availability" }
                 ]
             },
-            // Video 4 Content - Stats boş array
             {
                 title: "Financial Loss & Downtime Prediction",
                 subtitle: "",
                 description: "Quick estimates of financial loss and downtime from minimal inputs — giving insurers, financiers, and asset managers actionable awareness, even without full building data.",
-                ctaText: null, // CTA gizli
-                stats: null // Stats gizli (boş array)
+                ctaText: null,
+                stats: null
             },
-            // Video 5 Content - Stats var
             {
                 title: "New Investments Tool",
                 subtitle: "",
@@ -74,33 +69,112 @@ class HeroVideoCarousel {
     }
 
     init() {
-        // İLK ÖNCE DOM elementlerini bul
         this.findTextElements();
         
-        // İLK YÜKLEMEDEKİ İÇERİĞİ HEMEN AYARLA
+        // HEMEN İÇERİK YÜKLENİR - Loading state yok
         this.setInitialContent();
+        
+        // Video preload ve optimizasyon
+        this.preloadAndOptimizeVideos();
         
         // Mobile optimizations
         if (this.isMobileDevice) {
             this.optimizeForMobile();
         }
         
-        // Sonra event listener'ları ekle
         this.addEventListeners();
 
-        // Auto rotation'ı başlat (biraz gecikme ile)
+        // Auto rotation başlat
         setTimeout(() => {
             if (!this.isLowPowerMode) {
                 this.startAutoRotation();
             }
-        }, 1000);
+        }, 2000);
 
-        // Battery API for mobile optimization
         this.handleBatteryStatus();
     }
 
+    preloadAndOptimizeVideos() {
+        this.videos.forEach((video, index) => {
+            video.addEventListener('loadstart', () => {
+                console.log(`Video ${index} loading started`);
+            });
+            
+            video.addEventListener('canplay', () => {
+                console.log(`Video ${index} can play`);
+                video.playbackRate = 0.8;
+            });
+            
+            video.addEventListener('canplaythrough', () => {
+                console.log(`Video ${index} can play through`);
+            });
+            
+            video.addEventListener('error', (e) => {
+                console.error(`Video ${index} error:`, e);
+                this.handleVideoError(video, index);
+            });
+            
+            video.addEventListener('stalled', () => {
+                console.warn(`Video ${index} stalled`);
+                this.handleVideoStall(video, index);
+            });
+            
+            video.addEventListener('suspend', () => {
+                console.warn(`Video ${index} suspended`);
+            });
+            
+            video.addEventListener('waiting', () => {
+                console.warn(`Video ${index} waiting for data`);
+            });
+            
+            // Preload settings
+            video.preload = 'metadata';
+            video.muted = true;
+            video.loop = true;
+            video.playsInline = true;
+            
+            if (video.buffered && video.buffered.length > 0) {
+                console.log(`Video ${index} buffer length:`, video.buffered.length);
+            }
+        });
+    }
+
+    handleVideoError(video, index) {
+        console.error(`Video ${index} failed to load`);
+        
+        // Fallback: Video yerine statik görsel göster
+        const fallbackDiv = document.createElement('div');
+        fallbackDiv.className = 'video-fallback hero-video';
+        fallbackDiv.style.cssText = `
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #1f2937 0%, #374151 100%);
+            z-index: 1;
+        `;
+        
+        video.parentNode.insertBefore(fallbackDiv, video.nextSibling);
+        video.style.display = 'none';
+    }
+
+    handleVideoStall(video, index) {
+        setTimeout(() => {
+            if (video.readyState < 3) {
+                console.log(`Attempting to restart stalled video ${index}`);
+                video.load();
+                
+                if (index === this.currentIndex && video.classList.contains('active')) {
+                    video.play().catch(e => {
+                        console.error('Failed to restart video:', e);
+                    });
+                }
+            }
+        }, 1000);
+    }
+
     findTextElements() {
-        // DOM elements for text updates
         this.textElements = {
             title: document.getElementById('hero-title-main'),
             subtitle: document.getElementById('hero-subtitle'),
@@ -114,17 +188,16 @@ class HeroVideoCarousel {
             stat3Label: document.getElementById('stat3-label')
         };
 
-        // CTA Button'u bul
         this.ctaButton = document.querySelector('.hero-actions');
     }
 
     setInitialContent() {
-        // İlk video (index 0) içeriğini hemen göster
+        // İlk video içeriğini HEMEN yükle - Loading state yok
         const initialContent = this.contentData[0];
         
         console.log('Loading initial content:', initialContent);
         
-        // Tüm text elementlerini kontrol et ve güncelle
+        // Direkt olarak content'i yükle
         if (this.textElements.title) {
             this.textElements.title.textContent = initialContent.title;
         }
@@ -135,48 +208,36 @@ class HeroVideoCarousel {
             this.textElements.description.textContent = initialContent.description;
         }
         
-        // İlk CTA durumunu ayarla
+        // CTA'yı ayarla
         this.updateCTA(initialContent.ctaText);
         
-        // Stats'ları güncelle - FORMATLANMIŞ ŞEKİLDE
+        // Stats'ları ayarla
         this.updateStatsVisibility(initialContent.stats);
-        
-        // Content yüklendikten sonra loading class'ını kaldır
-        setTimeout(() => {
-            document.body.classList.add('content-loaded');
-        }, 500);
         
         console.log('Initial content loaded for video 0');
     }
 
-    // Stats görünürlüğünü kontrol et
     updateStatsVisibility(stats) {
         const statsContainer = document.querySelector('.hero-stats');
         
         if (!stats || stats.length === 0) {
-            // Stats'ları gizle
             if (statsContainer) {
                 statsContainer.style.display = 'none';
                 statsContainer.classList.add('stats-hidden');
-                console.log('Stats hidden');
             }
         } else {
-            // Stats'ları göster
             if (statsContainer) {
                 statsContainer.style.display = 'grid';
                 statsContainer.classList.remove('stats-hidden');
-                console.log('Stats visible');
             }
             
-            // Stats değerlerini güncelle
+            // Stats değerlerini direkt ayarla - animasyon yok
             stats.forEach((stat, index) => {
                 const numberElement = this.textElements[`stat${index + 1}Number`];
                 const labelElement = this.textElements[`stat${index + 1}Label`];
                 
                 if (numberElement) {
-                    // Sayıyı formatla
                     const formattedNumber = this.formatStatNumber(stat.number);
-                    console.log(`Formatting stat ${index + 1}: ${stat.number} -> ${formattedNumber}`);
                     numberElement.textContent = formattedNumber;
                 }
                 if (labelElement) {
@@ -186,41 +247,26 @@ class HeroVideoCarousel {
         }
     }
 
-    // Stat sayılarını formatla - TÜRKÇE FORMAT
     formatStatNumber(statValue) {
-        console.log('formatStatNumber input:', statValue);
-        
-        // Özel durumlar - formatlanmaması gereken değerler
         if (statValue === "24/7" || statValue === "Real-time" || statValue === "Certified" || 
-            statValue.includes("/") || statValue.includes("%") || 
-            statValue === "Real-time" || statValue === "Certified") {
-            console.log('formatStatNumber special case output:', statValue);
+            statValue.includes("/") || statValue.includes("%")) {
             return statValue;
         }
         
-        // Virgül ve noktaları temizle
         const cleanValue = statValue.toString().replace(/[,]/g, '');
         const isNumeric = /^\d+/.test(cleanValue);
         
         if (isNumeric) {
             const number = parseInt(cleanValue.replace(/[^\d]/g, ''));
             const suffix = cleanValue.replace(/^\d+/, '');
-            
-            // Türkçe format kullan - sadece 999'dan büyükse nokta ekle
             const formatted = number >= 1000 ? this.formatNumber(number) : number.toString();
-            const result = formatted + suffix;
-            console.log('formatStatNumber output:', result);
-            return result;
+            return formatted + suffix;
         } else {
-            // Sayısal olmayan değerler için olduğu gibi döndür
-            console.log('formatStatNumber non-numeric output:', statValue);
             return statValue;
         }
     }
 
-    // Sayı formatlama fonksiyonu - Türkçe format (3.000)
     formatNumber(number) {
-        // Sadece 1000 ve üzeri sayılarda nokta ekle
         if (number >= 1000) {
             return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
         }
@@ -228,55 +274,57 @@ class HeroVideoCarousel {
     }
 
     updateCTA(ctaText) {
-        const shouldHide = !ctaText || ctaText === "" || ctaText === "HIDE" || ctaText === null;
+        const shouldHide = !ctaText || ctaText === "" || ctaText === null;
         
         if (shouldHide) {
-            // CTA'yı gizle
             if (this.ctaButton) {
                 this.ctaButton.classList.add('cta-hidden');
                 this.ctaButton.classList.remove('cta-visible');
-                // Body'ye class ekle (stats margin için)
                 document.body.classList.add('no-cta');
             }
         } else {
-            // CTA'yı göster
             if (this.textElements.ctaText) {
                 this.textElements.ctaText.textContent = ctaText;
             }
             if (this.ctaButton) {
                 this.ctaButton.classList.add('cta-visible');
                 this.ctaButton.classList.remove('cta-hidden');
-                // Body'den class kaldır
                 document.body.classList.remove('no-cta');
             }
         }
     }
 
     optimizeForMobile() {
-        // Video kalitesini mobile için optimize et
         this.videos.forEach(video => {
-            // Preload sadece metadata
-            video.preload = 'metadata';
-            
-            // Mobile'da daha düşük playback rate
+            video.preload = 'none';
             video.playbackRate = 0.9;
-            
-            // Touch cihazlarda controls'u gizle
             video.controls = false;
             video.setAttribute('webkit-playsinline', 'true');
             video.setAttribute('playsinline', 'true');
+            
+            video.addEventListener('progress', () => {
+                if (video.buffered.length > 0) {
+                    const bufferedEnd = video.buffered.end(video.buffered.length - 1);
+                    const duration = video.duration;
+                    const bufferedPercent = (bufferedEnd / duration) * 100;
+                    
+                    if (bufferedPercent > 50) {
+                        video.preload = 'none';
+                    }
+                }
+            });
         });
     }
 
     addEventListeners() {
-        // Add click events to indicators
         this.indicators.forEach((indicator, index) => {
             indicator.addEventListener('click', () => {
-                this.goToVideo(index);
+                if (!this.isTransitioning) {
+                    this.goToVideo(index);
+                }
             });
         });
 
-        // Pause on hover (desktop only)
         if (!this.isMobileDevice) {
             const heroSection = document.querySelector('.hero');
             if (heroSection) {
@@ -290,18 +338,35 @@ class HeroVideoCarousel {
             }
         }
 
-        // Handle visibility change
         document.addEventListener('visibilitychange', () => {
             if (document.hidden) {
                 this.pauseAutoRotation();
+                this.pauseAllVideos();
             } else if (!this.isLowPowerMode) {
                 this.startAutoRotation();
+                this.resumeCurrentVideo();
             }
         });
 
-        // Add touch events for mobile
         if (this.isMobileDevice) {
             this.addTouchEvents();
+        }
+    }
+
+    pauseAllVideos() {
+        this.videos.forEach(video => {
+            if (!video.paused) {
+                video.pause();
+            }
+        });
+    }
+
+    resumeCurrentVideo() {
+        const currentVideo = this.videos[this.currentIndex];
+        if (currentVideo && currentVideo.paused) {
+            currentVideo.play().catch(e => {
+                console.error('Failed to resume video:', e);
+            });
         }
     }
 
@@ -318,20 +383,18 @@ class HeroVideoCarousel {
 
         heroSection.addEventListener('touchend', (e) => {
             touchEndX = e.changedTouches[0].screenX;
-            this.handleSwipe();
+            this.handleSwipe(touchStartX, touchEndX);
         });
     }
 
-    handleSwipe() {
+    handleSwipe(startX, endX) {
         const swipeThreshold = 50;
-        const difference = touchStartX - touchEndX;
+        const difference = startX - endX;
 
-        if (Math.abs(difference) > swipeThreshold) {
+        if (Math.abs(difference) > swipeThreshold && !this.isTransitioning) {
             if (difference > 0) {
-                // Sola swipe - sonraki video
                 this.nextVideo();
             } else {
-                // Sağa swipe - önceki video
                 this.previousVideo();
             }
         }
@@ -343,27 +406,39 @@ class HeroVideoCarousel {
     }
 
     goToVideo(index) {
-        if (index === this.currentIndex) return;
+        if (index === this.currentIndex || this.isTransitioning) return;
 
+        this.isTransitioning = true;
+        
         console.log(`Switching from video ${this.currentIndex} to video ${index}`);
 
-        // Start text transition
         this.updateContent(index);
 
-        // Remove active class from current video and indicator
-        this.videos[this.currentIndex].classList.remove('active');
+        const currentVideo = this.videos[this.currentIndex];
+        const nextVideo = this.videos[index];
+        
+        if (currentVideo) {
+            currentVideo.classList.remove('active');
+        }
+        
         this.indicators[this.currentIndex].classList.remove('active');
-
-        // Update index
         this.currentIndex = index;
 
-        // Add active class to new video and indicator with delay
         setTimeout(() => {
-            this.videos[this.currentIndex].classList.add('active');
+            if (nextVideo) {
+                nextVideo.classList.add('active');
+                nextVideo.play().catch(e => {
+                    console.error('Failed to play new video:', e);
+                    this.handleVideoError(nextVideo, index);
+                });
+            }
             this.indicators[this.currentIndex].classList.add('active');
+            
+            setTimeout(() => {
+                this.isTransitioning = false;
+            }, 500);
         }, 400);
 
-        // Restart auto rotation
         this.restartAutoRotation();
     }
 
@@ -375,14 +450,9 @@ class HeroVideoCarousel {
             return;
         }
         
-        console.log('Updating content for video', newIndex, ':', newContent);
-        
-        // Phase 1: Fade out current content
         this.fadeOutContent();
         
-        // Phase 2: Update content and fade in (after 400ms)
         setTimeout(() => {
-            // Update text content
             if (this.textElements.title) {
                 this.textElements.title.textContent = newContent.title;
             }
@@ -393,19 +463,13 @@ class HeroVideoCarousel {
                 this.textElements.description.textContent = newContent.description;
             }
             
-            // CTA kontrolü - varsa göster, yoksa gizle
             this.updateCTA(newContent.ctaText);
-            
-            // Update stats with animation
             this.updateStats(newContent.stats);
-            
-            // Fade in new content
             this.fadeInContent();
         }, 400);
     }
 
     fadeOutContent() {
-        // Fade out text elements
         if (this.textElements.title) {
             this.textElements.title.classList.add('text-fade-out');
         }
@@ -419,19 +483,16 @@ class HeroVideoCarousel {
             this.textElements.ctaText.classList.add('text-scale-out');
         }
         
-        // CTA'yı da fade out yap
         if (this.ctaButton) {
             this.ctaButton.classList.add('transitioning');
         }
         
-        // Fade out stats
         document.querySelectorAll('.stat').forEach(stat => {
             stat.classList.add('stat-updating');
         });
     }
 
     fadeInContent() {
-        // Remove fade out classes and add fade in
         if (this.textElements.title) {
             this.textElements.title.classList.remove('text-fade-out');
             this.textElements.title.classList.add('text-fade-in');
@@ -452,42 +513,34 @@ class HeroVideoCarousel {
             this.textElements.ctaText.classList.add('text-scale-in');
         }
         
-        // CTA transition'ı temizle
         setTimeout(() => {
             if (this.ctaButton) {
                 this.ctaButton.classList.remove('transitioning');
             }
         }, 500);
         
-        // Clean up animation classes after transition
         setTimeout(() => {
             this.cleanupAnimationClasses();
         }, 800);
     }
 
     updateStats(newStats) {
-        console.log('Updating stats:', newStats);
-        
         const statsContainer = document.querySelector('.hero-stats');
         
         if (!newStats || newStats.length === 0) {
-            // Stats'ları gizle
             if (statsContainer) {
                 statsContainer.style.display = 'none';
                 statsContainer.classList.add('stats-hidden');
-                console.log('Stats hidden during update');
             }
             return;
         }
         
-        // Stats'ları göster
         if (statsContainer) {
             statsContainer.style.display = 'grid';
             statsContainer.classList.remove('stats-hidden');
-            console.log('Stats visible during update');
         }
         
-        // Update stats with counter animation
+        // Stats değerlerini animasyonlu güncelle
         newStats.forEach((stat, index) => {
             const numberElement = this.textElements[`stat${index + 1}Number`];
             const labelElement = this.textElements[`stat${index + 1}Label`];
@@ -497,13 +550,10 @@ class HeroVideoCarousel {
             }
             
             if (numberElement) {
-                console.log(`Animating stat ${index + 1}: ${stat.number}`);
-                // Animasyonlu güncelleme - formatlanmış
                 this.animateNumber(numberElement, stat.number);
             }
         });
         
-        // Remove stat-updating class
         setTimeout(() => {
             document.querySelectorAll('.stat').forEach(stat => {
                 stat.classList.remove('stat-updating');
@@ -512,28 +562,21 @@ class HeroVideoCarousel {
     }
 
     animateNumber(element, targetValue) {
-        console.log('animateNumber called with:', targetValue);
-        
-        // Özel durumlar - animasyon yapılmaması gereken değerler
         if (targetValue === "24/7" || targetValue === "Real-time" || targetValue === "Certified" || 
             targetValue.includes("/") || targetValue.includes("%") || 
             typeof targetValue === "string" && !/^\d+/.test(targetValue)) {
-            console.log('animateNumber special case, setting directly:', targetValue);
             element.textContent = targetValue;
             return;
         }
         
-        // Önce sayıyı temizle - virgül ve noktaları kaldır
         const cleanValue = targetValue.toString().replace(/[,\.]/g, '');
         const isNumeric = /^\d+/.test(cleanValue);
         
         if (isNumeric) {
             const target = parseInt(cleanValue.replace(/[^\d]/g, ''));
-            const suffix = targetValue.replace(/^\d+[,\.]?[\d,\.]*/g, ''); // Sayısal kısmı temizle
+            const suffix = targetValue.replace(/^\d+[,\.]?[\d,\.]*/g, '');
             let current = 0;
             const increment = target / 20;
-            
-            console.log(`Animating from 0 to ${target} with suffix "${suffix}"`);
             
             const timer = setInterval(() => {
                 current += increment;
@@ -542,18 +585,11 @@ class HeroVideoCarousel {
                     clearInterval(timer);
                 }
                 
-                // Türkçe/Avrupa formatında sayı formatla
                 const formattedNumber = this.formatNumber(Math.floor(current));
                 const result = formattedNumber + suffix;
                 element.textContent = result;
-                
-                if (current >= target) {
-                    console.log(`Animation complete: ${result}`);
-                }
             }, 30);
         } else {
-            // Sayısal değilse olduğu gibi bırak
-            console.log('Non-numeric value, setting directly:', targetValue);
             element.textContent = targetValue;
         }
     }
@@ -576,9 +612,11 @@ class HeroVideoCarousel {
     }
 
     startAutoRotation() {
-        if (!this.isLowPowerMode) {
+        if (!this.isLowPowerMode && !this.interval) {
             this.interval = setInterval(() => {
-                this.nextVideo();
+                if (!this.isTransitioning) {
+                    this.nextVideo();
+                }
             }, this.duration);
         }
     }
@@ -592,16 +630,16 @@ class HeroVideoCarousel {
 
     restartAutoRotation() {
         this.pauseAutoRotation();
-        this.startAutoRotation();
+        setTimeout(() => {
+            this.startAutoRotation();
+        }, 1000);
     }
 
     detectLowPowerMode() {
-        // iOS Low Power Mode detection
         if (navigator.hardwareConcurrency && navigator.hardwareConcurrency < 4) {
             return true;
         }
         
-        // Connection speed check
         if (navigator.connection && navigator.connection.effectiveType === 'slow-2g') {
             return true;
         }
@@ -612,12 +650,10 @@ class HeroVideoCarousel {
     handleBatteryStatus() {
         if ('getBattery' in navigator) {
             navigator.getBattery().then((battery) => {
-                // Batarya %20'nin altındaysa video süresini uzat
                 if (battery.level < 0.2) {
-                    this.duration = 15000; // 15 saniye
+                    this.duration = 15000;
                 }
                 
-                // Şarj oluyorsa normal süre
                 battery.addEventListener('chargingchange', () => {
                     if (battery.charging) {
                         this.duration = this.isMobileDevice ? 10000 : 8000;
@@ -630,10 +666,9 @@ class HeroVideoCarousel {
     }
 }
 
-// DOM Elements (sadece header ile ilgili olmayanlar)
+// Utility functions
 const emailInput = document.getElementById('email-input');
 
-// Email handling fonksiyonları
 function handleGetStarted() {
     const email = emailInput ? emailInput.value.trim() : '';
     
@@ -649,19 +684,16 @@ function handleGetStarted() {
         return;
     }
     
-    // Here you would typically send the email to your backend
     console.log('Email submitted:', email);
     alert('Thank you for your interest! We\'ll be in touch soon.');
     if (emailInput) emailInput.value = '';
 }
 
-// Email validation
 function isValidEmail(email) {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
 }
 
-// Utility function for smooth scrolling
 function scrollToSection(sectionId) {
     const section = document.getElementById(sectionId);
     if (section) {
@@ -672,7 +704,6 @@ function scrollToSection(sectionId) {
     }
 }
 
-// Handle Enter key in email input
 if (emailInput) {
     emailInput.addEventListener('keypress', (e) => {
         if (e.key === 'Enter') {
@@ -681,294 +712,17 @@ if (emailInput) {
     });
 }
 
-// Intersection Observer for animations
-const observerOptions = {
-    threshold: 0.1,
-    rootMargin: '0px 0px -50px 0px'
-};
-
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.style.opacity = '1';
-            entry.target.style.transform = 'translateY(0)';
-        }
-    });
-}, observerOptions);
-
-// Counter animation for stats - TÜRKÇE FORMAT
-function animateCounters() {
-    const counters = document.querySelectorAll('.stat-number');
-    
-    counters.forEach(counter => {
-        const target = counter.textContent;
-        
-        // Özel durumlar - animasyon yapılmaması gereken değerler
-        if (target === "24/7" || target === "Real-time" || target === "Certified" || 
-            target.includes("/") || target === "Real-time" || target === "Certified") {
-            console.log('animateCounters: Special case, skipping animation for:', target);
-            return;
-        }
-        
-        const isPercentage = target.includes('%');
-        const isPlus = target.includes('+');
-        
-        let numericValue;
-        if (isPercentage) {
-            numericValue = parseFloat(target.replace('%', ''));
-        } else if (isPlus) {
-            numericValue = parseInt(target.replace(/[+,.]/g, '')); // Nokta ve virgülü kaldır
-        } else {
-            numericValue = parseInt(target.replace(/[,.]/g, '')); // Nokta ve virgülü kaldır
-        }
-        
-        if (isNaN(numericValue)) return;
-        
-        let current = 0;
-        const increment = numericValue / 50;
-        const timer = setInterval(() => {
-            current += increment;
-            if (current >= numericValue) {
-                current = numericValue;
-                clearInterval(timer);
-            }
-            
-            let displayValue;
-            if (isPercentage) {
-                displayValue = current.toFixed(1) + '%';
-            } else if (isPlus) {
-                // Türkçe format kullan (nokta ile ayır)
-                displayValue = formatNumberTurkish(Math.floor(current)) + '+';
-            } else {
-                displayValue = formatNumberTurkish(Math.floor(current));
-            }
-            
-            counter.textContent = displayValue;
-        }, 50);
-    });
-}
-
-// Global sayı formatlama fonksiyonu - Türkçe format
-function formatNumberTurkish(number) {
-    // Sadece 1000 ve üzeri sayılarda nokta ekle
-    if (number >= 1000) {
-        return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-    }
-    return number.toString();
-}
-
-// Intersection Observer for performance (video play/pause)
-const videoObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        const videos = entry.target.querySelectorAll('video');
-        if (entry.isIntersecting) {
-            videos.forEach(video => {
-                // Mobile'da video oynatmadan önce user interaction bekle
-                if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
-                    video.muted = true;
-                }
-                video.play().catch(e => {
-                    console.log('Video autoplay blocked:', e);
-                });
-            });
-        } else {
-            videos.forEach(video => {
-                video.pause();
-            });
-        }
-    });
-}, { 
-    threshold: window.innerWidth < 768 ? 0.3 : 0.1 // Mobile'da daha yüksek threshold
-});
-
-// Trigger counter animation when hero section is visible
-const heroObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            animateCounters();
-            heroObserver.unobserve(entry.target);
-        }
-    });
-}, { threshold: 0.5 });
-
-// Smooth reveal animation for code block
-const codeBlockObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            const codeBlock = entry.target;
-            const lines = codeBlock.querySelectorAll('code');
-            
-            lines.forEach((line, index) => {
-                setTimeout(() => {
-                    line.style.opacity = '1';
-                    line.style.transform = 'translateX(0)';
-                }, index * 100);
-            });
-            
-            codeBlockObserver.unobserve(entry.target);
-        }
-    });
-}, { threshold: 0.3 });
-
-// Touch device detection için utility
-function isTouchDevice() {
-    return (('ontouchstart' in window) ||
-           (navigator.maxTouchPoints > 0) ||
-           (navigator.msMaxTouchPoints > 0));
-}
-
-// Add hover effects to feature cards
-function initFeatureCardEffects() {
-    const featureCards = document.querySelectorAll('.feature-card');
-    
-    featureCards.forEach(card => {
-        card.addEventListener('mouseenter', () => {
-            card.style.transform = 'translateY(-8px) scale(1.02)';
-        });
-        
-        card.addEventListener('mouseleave', () => {
-            card.style.transform = 'translateY(0) scale(1)';
-        });
-    });
-}
-
-// Add parallax effect to hero section
-function initParallaxEffect() {
-    window.addEventListener('scroll', () => {
-        const scrolled = window.pageYOffset;
-        const heroVisual = document.querySelector('.hero-visual');
-        
-        if (heroVisual && scrolled < window.innerHeight) {
-            const rate = scrolled * -0.5;
-            heroVisual.style.transform = `translateY(${rate}px)`;
-        }
-    });
-}
-
-// Add loading state to buttons
-function addLoadingState(button, duration = 2000) {
-    const originalText = button.textContent;
-    button.textContent = 'Loading...';
-    button.disabled = true;
-    button.style.opacity = '0.7';
-    
-    setTimeout(() => {
-        button.textContent = originalText;
-        button.disabled = false;
-        button.style.opacity = '1';
-    }, duration);
-}
-
-// Add click handlers for CTA buttons with ripple effect
-function initRippleEffect() {
-    const ctaButtons = document.querySelectorAll('.btn-primary');
-    
-    ctaButtons.forEach(button => {
-        button.addEventListener('click', (e) => {
-            // Add ripple effect
-            const ripple = document.createElement('span');
-            const rect = button.getBoundingClientRect();
-            const size = Math.max(rect.width, rect.height);
-            const x = e.clientX - rect.left - size / 2;
-            const y = e.clientY - rect.top - size / 2;
-            
-            ripple.style.width = ripple.style.height = size + 'px';
-            ripple.style.left = x + 'px';
-            ripple.style.top = y + 'px';
-            ripple.classList.add('ripple');
-            
-            button.appendChild(ripple);
-            
-            setTimeout(() => {
-                ripple.remove();
-            }, 600);
-        });
-    });
-}
-
-// Mobile-specific initialization
-function initMobileOptimizations() {
-    if (isTouchDevice()) {
-        document.body.classList.add('touch-device');
-        
-        // Mobile'da click delay'i kaldır
-        let lastTouchEnd = 0;
-        document.addEventListener('touchend', function (event) {
-            const now = (new Date()).getTime();
-            if (now - lastTouchEnd <= 300) {
-                event.preventDefault();
-            }
-            lastTouchEnd = now;
-        }, false);
-    }
-}
-
-// Initialize all observers and effects
-function initObservers() {
-    // Observe elements for animation
-    const animatedElements = document.querySelectorAll('.feature-card, .testimonial-card, .section-header');
-    
-    animatedElements.forEach(el => {
-        el.style.opacity = '0';
-        el.style.transform = 'translateY(30px)';
-        el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-        observer.observe(el);
-    });
-    
-    // Observe hero section for counter animation and video control
-    const heroSection = document.getElementById('hero');
-    if (heroSection) {
-        heroObserver.observe(heroSection);
-        videoObserver.observe(heroSection);
-    }
-    
-    // Initialize code block animations
-    const codeBlocks = document.querySelectorAll('.code-block');
-    codeBlocks.forEach(block => {
-        const lines = block.querySelectorAll('code');
-        lines.forEach(line => {
-            line.style.opacity = '0';
-            line.style.transform = 'translateX(-20px)';
-            line.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-        });
-        codeBlockObserver.observe(block);
-    });
-}
-
-// Performance optimization: Debounce function
-function debounce(func, wait) {
-    let timeout;
-    return function executedFunction(...args) {
-        const later = () => {
-            clearTimeout(timeout);
-            func(...args);
-        };
-        clearTimeout(timeout);
-        timeout = setTimeout(later, wait);
-    };
-}
-
-// Main initialization function
+// Performance optimized initialization
 function initializeApp() {
     console.log('DOM loaded, initializing application...');
     
-    // Initialize video carousel
+    // Video carousel'ı hemen başlat - Loading delay yok
     new HeroVideoCarousel();
-    
-    // Initialize all other components
-    initObservers();
-    initFeatureCardEffects();
-    initParallaxEffect();
-    initRippleEffect();
-    initMobileOptimizations();
     
     console.log('Application initialized successfully');
 }
 
-// DOM yüklenir yüklenmez hemen başlat
-document.addEventListener('DOMContentLoaded', initializeApp);
-
-// Fallback initialization (eğer DOMContentLoaded kaçırılırsa)
+// DOM hazır olduğunda hemen başlat
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initializeApp);
 } else {

@@ -1,3 +1,5 @@
+/* CSS'ten Loading Skeleton'ları Tamamen Kaldırıldı */
+
 /* Reset and Base Styles */
 * {
     margin: 0;
@@ -142,6 +144,8 @@ body {
     width: 100%;
     height: 100%;
     z-index: 1;
+    aspect-ratio: 16/9;
+    min-height: 100vh;
 }
 
 .hero-video {
@@ -157,42 +161,15 @@ body {
     opacity: 0;
     transition: opacity 1.5s ease-in-out;
     will-change: opacity;
+    max-width: none;
+    max-height: none;
 }
 
 .hero-video.active {
     opacity: 0.9;
 }
 
-/* Loading shimmer for video container */
-.hero-video-container::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(
-        45deg,
-        rgba(255,255,255,0.1) 0%,
-        rgba(255,255,255,0.2) 50%,
-        rgba(255,255,255,0.1) 100%
-    );
-    background-size: 200% 200%;
-    animation: shimmer 3s ease-in-out infinite;
-    z-index: 0;
-}
-
-@keyframes shimmer {
-    0% { background-position: -200% -200%; }
-    50% { background-position: 200% 200%; }
-    100% { background-position: -200% -200%; }
-}
-
-/* Video yüklendiğinde shimmer'ı gizle */
-.hero-video.active ~ .hero-video-container::before {
-    opacity: 0;
-}
-
+/* Loading shimmer - KALDIRILDı */
 /* Overlay for better text readability */
 .hero::before {
     content: "";
@@ -229,6 +206,8 @@ body {
     align-items: center;
     padding-top: 8rem;
     min-height: 100vh;
+    grid-template-rows: minmax(auto, 1fr);
+    contain: layout style;
 }
 
 .hero-title {
@@ -238,6 +217,8 @@ body {
     margin-bottom: 1.5rem;
     color: #ffffff;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    min-height: 4.2rem;
+    contain: layout;
 }
 
 .hero-title-main,
@@ -259,6 +240,8 @@ body {
     line-height: 1.6;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
     transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    min-height: 3.2rem;
+    contain: layout;
 }
 
 /* CTA Section with conditional display */
@@ -268,6 +251,8 @@ body {
     margin-bottom: 3rem;
     transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     overflow: hidden;
+    min-height: 3.5rem;
+    contain: layout;
 }
 
 /* CTA visible state */
@@ -285,6 +270,7 @@ body {
     max-height: 0;
     margin-bottom: 0;
     pointer-events: none;
+    min-height: 0;
 }
 
 /* Smooth height transition */
@@ -317,6 +303,8 @@ body {
     grid-template-columns: repeat(4, 1fr);
     gap: 2rem;
     transition: opacity 0.5s ease, transform 0.5s ease;
+    min-height: 4rem;
+    contain: layout;
 }
 
 /* Stats hidden state */
@@ -324,6 +312,8 @@ body {
     opacity: 0;
     transform: translateY(20px);
     pointer-events: none;
+    display: grid;
+    visibility: hidden;
 }
 
 /* Stats visible state */
@@ -344,6 +334,11 @@ body {
 
 .stat {
     text-align: center;
+    min-height: 4rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    contain: layout;
 }
 
 .stat-number,
@@ -357,12 +352,18 @@ body {
     color: #ffffff;
     margin-bottom: 0.25rem;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    min-height: 2.4rem;
+    line-height: 1.2;
+    contain: layout;
 }
 
 .stat-label {
     font-size: 0.875rem;
     color: #e5e7eb;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    min-height: 1.05rem;
+    line-height: 1.2;
+    contain: layout;
 }
 
 /* Stats updating animation */
@@ -383,6 +384,9 @@ body {
     z-index: 3;
     display: flex;
     gap: 0.5rem;
+    min-width: 6rem;
+    min-height: 1rem;
+    contain: layout;
 }
 
 .video-indicator {
@@ -392,6 +396,8 @@ body {
     background: rgba(255, 255, 255, 0.5);
     cursor: pointer;
     transition: all 0.3s ease;
+    flex-shrink: 0;
+    contain: layout;
 }
 
 .video-indicator.active {
@@ -407,77 +413,47 @@ body {
 .text-fade-out {
     opacity: 0;
     transform: translateY(-20px);
+    contain: layout;
 }
 
 .text-fade-in {
     opacity: 1;
     transform: translateY(0);
+    contain: layout;
 }
 
 .text-slide-out-left {
     opacity: 0;
     transform: translateX(-50px);
+    contain: layout;
 }
 
 .text-slide-out-right {
     opacity: 0;
     transform: translateX(50px);
+    contain: layout;
 }
 
 .text-slide-in {
     opacity: 1;
     transform: translateX(0);
+    contain: layout;
 }
 
 .text-scale-out {
     opacity: 0;
     transform: scale(0.8);
+    contain: layout;
 }
 
 .text-scale-in {
     opacity: 1;
     transform: scale(1);
+    contain: layout;
 }
 
-/* Loading state styling */
-.hero-title-main:empty,
-.hero-subtitle:empty,
-.hero-description:empty,
-#hero-cta-text:empty,
-.stat-number:empty,
-.stat-label:empty {
-    background: linear-gradient(90deg, #e5e7eb 25%, #f3f4f6 50%, #e5e7eb 75%);
-    background-size: 200% 100%;
-    animation: loading-shimmer 1.5s infinite;
-    border-radius: 4px;
-    min-height: 1.2em;
-    display: inline-block;
-    min-width: 150px;
-}
-
-@keyframes loading-shimmer {
-    0% { background-position: -200% 0; }
-    100% { background-position: 200% 0; }
-}
-
-/* Loading state için özel genişlikler */
-.hero-title-main:empty { min-width: 400px; }
-.hero-subtitle:empty { min-width: 200px; }
-.hero-description:empty { min-width: 500px; min-height: 3em; }
-#hero-cta-text:empty { min-width: 120px; }
-.stat-number:empty { min-width: 60px; }
-.stat-label:empty { min-width: 100px; }
-
-/* Content loaded state - animasyonları kaldır */
-.content-loaded .hero-title-main,
-.content-loaded .hero-subtitle,
-.content-loaded .hero-description,
-.content-loaded #hero-cta-text,
-.content-loaded .stat-number,
-.content-loaded .stat-label {
-    background: none;
-    animation: none;
-}
+/* LOADING STATE SKELETON'LARI TAMAMEN KALDIRILDI */
+/* Boş elementler artık skeleton göstermez */
 
 .hero-visual {
     display: flex;
@@ -543,6 +519,7 @@ body {
     border-radius: 0.75rem;
     border: 1px solid #e5e7eb;
     transition: all 0.3s ease;
+    contain: layout;
 }
 
 .feature-card:hover {
@@ -739,6 +716,7 @@ body {
     border: 1px solid #e5e7eb;
     transition: all 0.3s ease;
     position: relative;
+    contain: layout;
 }
 
 .testimonial-card:hover {
@@ -904,7 +882,6 @@ body {
 
     .hero {
         min-height: 70vh;
-        /* Mobile'da daha dramatik gradient */
         background: linear-gradient(45deg, 
             #0f172a 0%, 
             #1e293b 30%, 
@@ -912,7 +889,6 @@ body {
             #1e293b 100%
         );
         
-        /* Animated pattern */
         background-image: 
             linear-gradient(45deg, rgba(255,255,255,0.1) 25%, transparent 25%), 
             linear-gradient(-45deg, rgba(255,255,255,0.1) 25%, transparent 25%),
@@ -925,7 +901,6 @@ body {
     }
     
     .hero-video {
-        /* Mobile'da video daha büyük, kenarları kırpılır ama tam kaplar */
         width: 120vw;
         height: 120vh;
         left: -10vw;
@@ -937,7 +912,7 @@ body {
     }
     
     .hero-video.active {
-        opacity: 0.8; /* Mobile'da biraz daha transparan */
+        opacity: 0.8;
     }
     
     .hero-content {
@@ -947,12 +922,15 @@ body {
         padding-top: 4rem;
         min-height: 70vh;
         justify-content: center;
+        grid-template-rows: auto;
+        contain: layout;
     }
     
     .hero-title {
         font-size: 2.2rem;
         line-height: 1.2;
         margin-bottom: 1rem;
+        min-height: 3rem;
     }
     
     .hero-title-main,
@@ -964,12 +942,14 @@ body {
         font-size: 1.1rem;
         margin-bottom: 1.5rem;
         transition-duration: 0.7s;
+        min-height: 2.6rem;
     }
 
     .hero-actions {
         flex-direction: column;
         align-items: center;
         margin-bottom: 2rem;
+        min-height: 3.5rem;
     }
 
     .cta-visible {
@@ -981,6 +961,7 @@ body {
         grid-template-columns: repeat(2, 1fr);
         gap: 1.5rem;
         margin-top: 2rem;
+        min-height: 8rem;
     }
     
     .stat-number {
@@ -1001,18 +982,12 @@ body {
         height: 10px;
     }
     
-    /* Hero overlay'i mobile'da daha koyu yap */
     .hero::before {
         background: linear-gradient(
             rgba(31, 41, 55, 0.6),
             rgba(31, 41, 55, 0.7)
         );
     }
-
-    /* Loading state mobile adjustments */
-    .hero-title-main:empty { min-width: 250px; }
-    .hero-subtitle:empty { min-width: 150px; }
-    .hero-description:empty { min-width: 300px; min-height: 2.5em; }
 
     .section-title {
         font-size: 2rem;
@@ -1051,7 +1026,6 @@ body {
         opacity: 1;
     }
 
-    /* Touch cihazlarda hover efektlerini kaldır */
     .video-indicator:hover {
         background: rgba(255, 255, 255, 0.5);
     }
@@ -1068,7 +1042,6 @@ body {
     }
     
     .hero-video {
-        /* Daha agresif scaling */
         width: 130vw;
         height: 130vh;
         left: -15vw;
@@ -1099,6 +1072,7 @@ body {
         grid-template-columns: 1fr;
         gap: 1rem;
         text-align: center;
+        min-height: 16rem;
     }
 
     .stat {
@@ -1107,15 +1081,19 @@ body {
         align-items: center;
         max-width: 200px;
         margin: 0 auto;
+        min-height: 3rem;
+        flex-direction: row;
     }
     
     .stat-number {
         font-size: 1.3rem;
         margin-bottom: 0;
+        min-height: auto;
     }
     
     .stat-label {
         font-size: 0.8rem;
+        min-height: auto;
     }
     
     .video-controls {
@@ -1184,10 +1162,9 @@ body {
 /* Ultra wide ekranlar için (Galaxy S21+, vb.) */
 @media (max-width: 768px) and (min-aspect-ratio: 19/9) {
     .hero-video {
-        /* Çok uzun ekranlar için */
         height: 120vh;
         top: -10vh;
-        object-position: center 40%; /* Video'nun üst kısmını göster */
+        object-position: center 40%;
     }
 }
 
@@ -1207,7 +1184,6 @@ body {
 /* Video quality fallback - düşük performanslı cihazlar */
 @media (max-width: 768px) and (max-resolution: 150dpi) {
     .hero-video {
-        /* Düşük çözünürlük ekranlar için optimize */
         filter: brightness(1.1) contrast(1.05);
     }
 }
@@ -1215,6 +1191,41 @@ body {
 /* Touch device styling */
 .touch-device .video-indicator:hover {
     background: rgba(255, 255, 255, 0.5);
+}
+
+/* Performance optimization - Layout containment */
+.hero {
+    contain: layout style;
+}
+
+.feature-card,
+.testimonial-card {
+    contain: layout;
+}
+
+/* Transition optimization - Layout stability */
+.text-fade-out,
+.text-fade-in,
+.text-slide-out-left,
+.text-slide-out-right,
+.text-slide-in,
+.text-scale-out,
+.text-scale-in {
+    contain: layout;
+}
+
+/* Fallback for older browsers */
+@supports not (contain: layout) {
+    .hero-content {
+        overflow: hidden;
+    }
+    
+    .hero-title,
+    .hero-description,
+    .hero-actions,
+    .hero-stats {
+        transform: translateZ(0);
+    }
 }
 
 /* Accessibility */
