@@ -23,7 +23,6 @@
         /* Hero Section - Dark Background */
         .hero-section {
             background: 
-                
                 url('../images/sol_6.png'); /* Arka plan resmini uygun olanla değiştirebilirsiniz */
             background-size: cover;
             background-position: center;
@@ -181,6 +180,56 @@
             font-size: 0.95rem;
         }
 
+        /* Centered Features Styles - Sadece Overall Value bölümü için */
+        .centered-features {
+            text-align: center;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .centered-features h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .centered-features p {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .centered-features .feature-list {
+            text-align: left;
+            margin: 30px 0;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .centered-features .feature-list li {
+            display: flex;
+            align-items: center;
+            padding: 15px 0;
+            margin: 0;
+            border-bottom: none;
+        }
+
+        .centered-features .feature-list li .feature-icon {
+            width: 24px;
+            height: 24px;
+            background: #0097FB;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+
+        .centered-features .feature-list li span:not(.feature-icon) {
+            flex: 1;
+        }
+
         /* Dark Sections */
         .dark-section {
             background: #1F2937;
@@ -206,52 +255,7 @@
         .light-section .feature-list li { border-bottom: 1px solid #e2e8f0; }
         .light-section .feature-list li:last-child { border-bottom: none; }
         
-        /* CTA Section */
-        .cta-section {
-            background: linear-gradient(135deg, #1F2937 0%, #0097FB 100%);
-            padding: 80px 20px;
-            text-align: center;
-            color: white;
-        }
-        
-        .cta-content h2 {
-            font-size: 3rem;
-            margin-bottom: 20px;
-        }
-        
-        .cta-content p {
-            font-size: 1.2rem;
-            margin-bottom: 40px;
-            opacity: 0.9;
-        }
-        
-        .cta-buttons {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-        }
-        
-        .cta-button {
-            display: inline-block;
-            padding: 18px 40px;
-            background: white;
-            color: #1F2937;
-            text-decoration: none;
-            border-radius: 30px;
-            font-weight: 600;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        
-        .cta-button-outline {
-            background: transparent;
-            color: white;
-            border: 2px solid white;
-        }
-        
-        .cta-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-        }
+       
         
         @media (max-width: 768px) {
             .hero-content h1 { font-size: 2.5rem; }
@@ -265,7 +269,7 @@
                 flex-direction: column;
                 gap: 30px;
             }
-            .cta-buttons { flex-direction: column; }
+            
         }
     </style>
 </head>
@@ -300,23 +304,31 @@
     </section>
 
     <section class="light-section">
-        <div class="product-container-reverse">
-             <div class="product-image" style="background: #1F2937; display: flex; align-items: center; justify-content: center;">
-                <div style="text-align: center; color: white;">
-                    <div style="font-size: 4rem; margin-bottom: 20px;">📈</div>
-                    <h3 style="font-size: 1.5rem; font-weight: 300;">Portfolio Intelligence</h3>
-                    <p style="opacity: 0.8; margin-top: 10px;">Data-Driven Asset Management</p>
-                </div>
-            </div>
-            <div class="product-content">
+        <div class="container">
+            <div class="product-content centered-features">
                 <h2>Overall Value to Investment & Asset Management</h2>
                 <p>We convert disparate hazard and asset signals into <strong>decision-ready portfolio intelligence</strong>. Teams gain:</p>
                 <ul class="feature-list">
-                    <li><span class="feature-icon">✓</span><div><span>Faster screening and comparable risk factors across markets</span></div></li>
-                    <li><span class="feature-icon">✓</span><div><span>Visibility into downtime/BI risk and capital at risk</span></div></li>
-                    <li><span class="feature-icon">✓</span><div><span>Concentration hotspot detection and stress-testable scenarios</span></div></li>
-                    <li><span class="feature-icon">✓</span><div><span>Data to negotiate premiums, covenants, and retrofit incentives</span></div></li>
-                    <li><span class="feature-icon">✓</span><div><span>Improved resilience and risk-adjusted performance across the portfolio</span></div></li>
+                    <li>
+                        <span class="feature-icon">✓</span>
+                        <span>Faster screening and comparable risk factors across markets</span>
+                    </li>
+                    <li>
+                        <span class="feature-icon">✓</span>
+                        <span>Visibility into downtime/BI risk and capital at risk</span>
+                    </li>
+                    <li>
+                        <span class="feature-icon">✓</span>
+                        <span>Concentration hotspot detection and stress-testable scenarios</span>
+                    </li>
+                    <li>
+                        <span class="feature-icon">✓</span>
+                        <span>Data to negotiate premiums, covenants, and retrofit incentives</span>
+                    </li>
+                    <li>
+                        <span class="feature-icon">✓</span>
+                        <span>Improved resilience and risk-adjusted performance across the portfolio</span>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -388,18 +400,7 @@
         </div>
     </section>
     
-    <section class="cta-section">
-        <div class="container">
-            <div class="cta-content">
-                <h2>Ready to Enhance Your Portfolio Intelligence?</h2>
-                <p>Join leading investment firms and asset managers who trust our data for their most critical decisions.</p>
-                <div class="cta-buttons">
-                    <a href="#" class="cta-button">Schedule a Demo</a>
-                    <a href="#" class="cta-button cta-button-outline">Download Brochure</a>
-                </div>
-            </div>
-        </div>
-    </section>
+    
     
     <div id="footer-placeholder"></div>
 
