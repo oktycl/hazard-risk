@@ -95,11 +95,23 @@ class HeroVideoCarousel {
     }
 
     preloadAndOptimizeVideos() {
-        // BASIT VERSİYON - Sadece playback rate ayarla
         this.videos.forEach((video, index) => {
-            // Sadece hızı ayarla, başka bir şey yapma
             video.addEventListener('canplay', () => {
-                video.playbackRate = 0.8;
+                // Video 3 (index 2) için özel ayarlar
+                if (index === 1) { // Video3 (3. video, index 2)
+                    video.playbackRate = 0.6; // %50 yavaş oynat
+                    video.loop = false; // Loop'u kapat
+                    
+                    // Video bittiğinde ne yapılacağını belirle
+                    video.addEventListener('ended', () => {
+                        console.log('Video3 ended, staying on same frame');
+                        // Video bittikten sonra son frame'de kal
+                        video.currentTime = video.duration - 0.1;
+                    });
+                } else {
+                    // Diğer videolar için normal ayarlar
+                    video.playbackRate = 0.8;
+                }
             });
         });
     }
@@ -345,6 +357,12 @@ class HeroVideoCarousel {
         setTimeout(() => {
             if (nextVideo) {
                 nextVideo.classList.add('active');
+                // Video3 için özel ayarlar
+                if (index === 1) {
+                    nextVideo.currentTime = 0; // Baştan başlat
+                    nextVideo.playbackRate = 0.08; // Yavaş oynat
+                    nextVideo.loop = false; // Loop kapalı
+                }
                 nextVideo.play().catch(e => {
                     console.error('Failed to play new video:', e);
                 });
