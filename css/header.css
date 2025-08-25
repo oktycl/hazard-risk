@@ -92,9 +92,9 @@
 }
 
 .nav-logo img {
-  height: 300px; /* ESKİ HALİ - orijinal boyut */
+  height: 200px; /* ESKİ HALİ - orijinal boyut */
   width: auto;
-  max-width: 300px; /* ESKİ HALİ */
+  max-width: 200px; /* ESKİ HALİ */
   object-fit: contain; /* Orantıları koru */
   filter: brightness(0) invert(1); /* Siyah logoyu beyaza çevir */
   vertical-align: middle; /* Dikey hizalama */
@@ -118,6 +118,9 @@
   text-decoration: none;
   color: #d1d5db; /* Hafif gri-açık */
   font-weight: 500;
+  /* BU İKİ SATIRI EKLEYİN ↓ */
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: 1.5rem; /* İstediğiniz boyutu buraya yazın, 1rem genelde iyidir */
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   white-space: nowrap;
