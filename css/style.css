@@ -587,7 +587,7 @@ body {
 /* API Section */
 .api-section {
     position: relative;
-    padding: 5rem 0;
+    padding: 0.5rem 0;
     background: #f9fafb;
     overflow: hidden;
     min-height: 900px;
@@ -700,7 +700,7 @@ body {
 
 /* Testimonials Section */
 .testimonials {
-    padding: 5rem 0;
+    padding: 0.5rem 0;
 }
 
 .testimonials-grid {
