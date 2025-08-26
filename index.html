@@ -13,6 +13,31 @@
     <link rel="stylesheet" href="css/style.css">
     
     <style>
+        /* How it Works Header Top */
+        .how-it-works-header-top {
+            text-align: center;
+            padding-bottom: 40px;
+            margin-bottom: 20px;
+        }
+
+        .how-it-works-title-top {
+            font-size: 42px;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, #ffffff 0%, #e5e7eb 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .how-it-works-subtitle-top {
+            font-size: 18px;
+            color: rgba(255, 255, 255, 0.8);
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
 
         /* Timeline Section Styles */
         .process-timeline-section {
@@ -181,6 +206,10 @@
             .process-timeline-nav {
                 order: 2;
             }
+
+            .how-it-works-title {
+                font-size: 32px;
+            }
         }
     </style>
 </head>
@@ -298,12 +327,7 @@
             
             <div class="features-grid">
                 <div class="feature-card">
-                    <div class="feature-icon feature-icon-blue">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
-                            <circle cx="12" cy="12" r="3"/>
-                        </svg>
-                    </div>
+                    
                     <h3 class="feature-title">Visual Risk Assessment</h3>
                     <p class="feature-description">
                         Advanced computer vision analyzes satellite and street-level imagery to identify 
@@ -312,15 +336,7 @@
                 </div>
                 
                 <div class="feature-card">
-                    <div class="feature-icon feature-icon-green">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-                            <polyline points="14,2 14,8 20,8"/>
-                            <line x1="16" y1="13" x2="8" y2="13"/>
-                            <line x1="16" y1="17" x2="8" y2="17"/>
-                            <polyline points="10,9 9,9 8,9"/>
-                        </svg>
-                    </div>
+                    
                     <h3 class="feature-title">FEMA P-154 Compliance</h3>
                     <p class="feature-description">
                         Full adherence to FEMA P-154 Rapid Visual Screening standards for comprehensive 
@@ -329,20 +345,7 @@
                 </div>
                 
                 <div class="feature-card">
-                    <div class="feature-icon feature-icon-purple">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <rect x="4" y="4" width="16" height="16" rx="2" ry="2"/>
-                            <rect x="9" y="9" width="6" height="6"/>
-                            <line x1="9" y1="1" x2="9" y2="4"/>
-                            <line x1="15" y1="1" x2="15" y2="4"/>
-                            <line x1="9" y1="20" x2="9" y2="23"/>
-                            <line x1="15" y1="20" x2="15" y2="23"/>
-                            <line x1="20" y1="9" x2="23" y2="9"/>
-                            <line x1="20" y1="14" x2="23" y2="14"/>
-                            <line x1="1" y1="9" x2="4" y2="9"/>
-                            <line x1="1" y1="14" x2="4" y2="14"/>
-                        </svg>
-                    </div>
+                    
                     <h3 class="feature-title">Machine Learning Engine</h3>
                     <p class="feature-description">
                         Continuously improving AI models trained on extensive structural engineering 
@@ -351,12 +354,7 @@
                 </div>
                 
                 <div class="feature-card">
-                    <div class="feature-icon feature-icon-orange">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
-                            <circle cx="12" cy="10" r="3"/>
-                        </svg>
-                    </div>
+                    
                     <h3 class="feature-title">Geospatial Intelligence</h3>
                     <p class="feature-description">
                         Location-based risk factors including soil conditions, fault proximity, 
@@ -365,13 +363,7 @@
                 </div>
                 
                 <div class="feature-card">
-                    <div class="feature-icon feature-icon-red">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <line x1="18" y1="20" x2="18" y2="10"/>
-                            <line x1="12" y1="20" x2="12" y2="4"/>
-                            <line x1="6" y1="20" x2="6" y2="14"/>
-                        </svg>
-                    </div>
+                    
                     <h3 class="feature-title">Real-Time Analytics</h3>
                     <p class="feature-description">
                         Instant risk scoring with interactive visualizations and actionable insights 
@@ -380,12 +372,7 @@
                 </div>
                 
                 <div class="feature-card">
-                    <div class="feature-icon feature-icon-yellow">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <line x1="12" y1="1" x2="12" y2="23"/>
-                            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
-                        </svg>
-                    </div>
+                    
                     <h3 class="feature-title">Financial Impact Modeling</h3>
                     <p class="feature-description">
                         Quantify potential earthquake-related losses including structural damage, 
@@ -418,6 +405,12 @@
     <section class="process-timeline-section" id="process">
         <div class="process-timeline-container">
             <div class="container">
+                <!-- How it Works Header -->
+                <div class="how-it-works-header-top">
+                    <h2 class="how-it-works-title-top">How it Works</h2>
+                    <p class="how-it-works-subtitle-top">Discover our AI-powered earthquake risk assessment process</p>
+                </div>
+                
                 <div class="process-timeline-content">
                     <div class="process-timeline-nav">
                         <div class="process-timeline-item active" data-slide="0">
@@ -476,35 +469,8 @@
                 </div>
             </div>
         </div>
-    </section>">
-                <div class="timeline-content">
-                    <div class="timeline-nav">
-                        <div class="timeline-item active" data-slide="0">
-                            <h3>Coordinates Received</h3>
-                            <p>Single coordinate input initiates comprehensive analysis</p>
-                        </div>
-                        <div class="timeline-item" data-slide="1">
-                            <h3>Roof Detection</h3>
-                            <p>AI identifies building structure from satellite imagery</p>
-                        </div>
-                        <div class="timeline-item" data-slide="2">
-                            <h3>Street Views Gathered</h3>
-                            <p>Multiple visual perspectives collected and analyzed</p>
-                        </div>
-                        <div class="timeline-item" data-slide="3">
-                            <h3>All Visuals Analyzed</h3>
-                            <p>Machine learning processes structural characteristics</p>
-                        </div>
-                        <div class="timeline-item" data-slide="4">
-                            <h3>Report Prepared</h3>
-                            <p>FEMA P-154 compliant assessment delivered</p>
-                        </div>
-                    </div>
-                    
-                    
-                </div>
-            </div>
-        </div>
+    </section>
+
     <!-- Testimonials Section
     <section class="testimonials" id="testimonials">
         <div class="container">
@@ -654,53 +620,6 @@
         
         // Initialize process timeline
         updateProcessTimeline();
-    </script>
-
-    <script>
-        // Timeline scroll functionality
-        const timelineSection = document.querySelector('.timeline-section');
-        const timelineItems = document.querySelectorAll('.timeline-item');
-        const visualSlides = document.querySelectorAll('.visual-slide');
-        
-        function updateTimeline() {
-            const sectionTop = timelineSection.offsetTop;
-            const sectionHeight = timelineSection.offsetHeight;
-            const scrolled = window.pageYOffset - sectionTop;
-            const progress = Math.max(0, Math.min(1, scrolled / (sectionHeight - window.innerHeight)));
-            
-            const totalSteps = timelineItems.length;
-            const currentStep = Math.floor(progress * totalSteps);
-            const clampedStep = Math.max(0, Math.min(totalSteps - 1, currentStep));
-            
-            // Update active states
-            timelineItems.forEach((item, index) => {
-                item.classList.toggle('active', index === clampedStep);
-            });
-            
-            visualSlides.forEach((slide, index) => {
-                slide.classList.toggle('active', index === clampedStep);
-            });
-        }
-        
-        // Click functionality for timeline items
-        timelineItems.forEach((item, index) => {
-            item.addEventListener('click', () => {
-                const targetScroll = timelineSection.offsetTop + 
-                    (index / (timelineItems.length - 1)) * 
-                    (timelineSection.offsetHeight - window.innerHeight);
-                
-                window.scrollTo({
-                    top: targetScroll,
-                    behavior: 'smooth'
-                });
-            });
-        });
-        
-        // Scroll listener
-        window.addEventListener('scroll', updateTimeline);
-        
-        // Initialize
-        updateTimeline();
     </script>
 </body>
 </html>
