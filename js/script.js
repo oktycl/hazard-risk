@@ -19,7 +19,7 @@ class HeroVideoCarousel {
             {
                 title: "Seismic Risk Predictor",
                 subtitle: "",
-                description: "Seismic risk prediction in seconds from geographic coordinates — rapid screening for individual structures, and portfolio-scale analysis powering Insurance, Finance, Investment, and Asset Management decisions.",
+                description: "Seismic risk prediction <strong>in seconds</strong> from geographic coordinates — rapid screening for individual structures, and portfolio-scale analysis powering Insurance, Finance, Investment, and Asset Management decisions.",
                 ctaText: "Start Assessment",
                 stats: [
                     { number: "3000+", label: "Buildings Assessed" },
@@ -149,9 +149,8 @@ class HeroVideoCarousel {
         if (this.textElements.subtitle) {
             this.textElements.subtitle.textContent = initialContent.subtitle;
         }
-        if (this.textElements.description) {
-            this.textElements.description.textContent = initialContent.description;
-        }
+        setSafeHTML(this.textElements.description, initialContent.description);
+
         
         // CTA'yı ayarla
         this.updateCTA(initialContent.ctaText);
@@ -394,10 +393,8 @@ class HeroVideoCarousel {
             if (this.textElements.subtitle) {
                 this.textElements.subtitle.textContent = newContent.subtitle;
             }
-            if (this.textElements.description) {
-                this.textElements.description.textContent = newContent.description;
-            }
-            
+            setSafeHTML(this.textElements.description, newContent.description);
+
             this.updateCTA(newContent.ctaText);
             this.updateStats(newContent.stats);
             this.fadeInContent();
@@ -647,6 +644,33 @@ if (emailInput) {
     });
 }
 
+function setSafeHTML(element, htmlString) {
+    if (!element) return;
+
+    // İzin verilen HTML etiketleri
+    const allowedTags = ['strong', 'em', 'p', 'ul', 'ol', 'li', 'br'];
+    
+    // HTML tag'lerini temizle - sadece izin verilenleri bırak
+    let cleanHTML = htmlString;
+    
+    // Önce tüm HTML tag'lerini bul
+    const tagRegex = /<\/?([a-zA-Z][a-zA-Z0-9]*)\b[^<>]*>/gi;
+    
+    cleanHTML = cleanHTML.replace(tagRegex, (match, tagName) => {
+        // Tag adını küçük harfe çevir ve kontrol et
+        if (allowedTags.includes(tagName.toLowerCase())) {
+            return match; // İzin verilen tag'i koru
+        } else {
+            return ''; // İzin verilmeyen tag'i kaldır
+        }
+    });
+    
+    // Sonucu element'e ata
+    element.innerHTML = cleanHTML;
+}
+
+
+
 // Performance optimized initialization
 function initializeApp() {
     console.log('DOM loaded, initializing application...');
@@ -656,6 +680,7 @@ function initializeApp() {
     
     console.log('Application initialized successfully');
 }
+
 
 // DOM hazır olduğunda hemen başlat
 if (document.readyState === 'loading') {
