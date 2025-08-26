@@ -298,9 +298,9 @@
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, #3b82f6, #2563eb);
-  color: white;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background:  #2563eb !important;;
+  color: white !important;;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
 }
 
 .btn-primary:hover {
