@@ -23,17 +23,18 @@
         
         /* Hero Section - Dark Background */
         .hero-section {
+            /* Mevcut arka plan tanımınızı bu şekilde güncelleyin */
             background: 
-                url('../images/image-solution-public.jpg'); /* Arka plan resmini uygun olanla değiştirebilirsiniz */
+                linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), /* Siyah overlay katmanı */
+                url('../images/image-solution-public.jpeg'); /* Arka plan resminiz */
+            
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
             color: #F2FAFF;
             padding: 120px 20px 100px;
             position: relative;
-            overflow: hidden;
         }
-        
         .hero-section::before {
             content: '';
             position: absolute;
@@ -67,7 +68,7 @@
         }
         
         .hero-content p {
-            font-size: 1.3rem;
+            font-size: 1.5rem;
             margin-bottom: 40px;
             opacity: 0.9;
             max-width: 800px;
@@ -281,24 +282,7 @@
             <div class="hero-content">
                 <h1>Public Institutions</h1>
                 <p>Building safer communities with actionable seismic intelligence for governments, municipalities, and public agencies.</p>
-                <div class="hero-stats">
-                    <div class="stat-item">
-                        <div class="stat-number">50+</div>
-                        <div class="stat-label">Municipalities Served</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number">10K+</div>
-                        <div class="stat-label">Facilities Assessed</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number">40%</div>
-                        <div class="stat-label">Faster Planning</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number">Top 1%</div>
-                        <div class="stat-label">Risk Accuracy</div>
-                    </div>
-                </div>
+                
             </div>
         </div>
     </section>
