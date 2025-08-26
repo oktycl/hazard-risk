@@ -3,469 +3,400 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Real Estate & Construction Solutions - Hazard & Risk</title>
-    <meta name="description" content="Advanced construction cost prediction and investment risk assessment tools for real estate and construction industry.">
+    <title>Real Estate & Construction Solutions</title>
     <link rel="stylesheet" href="../css/header.css">
     <link rel="stylesheet" href="../css/footer.css">
-     <style>
-        /* Base Styles */
+    <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-
+        
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
             line-height: 1.6;
-            color: #1f2937;
-            background: #f2faff;
+            color: #1F2937;
             overflow-x: hidden;
+            font-size: 1.4rem;
         }
-
-        /* Main Content */
-        main {
-            padding-top: 4rem;
-            min-height: 100vh;
-        }
-
-        /* Hero Section - Blue Theme */
-        .hero {
-            background: #1f2937;
-            color: white;
-            padding: 6rem 0 4rem;
+        
+        /* Hero Section - Dark Background */
+        .hero-section {
+            background: 
+                linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), /* Siyah overlay katmanı */
+                url('../images/image-solution-real-estate.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            color: #F2FAFF;
+            padding: 120px 20px 100px;
             position: relative;
             overflow: hidden;
         }
-
-        .hero::before {
+        
+        .hero-section::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
-            opacity: 0.3;
+            top: -50%;
+            right: -10%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(0,151,251,0.1) 0%, transparent 70%);
+            border-radius: 50%;
         }
-
-        .hero-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-            position: relative;
-            z-index: 2;
-        }
-
-        .hero-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-            align-items: center;
-        }
-
-        .hero-text h1 {
-            font-size: 3.5rem;
-            font-weight: 800;
-            margin-bottom: 1.5rem;
-            line-height: 1.1;
-        }
-
-        .hero-text .subtitle {
-            font-size: 1.25rem;
-            margin-bottom: 2rem;
-            opacity: 0.9;
-            font-weight: 400;
-        }
-
-        .hero-visual {
-            position: relative;
-            height: 400px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        /* Flow Lines - Using palette colors */
-        .flow-container {
-            position: relative;
-            width: 100%;
-            height: 100%;
-        }
-
-        .flow-line {
-            position: absolute;
-            background: none;
-            border: 3px solid;
-            border-radius: 50px;
-            opacity: 0.8;
-        }
-
-        .flow-line-1 {
-            width: 200px;
-            height: 100px;
-            top: 20%;
-            left: 10%;
-            transform: rotate(-20deg);
-            border-color: #f2faff; /* Light from palette */
-        }
-
-        .flow-line-2 {
-            width: 150px;
-            height: 80px;
-            top: 40%;
-            right: 20%;
-            transform: rotate(30deg);
-            border-color: #0097FB; /* Dark from palette */
-        }
-
-        .flow-line-3 {
-            width: 180px;
-            height: 90px;
-            bottom: 30%;
-            left: 20%;
-            transform: rotate(15deg);
-            border-color: #f1f1e6; /* Light cream from palette */
-        }
-
-        /* Buttons */
-        /* .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            padding: 1rem 2rem;
-            border-radius: 8px;
-            font-weight: 600;
-            text-decoration: none;
-            border: none;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 1rem;
-        } */
-
-        .btn-primary {
-            background: #f2faff;
-            color: #1f2937;
-            border: 2px solid #f2faff;
-        }
-
-        .btn-primary:hover {
-            background: transparent;
-            color: #f2faff;
-            transform: translateY(-2px);
-        }
-
-        .btn-outline {
-            background: transparent;
-            color: #f2faff;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-        }
-
-        .btn-outline:hover {
-            background: rgba(255, 255, 255, 0.1);
-            border-color: #f2faff;
-        }
-
-        .cta-buttons {
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
-        /* Features Section */
-        .features {
-            padding: 6rem 0;
-            background: white;
-        }
-
+        
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 2rem;
+            position: relative;
+            z-index: 1;
         }
-
-        .section-header {
+        
+        .hero-content {
             text-align: center;
-            margin-bottom: 4rem;
         }
-
-        .section-header h2 {
-            font-size: 2.5rem;
+        
+        .hero-content h1 {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            background: #0097FB;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
             font-weight: 700;
-            color: #1f2937;
-            margin-bottom: 1rem;
         }
-
-        .section-header p {
-            font-size: 1.2rem;
-            color: #1f2937;
-            max-width: 600px;
-            margin: 0 auto;
-            opacity: 0.8;
+        
+        .hero-content p {
+            font-size: 1.3rem;
+            margin-bottom: 40px;
+            opacity: 0.9;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
         }
-
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2rem;
-            margin-top: 4rem;
-            align-items: stretch;
+        
+        .hero-stats {
+            display: flex;
             justify-content: center;
-            max-width: 800px; /* 2 kart için optimal genişlik */
+            gap: 60px;
+            margin-top: 50px;
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #0097FB;
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-top: 5px;
+        }
+        
+        /* Product Sections Common Styles */
+        .product-container, .product-container-reverse {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .product-image {
+            position: relative;
+            height: 500px;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.3);
+        }
+        
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .product-content h2 {
+            font-size: 2.8rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+        
+        .product-badge {
+            display: inline-block;
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+            font-weight: 600;
+            background: #0097FB;
+            color: white;
+        }
+        
+        .product-content p {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            line-height: 1.8;
+        }
+        
+        .feature-list {
+            list-style: none;
+            margin: 30px 0;
+            padding: 0;
+        }
+        
+        .feature-list li {
+            padding: 15px 0;
+            display: flex;
+            align-items: flex-start;
+        }
+        
+        .feature-icon {
+            width: 24px;
+            height: 24px;
+            background: #0097FB;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            margin-right: 15px;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+        
+        .feature-list strong {
+            display: block;
+            margin-bottom: 5px;
+        }
+        
+        .feature-list span {
+            font-size: 1.5rem;
+        }
+
+        /* Centered Features Styles - Sadece Overall Value bölümü için */
+        .centered-features {
+            text-align: center;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .centered-features h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .centered-features p {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .centered-features .feature-list {
+            text-align: left;
+            margin: 30px 0;
+            max-width: 700px;
             margin-left: auto;
             margin-right: auto;
         }
 
-        .feature-card {
-            background: white;
-            border-radius: 16px;
-            padding: 2rem;
-            border: 1px solid #f1f1e6;
-            box-shadow: 0 4px 20px rgba(31, 41, 55, 0.1);
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-            height: 100%;
+        .centered-features .feature-list li {
             display: flex;
-            flex-direction: column;
+            align-items: center;
+            padding: 15px 0;
+            margin: 0;
+            border-bottom: none;
         }
 
-        .feature-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
+        .centered-features .feature-list li .feature-icon {
+            width: 24px;
+            height: 24px;
             background: #0097FB;
-        }
-
-        .feature-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 30px rgba(31, 41, 55, 0.15);
-            border-color: #0097FB;
-        }
-
-        .feature-icon {
-            width: 60px;
-            height: 60px;
-            background: #1f2937;
-            border-radius: 12px;
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 1.5rem;
-            font-size: 1.5rem;
             color: white;
+            margin-right: 15px;
+            flex-shrink: 0;
         }
 
-        .feature-card h3 {
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: #1f2937;
-            margin-bottom: 1rem;
+        .centered-features .feature-list li span:not(.feature-icon) {
+            flex: 1;
         }
 
-        .feature-card p {
-            color: #1f2937;
-            margin-bottom: 1.5rem;
-            opacity: 0.8;
+        /* Dark Sections */
+        .dark-section {
+            background: #1F2937;
+            padding: 100px 20px;
         }
+        .dark-section .product-content h2,
+        .dark-section .product-content h3 { color: white; }
+        .dark-section .product-content p { color: white; }
+        .dark-section .feature-list strong { color: white; }
+        .dark-section .feature-list span { color: white; }
+        .dark-section .feature-list li { border-bottom-color: rgba(255,255,255,0.1); }
 
-        .feature-details {
-            font-size: 0.9rem;
-            color: #1f2937;
-            line-height: 1.6;
-            opacity: 0.7;
-            margin-top: auto;
+        /* Light Sections */
+        .light-section {
+            background: #FFFFFF;
+            padding: 100px 20px;
         }
-
-        /* CTA Section */
-        .cta {
-            background: #1f2937;
-            color: #f2faff;
-            padding: 6rem 0;
-            text-align: center;
-        }
-
-        .cta h2 {
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-        }
-
-        .cta p {
-            font-size: 1.2rem;
-            margin-bottom: 2rem;
-            opacity: 0.9;
-        }
-
-        .cta .btn-primary {
-            background: #0097FB;
-            color: #f2faff;
-            border-color: #0097FB;
-        }
-
-        .cta .btn-primary:hover {
-            background: transparent;
-            border-color: #0097FB;
-            color: #0097FB;
-        }
-
-        .cta .btn-outline {
-            border-color: #f1f1e6;
-            color: #f1f1e6;
-        }
-
-        .cta .btn-outline:hover {
-            background: #f1f1e6;
-            color: #1f2937;
-        }
-
-        /* Responsive Design */
-        @media (max-width: 1024px) {
-            .features-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 1.5rem;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .hero-content {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-                text-align: center;
-            }
-
-            .hero-text h1 {
-                font-size: 2.5rem;
-            }
-
-            .features-grid {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-            }
-
-            .cta-buttons {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .btn {
-                width: 100%;
-                max-width: 300px;
-            }
-        }
-
-        /* Animations */
-        @keyframes float {
-            0%, 100% { transform: translateY(0px) rotate(var(--rotation)); }
-            50% { transform: translateY(-15px) rotate(var(--rotation)); }
-        }
-
-        .flow-line-1 {
-            --rotation: -20deg;
-            animation: float 4s ease-in-out infinite;
-        }
-
-        .flow-line-2 {
-            --rotation: 30deg;
-            animation: float 4s ease-in-out infinite;
-            animation-delay: -1.5s;
-        }
-
-        .flow-line-3 {
-            --rotation: 15deg;
-            animation: float 4s ease-in-out infinite;
-            animation-delay: -3s;
-        }
-
+        .light-section .product-content h2,
+        .light-section .product-content h3 { color: #1F2937; }
+        .light-section .product-content p { color: #4a5568; }
+        .light-section .feature-list strong { color: #1F2937; }
+        .light-section .feature-list span { color: #4a5568; }
+        .light-section .feature-list li { border-bottom: 1px solid #e2e8f0; }
+        .light-section .feature-list li:last-child { border-bottom: none; }
         
+        
+        
+        @media (max-width: 768px) {
+            .hero-content h1 { font-size: 2.5rem; }
+            .product-container,
+            .product-container-reverse {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+            .product-container-reverse .product-image { order: -1; }
+            .hero-stats {
+                flex-direction: column;
+                gap: 30px;
+            }
+            
+        }
     </style>
 </head>
 <body>
-    <!-- Header Placeholder -->
     <div id="header-placeholder"></div>
 
-    <!-- Main Content -->
-    <main>
-        <!-- Hero Section -->
-        <section class="hero">
-            <div class="hero-container">
-                <div class="hero-content">
-                    <div class="hero-text">
-                        <h1>Real Estate & Construction Solutions</h1>
-                        <p class="subtitle">Advanced investment analysis and construction cost prediction tools designed specifically for real estate developers and construction companies.</p>
-                        <div class="cta-buttons">
-                            <button class="btn btn-primary">Start Investment Analysis</button>
-                            <button class="btn btn-outline">View Case Studies</button>
-                        </div>
-                    </div>
-                    <div class="hero-visual">
-                        <div class="flow-container">
-                            <div class="flow-line flow-line-1"></div>
-                            <div class="flow-line flow-line-2"></div>
-                            <div class="flow-line flow-line-3"></div>
-                        </div>
-                    </div>
-                </div>
+    <section class="hero-section">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Real Estate & Construction</h1>
+                <p>Build with confidence using AI-powered seismic risk analysis for faster, safer, and more resilient project development.</p>
+                
             </div>
-        </section>
+        </div>
+    </section>
 
-       >
-
-        <!-- Features Section -->
-        <section class="features">
-            <div class="container">
-                <div class="section-header">
-                    <h2>Specialized Solutions for Real Estate & Construction</h2>
-                    <p>Comprehensive construction cost prediction and investment risk assessment for real estate development</p>
-                </div>
-
-                <div class="features-grid">
-                    <div class="feature-card ">
-                        <div class="feature-icon">
-                            <svg width="32" height="32" fill="none">
-                                <use href="../images/icons.svg#icon-hazard-map"></use>
-                            </svg>
-                        </div>
-                        <h3>Hazard Maps</h3>
-                        <p>Seismic hazard maps for buildings and contents are produced by integrating earthquake hazard data with site-specific soil amplification to improve risk assessment accuracy.</p>
-                    </div>
-
-                    <div class="feature-card">
-                        <div class="feature-icon">
-                            <svg width="32" height="32" fill="none">
-                                <use href="../images/icons.svg#icon-investment-tool"></use>
-                            </svg>
-                        </div>
-                        <h3>New Investment Tool</h3>
-                        <p>Construction costs are predicted by our hybrid AI algorithms using building footprint, roofprint, number of stories, and soil and slope conditions, with global seismicity and soil maps enabling accurate investment insights from simple user inputs.</p>
-                       
-                    </div>
-                </div>
+    <section class="light-section">
+        <div class="container">
+            <div class="product-content centered-features">
+                <h2>Overall Value to Real Estate & Construction</h2>
+                <p>Our solutions enable the sector to combine speed, foresight, and resilience in project planning. By automating risk screening and integrating seismic hazard data, real estate and construction professionals gain:</p>
+                <ul class="feature-list">
+                    <li>
+                        <span class="feature-icon">✓</span>
+                        <span>Faster project feasibility and due diligence checks</span>
+                    </li>
+                    <li>
+                        <span class="feature-icon">✓</span>
+                        <span>Early cost and excavation requirement insights</span>
+                    </li>
+                    <li>
+                        <span class="feature-icon">✓</span>
+                        <span>Safer site selection and smarter urban planning</span>
+                    </li>
+                    <li>
+                        <span class="feature-icon">✓</span>
+                        <span>Reduced construction delays and budget overruns</span>
+                    </li>
+                    <li>
+                        <span class="feature-icon">✓</span>
+                        <span>Stronger, regulation-compliant, and resilient developments</span>
+                    </li>
+                </ul>
             </div>
-        </section>
-
-        <!-- CTA Section -->
-        <section class="cta">
-            <div class="container">
-                <h2>Ready to Optimize Your Real Estate Investments?</h2>
-                <p>Join leading real estate developers and construction companies using our advanced investment analysis tools.</p>
-                <div class="cta-buttons">
-                    <button class="btn btn-primary">Schedule Demo</button>
-                    <button class="btn btn-outline">Contact Sales</button>
-                </div>
+        </div>
+    </section>
+    
+    <section class="dark-section">
+        <div class="product-container">
+            <div class="product-content">
+               
+                <h2>Seismic Risk Predictor</h2>
+                <p>Rapid seismic risk screening for new and existing buildings.</p>
+                <ul class="feature-list">
+                    <li><span class="feature-icon">✓</span><div><strong>Instant Analysis</strong><span>Provides probability of collapse and key deficiencies instantly from coordinates.</span></div></li>
+                    <li><span class="feature-icon">✓</span><div><strong>Pre-Investment Insight</strong><span>Helps developers and contractors quickly assess site-specific seismic risks before design or investment.</span></div></li>
+                    <li><span class="feature-icon">✓</span><div><strong>Reduced Uncertainty</strong><span>Reduces uncertainty in early planning and supports safer, more resilient building projects.</span></div></li>
+                </ul>
             </div>
-        </section>
-    </main>
+            <div class="product-image" style="
+                width: 100%; 
+                height: 400px; 
+                overflow: hidden; 
+                border-radius: 10px;">
+                <img src="../images/image-seismic-risk-predictor.png" alt="Seismic Risk Analysis" style="
+                    width: 100%; 
+                    height: 100%; 
+                    object-fit: fill;">
+            </div>
+        </div>
+    </section>
 
-    <!-- Footer Placeholder -->
+    <section class="light-section">
+        <div class="product-container-reverse">
+            <div class="product-image" style="
+                width: 100%; 
+                height: 400px; 
+                overflow: hidden; 
+                border-radius: 10px;">
+                <img src="../images/image-new-investment.png" alt="Seismic Risk Analysis" style="
+                    width: 100%; 
+                    height: 100%; 
+                    object-fit: fill;">
+            </div>
+            <div class="product-content">
+                
+                <h2>New Investments Tool</h2>
+                <p>Fast construction cost prediction with available data inputs.</p>
+                <ul class="feature-list">
+                    <li><span class="feature-icon">✓</span><div><strong>Cost Estimation</strong><span>Estimates construction costs and highlights requirements like deep excavation by combining building footprint, height, materials, seismicity, and soil conditions.</span></div></li>
+                    <li><span class="feature-icon">✓</span><div><strong>Feasibility Support</strong><span>Supports feasibility studies and cost planning during early design stages.</span></div></li>
+                    <li><span class="feature-icon">✓</span><div><strong>Risk Reduction</strong><span>Provides rapid insights for developers and construction firms, reducing delays and budget risks.</span></div></li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="dark-section">
+        <div class="product-container">
+            <div class="product-content">
+                
+                <h2>Hazard Maps</h2>
+                <p>Seismic hazard mapping integrated with soil and site conditions.</p>
+                <ul class="feature-list">
+                    <li><span class="feature-icon">✓</span><div><strong>Integrated Hazard Layers</strong><span>Produces hazard layers for risk by combining seismic data with site-specific soil conditions.</span></div></li>
+                    <li><span class="feature-icon">✓</span><div><strong>Informed Site Selection</strong><span>Supports developers in assessing regional hazard exposure to inform site selection and master planning.</span></div></li>
+                    <li><span class="feature-icon">✓</span><div><strong>Resilient Development</strong><span>Enables safer urban planning and more resilient portfolio development.</span></div></li>
+                </ul>
+            </div>
+            <div class="product-image" style="
+                width: 100%; 
+                height: 400px; 
+                overflow: hidden; 
+                border-radius: 10px;">
+                <img src="../images/image-hazard-map.png" alt="Seismic Risk Analysis" style="
+                    width: 100%; 
+                    height: 100%; 
+                    object-fit: fill;">
+            </div>
+        </div>
+    </section>
+    
+    
+    
     <div id="footer-placeholder"></div>
 
-    <!-- Scripts -->
     <script>
         // Load Header
         fetch('../header.html')

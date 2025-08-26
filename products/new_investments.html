@@ -157,152 +157,14 @@
             width: 100%;
             max-width: 500px;
             height: 400px;
-            background: linear-gradient(135deg, var(--bright-blue), #2563eb);
             border-radius: 2rem;
             position: relative;
             overflow: hidden;
-            box-shadow: 0 20px 60px rgba(0, 151, 251, 0.3);
-            animation: float 6s ease-in-out infinite;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        /* --- BAŞLANGIÇ: YENİ GÖRSEL ANİMASYON CSS KODLARI --- */
-        .investment-viz {
-            width: 280px;
-            height: 200px;
-            position: relative;
-        }
-
-        .viz-map {
-            width: 150px;
-            height: 150px;
-            background: rgba(255,255,255,0.1);
-            border: 1px solid rgba(255,255,255,0.2);
-            border-radius: 8px;
-            position: absolute;
-            left: 0;
-            top: 50%;
-            transform: translateY(-50%) scale(0.8);
-            opacity: 0;
-            animation: slideIn 1s ease-out 0.5s forwards;
-        }
-
-        .footprint {
-            width: 60px;
-            height: 80px;
-            border: 2px solid white;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            border-radius: 4px;
-            box-shadow: 0 0 10px white;
-        }
-
-        .data-layer {
-            position: absolute;
-            left: 100%;
-            width: 30px;
-            height: 30px;
-            background: rgba(255,255,255,0.8);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 14px;
-            color: var(--dark-slate);
-            box-shadow: 0 0 10px white;
-            opacity: 0;
-        }
-
-        .seismic-layer { top: 20px; animation: flyIn 1s ease-out 1.5s forwards; }
-        .soil-layer { top: 60px; animation: flyIn 1s ease-out 1.7s forwards; }
-        .slope-layer { top: 100px; animation: flyIn 1s ease-out 1.9s forwards; }
-
-        .cost-chart {
-            width: 100px;
-            height: 150px;
-            position: absolute;
-            right: 0;
-            top: 50%;
-            transform: translateY(-50%);
-            display: flex;
-            flex-direction: column-reverse; /* Stack from bottom */
-            border-radius: 8px;
-            background: rgba(255,255,255,0.1);
-            padding: 5px;
-            border: 1px solid rgba(255,255,255,0.2);
-        }
-        
-        .cost-segment {
-            width: 100%;
-            border-radius: 4px;
-            margin-top: 5px;
-            position: relative;
-            transform-origin: bottom;
-            transform: scaleY(0);
-            text-align: center;
-            font-size: 10px;
-            font-weight: 500;
-            color: white;
-            padding: 2px 0;
-        }
-
-        .base-cost { background: #22c55e; animation: stackBar 0.5s ease-out 3s forwards; }
-        .foundation-cost { background: #eab308; animation: stackBar 0.5s ease-out 3.5s forwards; }
-        .seismic-cost { background: #ef4444; animation: stackBar 0.5s ease-out 4s forwards; }
-
-        .total-cost {
-            position: absolute;
-            top: -25px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 14px;
-            font-weight: bold;
-            color: white;
-            opacity: 0;
-            animation: showTotal 1s ease-out 4.5s forwards;
-        }
-        
-
-        @keyframes slideIn {
-            from { transform: translateY(-50%) translateX(-50px) scale(0.8); opacity: 0; }
-            to { transform: translateY(-50%) translateX(0) scale(1); opacity: 1; }
-        }
-        @keyframes flyIn {
-            0% { transform: translateX(50px); opacity: 0; }
-            50% { transform: translateX(-10px); opacity: 1; }
-            100% { transform: translateX(0); opacity: 0; } /* Disappears after 'merging' */
-        }
-        @keyframes stackBar {
-            from { transform: scaleY(0); }
-            to { transform: scaleY(1); }
-        }
-        @keyframes showTotal { from { opacity: 0; } to { opacity: 1; } }
-
-        /* --- BİTİŞ: YENİ GÖRSEL ANİMASYON CSS KODLARI --- */
-
-        .hero-image::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.1) 50%, transparent 70%);
-            animation: shimmer 3s ease-in-out infinite;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
-        }
-
-        @keyframes shimmer {
-            0%, 100% { transform: translateX(-100%); }
-            50% { transform: translateX(100%); }
+            
+            background-image: url('../images/image-product-investment-tool.png');
+            background-size: cover;
+            background-position: center center;
+            background-repeat: no-repeat;
         }
 
         /* Details Section */
@@ -332,7 +194,7 @@
         }
 
         .details-text {
-            font-size: 1.1rem;
+            font-size: 1.5rem;
             line-height: 1.8;
             color: #1f2937;
             text-align: justify;
@@ -363,7 +225,7 @@
         }
 
         .features-subtitle {
-            font-size: 1.2rem;
+            font-size: 1.5rem;
             color: rgba(255, 255, 255, 0.7);
             max-width: 600px;
             margin: 0 auto;
@@ -401,13 +263,14 @@
         }
 
         .feature-title {
-            font-size: 1.25rem;
+            font-size: 1.6rem;
             font-weight: 600;
             color: #1f2937;
             margin-bottom: 1rem;
         }
 
         .feature-description {
+            font-size: 1.6rem;
             color: #6b7280;
             line-height: 1.6;
         }
@@ -481,6 +344,10 @@
             .features-grid {
                 grid-template-columns: 1fr;
             }
+
+            .hero-image {
+                height: 300px;
+            }
         }
     </style>
 </head>
@@ -492,9 +359,7 @@
             <div class="hero-container">
                 <div class="hero-content">
                     <div class="hero-text">
-                        <div class="hero-badge">
-                            🏗️ Investment Planning
-                        </div>
+                        
                         <h1 class="hero-title">New Investments Tool</h1>
                         <p class="hero-subtitle">
                             AI-powered construction cost prediction leveraging global hazard datasets and geotechnical data for data-driven investment planning and project feasibility assessment.
@@ -506,23 +371,8 @@
                     </div>
                     <div class="hero-visual">
                         <div class="hero-image">
-                            <div class="investment-viz">
-                                <div class="viz-map">
-                                    <div class="footprint"></div>
-                                </div>
-                                <div class="data-layers">
-                                    <div class="data-layer seismic-layer">🌊</div>
-                                    <div class="data-layer soil-layer">⛰️</div>
-                                    <div class="data-layer slope-layer">📐</div>
-                                </div>
-                                <div class="cost-chart">
-                                     <div class="total-cost">$2.1M</div>
-                                    <div class="cost-segment seismic-cost" style="flex-basis: 25%;">Risk</div>
-                                    <div class="cost-segment foundation-cost" style="flex-basis: 30%;">Foundation</div>
-                                    <div class="cost-segment base-cost" style="flex-basis: 45%;">Base</div>
-                                </div>
-                            </div>
-                            </div>
+                            <!-- sol14.png background image is applied via CSS -->
+                        </div>
                     </div>
                 </div>
             </div>
