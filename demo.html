@@ -17,6 +17,8 @@
       --cream:#f1f1e6;
       --border:#e5e7eb;
       --text-secondary:#374151;
+      --success-green: #10b981;
+      --error-red: #ef4444;
     }
     
     *{box-sizing:border-box}
@@ -78,6 +80,7 @@
       padding: 40px;
       box-shadow: 0 4px 20px rgba(0,0,0,0.08);
       border: 1px solid var(--border);
+      position: relative;
     }
     
     .form-container h2{
@@ -160,12 +163,22 @@
       font-weight: 600;
       font-size: 16px;
       cursor: pointer;
-      transition: background-color 0.2s ease;
+      transition: all 0.2s ease;
       margin-top: 8px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
     }
     
-    .submit-btn:hover{
+    .submit-btn:hover:not(:disabled){
       filter: brightness(0.95);
+    }
+
+    .submit-btn:disabled {
+      background: #6b7280;
+      cursor: not-allowed;
     }
     
     .legal-text{
@@ -182,6 +195,141 @@
     
     .legal-text a:hover{
       text-decoration: underline;
+    }
+
+    .form-group input.error,
+    .form-group select.error{
+      border-color: var(--error-red);
+      background-color: rgba(239, 68, 68, 0.05);
+    }
+
+    .error-message {
+      color: var(--error-red);
+      font-size: 12px;
+      margin-top: 4px;
+      display: block;
+    }
+
+    /* Toast Notification */
+    .toast {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: white;
+      border-radius: 8px;
+      padding: 16px 20px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+      border-left: 4px solid;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      z-index: 1000;
+      transform: translateX(400px);
+      transition: transform 0.3s ease;
+      max-width: 400px;
+    }
+
+    .toast.show {
+      transform: translateX(0);
+    }
+
+    .toast.success {
+      border-left-color: var(--success-green);
+    }
+
+    .toast.error {
+      border-left-color: var(--error-red);
+    }
+
+    .toast-icon {
+      font-size: 20px;
+    }
+
+    .toast.success .toast-icon {
+      color: var(--success-green);
+    }
+
+    .toast.error .toast-icon {
+      color: var(--error-red);
+    }
+
+    .toast-content h4 {
+      margin: 0 0 4px 0;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .toast-content p {
+      margin: 0;
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+
+    /* Loading Spinner */
+    .spinner {
+      width: 20px;
+      height: 20px;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-top: 2px solid white;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* Success Overlay */
+    .success-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(31, 41, 55, 0.95);
+      border-radius: 12px;
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: white;
+      padding: 40px;
+    }
+
+    .success-overlay.show {
+      display: flex;
+    }
+
+    .success-overlay .success-icon {
+      font-size: 48px;
+      color: var(--success-green);
+      margin-bottom: 20px;
+    }
+
+    .success-overlay h3 {
+      font-size: 24px;
+      margin: 0 0 12px 0;
+      font-weight: 400;
+    }
+
+    .success-overlay p {
+      font-size: 16px;
+      margin: 0 0 24px 0;
+      opacity: 0.8;
+      line-height: 1.5;
+    }
+
+    .success-overlay .btn {
+      background: var(--bright-blue);
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 14px;
     }
 
     @media (max-width: 960px){
@@ -201,6 +349,17 @@
       
       .form-container{
         padding: 32px 24px;
+      }
+
+      .toast {
+        right: 10px;
+        left: 10px;
+        transform: translateY(-100px);
+        max-width: none;
+      }
+
+      .toast.show {
+        transform: translateY(0);
       }
     }
     
@@ -242,16 +401,19 @@
         <div class="form-group">
           <label for="email">Business Email*</label>
           <input id="email" name="email" type="email" placeholder="Business Email*" required>
+          <span class="error-message" id="email-error"></span>
         </div>
 
         <div class="form-row">
           <div class="form-group">
             <label for="fname">First Name*</label>
             <input id="fname" name="first_name" type="text" placeholder="First Name*" required>
+            <span class="error-message" id="fname-error"></span>
           </div>
           <div class="form-group">
             <label for="lname">Last Name*</label>
             <input id="lname" name="last_name" type="text" placeholder="Last Name*" required>
+            <span class="error-message" id="lname-error"></span>
           </div>
         </div>
 
@@ -259,10 +421,12 @@
           <div class="form-group">
             <label for="company">Company*</label>
             <input id="company" name="company" type="text" placeholder="Company*" required>
+            <span class="error-message" id="company-error"></span>
           </div>
           <div class="form-group">
             <label for="title">Job Title*</label>
             <input id="title" name="job_title" type="text" placeholder="Job Title*" required>
+            <span class="error-message" id="title-error"></span>
           </div>
         </div>
 
@@ -279,6 +443,7 @@
             <option>Italy</option>
             <option>Other</option>
           </select>
+          <span class="error-message" id="country-error"></span>
         </div>
 
         <div class="form-group">
@@ -296,15 +461,28 @@
           <p class="helper-text">You can unsubscribe anytime using the link at the bottom of our emails.</p>
         </div>
 
-        <button class="submit-btn" type="submit">Request Demo</button>
+        <button class="submit-btn" type="submit" id="submitBtn">
+          <span class="btn-text">Request Demo</span>
+        </button>
         
         <p class="legal-text">
           By submitting this form you agree to our <a href="../legal/privacy.html">Privacy Policy</a> and
           <a href="/legal/use.html">Terms of Use</a>.
         </p>
       </form>
+
+      <!-- Success Overlay -->
+      <div class="success-overlay" id="successOverlay">
+        <div class="success-icon">✅</div>
+        <h3>Demo Request Sent!</h3>
+        <p>Thank you for your interest! Our team will contact you within 24 hours to schedule your personalized demo.</p>
+        <button class="btn" onclick="resetForm()">Send Another Request</button>
+      </div>
     </section>
   </main>
+
+  <!-- Toast Container -->
+  <div id="toastContainer"></div>
 
   <!-- Footer placeholder -->
   <div id="footer-placeholder"></div>
@@ -325,10 +503,106 @@
       });
   </script>
 
-  <!-- Form submit handler -->
   <script>
+    // Form validation
+    function validateForm() {
+      let isValid = true;
+      
+      // Clear previous errors
+      document.querySelectorAll('.error-message').forEach(msg => msg.textContent = '');
+      document.querySelectorAll('.error').forEach(field => field.classList.remove('error'));
+      
+      // Required fields validation
+      const fields = [
+        { id: 'email', name: 'Business Email', type: 'email' },
+        { id: 'fname', name: 'First Name' },
+        { id: 'lname', name: 'Last Name' },
+        { id: 'company', name: 'Company' },
+        { id: 'title', name: 'Job Title' },
+        { id: 'country', name: 'Country' }
+      ];
+      
+      fields.forEach(field => {
+        const element = document.getElementById(field.id);
+        const errorElement = document.getElementById(field.id + '-error');
+        const value = element.value.trim();
+        
+        // Check if required field is empty
+        if (!value) {
+          element.classList.add('error');
+          errorElement.textContent = `${field.name} is required`;
+          isValid = false;
+          return;
+        }
+        
+        // Email validation
+        if (field.type === 'email' && value) {
+          const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+          if (!emailRegex.test(value)) {
+            element.classList.add('error');
+            errorElement.textContent = 'Please enter a valid email address';
+            isValid = false;
+          }
+        }
+      });
+      
+      return isValid;
+    }
+
+    // Clear error on input
+    document.querySelectorAll('input, select').forEach(field => {
+      field.addEventListener('input', function() {
+        this.classList.remove('error');
+        const errorElement = document.getElementById(this.id + '-error');
+        if (errorElement) {
+          errorElement.textContent = '';
+        }
+      });
+    });
+
+    // Toast Notification System
+    function showToast(type, title, message) {
+      const toast = document.createElement('div');
+      toast.className = `toast ${type}`;
+      
+      const icon = type === 'success' ? '✅' : '❌';
+      
+      toast.innerHTML = `
+        <div class="toast-icon">${icon}</div>
+        <div class="toast-content">
+          <h4>${title}</h4>
+          <p>${message}</p>
+        </div>
+      `;
+      
+      document.getElementById('toastContainer').appendChild(toast);
+      
+      // Show toast
+      setTimeout(() => toast.classList.add('show'), 100);
+      
+      // Hide and remove toast
+      setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => toast.remove(), 300);
+      }, 4000);
+    }
+
+    // Form submission with better UX
     document.getElementById("demoForm").addEventListener("submit", async function(e) {
       e.preventDefault();
+      
+      // Validate form before submission
+      if (!validateForm()) {
+        showToast('error', 'Form Incomplete', 'Please fill in all required fields correctly.');
+        return;
+      }
+      
+      const submitBtn = document.getElementById('submitBtn');
+      const successOverlay = document.getElementById('successOverlay');
+      
+      // Show loading state
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<div class="spinner"></div> <span>Sending...</span>';
       
       const data = Object.fromEntries(new FormData(e.target).entries());
 
@@ -340,12 +614,40 @@
         });
 
         const result = await response.json();
-        alert(result.message || "Talebiniz başarıyla gönderildi.");
+        
+        // Show success overlay (covers the form)
+        successOverlay.classList.add('show');
+        
+        // Reset button (will be hidden by overlay anyway)
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = '<span class="btn-text">Request Demo</span>';
+        
       } catch (error) {
-        alert("Bir hata oluştu, lütfen tekrar deneyin.");
+        // Show error toast
+        showToast('error', 'Submission Failed', 'Please try again or contact support.');
+        
+        // Reset button
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = '<span class="btn-text">Request Demo</span>';
+        
         console.error(error);
       }
     });
+
+    // Reset form function
+    function resetForm() {
+      document.getElementById('demoForm').reset();
+      document.getElementById('successOverlay').classList.remove('show');
+    }
+
+    // Simulate different response scenarios for demo
+    function simulateError() {
+      showToast('error', 'Network Error', 'Please check your connection and try again.');
+    }
+
+    function simulateSuccess() {
+      showToast('success', 'Demo Booked!', 'Check your email for confirmation details.');
+    }
   </script>
 
   <script src="js/header.js"></script>
