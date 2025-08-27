@@ -20,7 +20,7 @@ class HeroVideoCarousel {
                 title: "Seismic Risk Predictor",
                 subtitle: "",
                 description: "Seismic risk prediction <strong>in seconds</strong> from geographic coordinates — rapid screening for individual structures, and portfolio-scale analysis powering Insurance, Finance, Investment, and Asset Management decisions.",
-                ctaText: "Start Assessment",
+                ctaText: null,
                 stats: [
                     { number: "3000+", label: "Buildings Assessed" },
                     { number: "100+", label: "Countries Covered" },
