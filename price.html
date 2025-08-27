@@ -286,10 +286,25 @@
                         <ul class="features">
                             ${plan.features.map(feature => `<li>${feature}</li>`).join('')}
                         </ul>
-                        <button class="cta-button cta-${plan.type}">${plan.cta}</button>
+                        <button class="cta-button cta-${plan.type}" onclick="handleCTA('${key}', '${plan.cta}')">${plan.cta}</button>
                     </div>
                 `;
             }).join('');
+        }
+
+        // Bu fonksiyonu da ekleyin
+        function handleCTA(planKey, ctaText) {
+            if (ctaText === 'Contact Sales') {
+                // Contact sayfasına yönlendir
+                window.location.href = '../demo.html';
+                // Veya email açmak için:
+                // window.location.href = 'mailto:sales@yourcompany.com?subject=Enterprise Plan Inquiry';
+            } else if (ctaText === 'Get Started') {
+                // Kayıt sayfasına yönlendir
+                window.location.href = '../demo.html';
+                // Veya başka bir sayfaya:
+                // window.location.href = 'register.html';
+            }
         }
 
         // Initialize the page
