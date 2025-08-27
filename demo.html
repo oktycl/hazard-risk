@@ -39,37 +39,12 @@
       align-items: start;
     }
     
-    .brand{
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      font-weight: 700;
-      font-size: 18px;
-      color: var(--bright-blue);
-      margin-bottom: 32px;
-    }
-    
-    .brand .dot{
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: var(--bright-blue);
-      display: inline-block;
-    }
-    
     .hero-copy h1{
       font-size: 48px;
       line-height: 1.2;
       margin: 0 0 40px;
       font-weight: 300;
       color: var(--dark-slate);
-    }
-    
-    .lead{
-      font-size: 18px;
-      color: var(--text-secondary);
-      margin-bottom: 40px;
-      line-height: 1.6;
     }
     
     .bullets{
@@ -97,20 +72,6 @@
       margin-top: -2px;
     }
     
-    .logos{
-      display: flex;
-      gap: 40px;
-      flex-wrap: wrap;
-      align-items: center;
-      opacity: 0.7;
-    }
-    
-    .logos img{
-      height: 32px;
-      filter: grayscale(1);
-      opacity: 0.8;
-    }
-
     .form-container{
       background: #1f2937;
       border-radius: 12px;
@@ -146,8 +107,7 @@
     }
     
     .form-group input,
-    .form-group select,
-    .form-group textarea{
+    .form-group select{
       width: 100%;
       padding: 14px 16px;
       border: 2px solid var(--border);
@@ -158,8 +118,7 @@
     }
     
     .form-group input:focus,
-    .form-group select:focus,
-    .form-group textarea:focus{
+    .form-group select:focus{
       border-color: var(--bright-blue);
     }
     
@@ -263,10 +222,9 @@
   <div id="header-placeholder"></div>
 
   <main class="wrapper">
-    <!-- LEFT: Value proposition -->
+    <!-- LEFT -->
     <section class="hero-copy">
       <h1>Try Hazard & Risk for free</h1>
-      
       <ul class="bullets">
         <li>Run instant building risk assessments with only an address or map location</li>
         <li>Visualize hazard and soil conditions through high-resolution hazard & regional maps</li>
@@ -274,15 +232,13 @@
         <li>Support for insurers, engineers, and public agencies to make faster, data-driven decisions</li>
         <li>Downloadable reports – generate PDF/Excel reports ready to share with stakeholders</li>
       </ul>
-
-      
     </section>
 
-    <!-- RIGHT: Form -->
+    <!-- RIGHT -->
     <section class="form-container" aria-label="Free trial request form">
       <h2>Book your demo now</h2>
 
-      <form class="form-grid" action="/api/trial-request" method="post" novalidate>
+      <form id="demoForm" class="form-grid" novalidate>
         <div class="form-group">
           <label for="email">Business Email*</label>
           <input id="email" name="email" type="email" placeholder="Business Email*" required>
@@ -368,7 +324,30 @@
         document.getElementById('footer-placeholder').innerHTML = data;
       });
   </script>
-  
+
+  <!-- Form submit handler -->
+  <script>
+    document.getElementById("demoForm").addEventListener("submit", async function(e) {
+      e.preventDefault();
+      
+      const data = Object.fromEntries(new FormData(e.target).entries());
+
+      try {
+        const response = await fetch("https://ib75iyeqt1.execute-api.eu-north-1.amazonaws.com/prod/demo-request", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data)
+        });
+
+        const result = await response.json();
+        alert(result.message || "Talebiniz başarıyla gönderildi.");
+      } catch (error) {
+        alert("Bir hata oluştu, lütfen tekrar deneyin.");
+        console.error(error);
+      }
+    });
+  </script>
+
   <script src="js/header.js"></script>
 </body>
 </html>
