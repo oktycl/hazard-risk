@@ -198,6 +198,33 @@
         }
 
         @media (max-width: 768px) {
+            .process-visual-slide {
+                padding: 20px; /* daha küçük iç boşluk */
+            }
+
+            .process-visual-slide img {
+                max-width: 100%;
+                height: auto;
+                margin-bottom: 10px; /* resim ile yazı arası daralsın */
+            }
+
+            .process-visual-slide h2 {
+                font-size: 15px;   /* başlık küçültülür */
+                margin-bottom: 10px;
+            }
+
+            .process-visual-slide p {
+                font-size: 10px;   /* açıklama küçültülür */
+                line-height: 1.4;  /* satır aralığı daraltılır */
+                max-width: 90%;    /* taşmayı engeller */
+                margin: 0 auto;    /* ortalar */
+            }
+
+            .process-timeline-visual {
+                min-height: auto;  /* sabit yükseklik yerine içeriğe göre ayarlansın */
+                height: auto;
+                padding: 15px;
+            }
             .process-timeline-content {
                 grid-template-columns: 1fr;
                 gap: 30px;
