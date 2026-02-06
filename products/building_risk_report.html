@@ -18,13 +18,12 @@
             line-height: 1.6;
             color: #1F2937;
             overflow-x: hidden;
-            font-size: 1.4em; /* İki sayfada da aynı olsun */
+            font-size: 1.4em;
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
-        /* Natural Palette Colors */
         :root {
             --dark-slate: #1f2937;
             --bright-blue: #0097fb;
@@ -32,13 +31,11 @@
             --cream-white: #f1f1e6;
         }
 
-        /* Main Content */
         .main-content {
             flex: 1;
-            margin-top: 4rem; /* Desktop header height */
+            margin-top: 4rem;
         }
 
-        /* Hero Section */
         .hero {
             background: var(--dark-slate);
             padding: 4rem 0 6rem;
@@ -162,15 +159,12 @@
             border-radius: 2rem;
             position: relative;
             overflow: hidden;        
-            background-image: url('../images/image-product-seismic-risk.png');
+            background-image: url('../images/image-product-seismic-risk-2.png');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
         }
 
-       
-
-        /* Features Section */
         .features {
             padding: 6rem 0;
             background: #1f2937;
@@ -244,7 +238,6 @@
             line-height: 1.6;
         }
 
-        /* Details Section */
         .details {
             padding: 6rem 0;
             background: white;
@@ -283,7 +276,17 @@
             font-weight: 600;
         }
 
-        /* Responsive Design */
+        .details-image-wrapper {
+            margin: 2.5rem 0;
+            text-align: center;
+        }
+
+        .details-image-wrapper img {
+            width: 100%;
+            max-width: 960px;
+            border-radius: 1rem;
+        }
+
         @media (max-width: 768px) {
             .main-content {
                 margin-top: 3.5rem;
@@ -378,9 +381,7 @@
                         </div>
                     </div>
                     <div class="hero-visual">
-                        <div class="hero-image" id="heroContainer">
-                            <!-- sol10.png background image is applied via CSS -->
-                        </div>
+                        <div class="hero-image" id="heroContainer"></div>
                     </div>
                 </div>
             </div>
@@ -392,7 +393,11 @@
                     <h2 class="details-title">Advanced Technology for Critical Decisions</h2>
                     <div class="details-text">
                         Our Building Risk Report leverages advanced hybrid AI algorithms to deliver fast, high-accuracy seismic risk assessments for both individual structures and large-scale property portfolios. This technology is specifically designed for insurers, reinsurers, and asset managers who often operate with limited property data and require rapid, reliable insights to inform underwriting, investment, and risk mitigation decisions.
-                        <br><br>
+
+                        <div class="details-image-wrapper">
+                            <img src="../images/image-product-seismic-risk-3.png" alt="Seismic Risk Predictor - Real-time portfolio risk visualization on satellite imagery">
+                        </div>
+
                         The system performs an AI-powered rapid visual screening, applying the FEMA P-154 methodology to calculate probability of collapse alongside key building-specific risk factors. Using only geographic coordinates as input, our algorithms detect and evaluate multiple parameters: structural system type, construction material, year built, number of stories, design code compliance, vertical and plan irregularities, adjacent building proximity (pounding risk), and soil classification derived from authoritative datasets such as USGS or detailed local geotechnical surveys. Spectral acceleration values are incorporated to ensure the seismic demand is accurately represented for each site.
                         <br><br>
                         For contents coverage, the platform calculates floor-level accelerations to assess the likelihood of damage to non-structural components and valuable equipment. Additional hazards, such as nearby deep excavations, are also factored into the evaluation.
@@ -413,42 +418,36 @@
                 </div>
                 <div class="features-grid">
                     <div class="feature-card">
-                        
                         <h3 class="feature-title">Rapid Visual Screening</h3>
                         <p class="feature-description">
                             AI-powered analysis applying FEMA P-154 methodology to calculate probability of collapse with only geographic coordinates as input.
                         </p>
                     </div>
                     <div class="feature-card">
-                        
                         <h3 class="feature-title">Structural Analysis</h3>
                         <p class="feature-description">
                             Detects structural system type, construction material, year built, number of stories, and design code compliance automatically.
                         </p>
                     </div>
                     <div class="feature-card">
-                        
                         <h3 class="feature-title">Geospatial Intelligence</h3>
                         <p class="feature-description">
                             Incorporates soil classification from USGS data and detailed local geotechnical surveys for accurate site-specific analysis.
                         </p>
                     </div>
                     <div class="feature-card">
-                       
                         <h3 class="feature-title">API Integration</h3>
                         <p class="feature-description">
                             Secure API interface delivers comprehensive risk profiles within seconds, perfect for portfolio-scale analysis.
                         </p>
                     </div>
                     <div class="feature-card">
-                        
                         <h3 class="feature-title">Contents Coverage</h3>
                         <p class="feature-description">
                             Calculates floor-level accelerations to assess the likelihood of damage to non-structural components and valuable equipment.
                         </p>
                     </div>
                     <div class="feature-card">
-                        
                         <h3 class="feature-title">Risk Factors</h3>
                         <p class="feature-description">
                             Evaluates vertical and plan irregularities, adjacent building proximity (pounding risk), and nearby excavation hazards.
@@ -462,21 +461,18 @@
     <div id="footer-placeholder"></div>
 
     <script>
-        // Load header
         fetch('../header.html')
             .then(response => response.text())
             .then(data => {
                 document.getElementById('header-placeholder').innerHTML = data;
             });
 
-        // Load footer
         fetch('../footer.html')
             .then(response => response.text())
             .then(data => {
                 document.getElementById('footer-placeholder').innerHTML = data;
             });
 
-        // Smooth scrolling for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -490,7 +486,6 @@
             });
         });
 
-        // Intersection Observer for animations
         const observerOptions = {
             threshold: 0.1,
             rootMargin: '0px 0px -50px 0px'
@@ -505,7 +500,6 @@
             });
         }, observerOptions);
 
-        // Animate elements on scroll
         document.querySelectorAll('.feature-card, .details-content').forEach(el => {
             el.style.opacity = '0';
             el.style.transform = 'translateY(30px)';
@@ -513,7 +507,6 @@
             observer.observe(el);
         });
 
-        // Header scroll effect
         window.addEventListener('scroll', function() {
             const header = document.querySelector('.header');
             if (header) {
