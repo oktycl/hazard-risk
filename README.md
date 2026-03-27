@@ -28,7 +28,7 @@ hazard-risk-vanilla/
 └── README.md          # This file
 ```
 
-## Integration with Express.js/EJS Project.
+## Integration with Express.js/EJS Project
 
 ### Method 1: Replace Homepage (Recommended)
 
