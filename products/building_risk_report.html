@@ -14,12 +14,14 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
             line-height: 1.6;
-            color: #1f2937;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
+            color: #1F2937;
+            overflow-x: hidden;
+            font-size: 1.4em; /* İki sayfada da aynı olsun */
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
         /* Natural Palette Colors */
@@ -157,377 +159,16 @@
             width: 100%;
             max-width: 500px;
             height: 400px;
-            background: linear-gradient(135deg, var(--bright-blue), #2563eb);
             border-radius: 2rem;
             position: relative;
-            overflow: hidden;
-            box-shadow: 0 20px 60px rgba(0, 151, 251, 0.3);
-            animation: float 6s ease-in-out infinite;
-            cursor: pointer;
-            perspective: 1000px;
+            overflow: hidden;        
+            background-image: url('../images/image-product-seismic-risk.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
         }
 
-        /* Interactive Map to 3D Scanner Animation */
-        
-        /* Stage 1: Map View */
-        .map-stage {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background: 
-                radial-gradient(circle at 30% 40%, rgba(255,255,255,0.1) 1px, transparent 1px),
-                radial-gradient(circle at 70% 60%, rgba(255,255,255,0.1) 1px, transparent 1px),
-                linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
-            background-size: 40px 40px, 35px 35px, 20px 20px, 20px 20px;
-            opacity: 1;
-            transition: all 1s ease;
-        }
-
-        .map-stage.hidden {
-            opacity: 0;
-            transform: scale(0.8);
-        }
-
-        /* Buildings on map */
-        .map-building {
-            position: absolute;
-            background: rgba(255, 255, 255, 0.3);
-            border-radius: 4px;
-            transition: all 0.3s ease;
-        }
-
-        .map-building.selected {
-            background: white;
-            box-shadow: 0 0 20px rgba(255, 255, 255, 0.6);
-            animation: selected-pulse 2s ease-in-out infinite;
-        }
-
-        .building-1 { top: 80px; left: 100px; width: 35px; height: 50px; }
-        .building-2 { top: 120px; left: 220px; width: 30px; height: 70px; }
-        .building-3 { top: 200px; left: 80px; width: 45px; height: 35px; }
-        .building-4 { top: 180px; left: 320px; width: 40px; height: 60px; }
-        .building-5 { top: 250px; left: 240px; width: 50px; height: 40px; }
-
-        /* Target building (the one we'll focus on) */
-        .target-building {
-            top: 150px;
-            left: 200px;
-            width: 45px;
-            height: 65px;
-            z-index: 10;
-        }
-
-        /* Scanning cursor */
-        .scan-cursor {
-            position: absolute;
-            width: 25px;
-            height: 25px;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 1v6m0 6v6"/><path d="m21 12-6 0m-6 0-6 0"/></svg>');
-            z-index: 20;
-            opacity: 0;
-            animation: cursor-move 4s ease-in-out 1s forwards;
-        }
-
-        /* Stage 2: Building Extraction & 3D Generation */
-        .extraction-stage {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            transform: scale(1.2);
-            transition: all 1s ease;
-        }
-
-        .extraction-stage.active {
-            opacity: 1;
-            transform: scale(1);
-        }
-
-        .building-extraction {
-            position: relative;
-            width: 200px;
-            height: 200px;
-        }
-
-        /* 3D Building Model */
-        .building-3d {
-            width: 70px;
-            height: 110px;
-            background: rgba(255, 255, 255, 0.9);
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%) rotateY(0deg) rotateX(0deg) scale(0);
-            border-radius: 4px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            animation: building-generate 2s ease-out 0.5s forwards, building-rotate 8s ease-in-out 3s infinite;
-        }
-
-        .building-3d::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            right: -22px;
-            width: 22px;
-            height: 110px;
-            background: rgba(255, 255, 255, 0.7);
-            transform: skewY(15deg);
-            border-radius: 0 4px 4px 0;
-        }
-
-        .building-3d::after {
-            content: '';
-            position: absolute;
-            top: -22px;
-            left: 0;
-            right: -22px;
-            height: 22px;
-            background: rgba(255, 255, 255, 0.8);
-            transform: skewX(15deg);
-            border-radius: 4px 4px 0 0;
-        }
-
-        /* Stage 3: AI Scanning */
-        .scan-lines {
-            position: absolute;
-            width: 150px;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, #00ff88, transparent);
-            left: 50%;
-            transform: translateX(-50%);
-            opacity: 0;
-            animation: scan-building 3s ease-in-out 3s infinite;
-        }
-
-        /* Data extraction points */
-        .data-point {
-            position: absolute;
-            width: 6px;
-            height: 6px;
-            background: #00ff88;
-            border-radius: 50%;
-            opacity: 0;
-            animation: data-extract 0.5s ease-out forwards;
-        }
-
-        .point-1 { top: 25%; left: 20%; animation-delay: 4s; }
-        .point-2 { top: 55%; right: 15%; animation-delay: 4.3s; }
-        .point-3 { bottom: 35%; left: 25%; animation-delay: 4.6s; }
-        .point-4 { top: 35%; right: 20%; animation-delay: 4.9s; }
-
-        /* Stage 4: AI Processing */
-        .ai-processing {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            background: rgba(0, 0, 0, 0.7);
-            padding: 12px;
-            border-radius: 8px;
-            font-size: 11px;
-            opacity: 0;
-            animation: show-processing 1s ease-out 5s forwards;
-        }
-
-        .processing-line {
-            display: flex;
-            align-items: center;
-            margin-bottom: 4px;
-        }
-
-        .processing-dot {
-            width: 5px;
-            height: 5px;
-            background: #00ff88;
-            border-radius: 50%;
-            margin-right: 6px;
-            animation: processing-pulse 1.5s ease-in-out infinite;
-        }
-
-        /* Stage 5: Risk Score with Arrow - Above Building */
-        .risk-score-container {
-            position: absolute;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            opacity: 0;
-            /* Animation will be controlled by JavaScript */
-        }
-
-        .score-arrow {
-            width: 0;
-            height: 0;
-            border-left: 8px solid transparent;
-            border-right: 8px solid transparent;
-            border-top: 12px solid #ef4444;
-            margin: 0 auto 3px;
-            position: relative;
-        }
-
-        .score-arrow::after {
-            content: '';
-            position: absolute;
-            top: -12px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 2px;
-            height: 15px;
-            background: #ef4444;
-        }
-
-        .risk-score {
-            background: #ef4444;
-            color: white;
-            padding: 8px 12px;
-            border-radius: 6px;
-            text-align: center;
-            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4);
-            min-width: 80px;
-            font-size: 10px;
-        }
-
-        .score-value {
-            font-size: 14px;
-            font-weight: 700;
-            margin-bottom: 2px;
-        }
-
-        .score-divider {
-            width: 100%;
-            height: 1px;
-            background: rgba(255, 255, 255, 0.4);
-            margin: 2px 0;
-        }
-
-        .score-label {
-            font-size: 8px;
-            opacity: 0.9;
-            font-weight: 500;
-        }
-
-        /* Progress indicator */
-        .progress-bar {
-            position: absolute;
-            bottom: 15px;
-            left: 15px;
-            right: 15px;
-            height: 3px;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 2px;
-            overflow: hidden;
-        }
-
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #00ff88, var(--bright-blue));
-            width: 0;
-            border-radius: 2px;
-            animation: progress-fill 8s ease-in-out forwards;
-        }
-
-        /* Restart button - REMOVED */
-
-        /* Status Messages */
-        .status-text {
-            position: absolute;
-            top: 45px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(0, 0, 0, 0.7);
-            padding: 8px 16px;
-            border-radius: 16px;
-            font-size: 12px;
-            font-weight: 500;
-            opacity: 0;
-            white-space: nowrap;
-        }
-
-        .status-1 { animation: show-status 2s ease-in-out 1s forwards; }
-        .status-2 { animation: show-status 2s ease-in-out 3s forwards; }
-        .status-3 { animation: show-status 2s ease-in-out 5s forwards; }
-        .status-4 { animation: show-status 2s ease-in-out 7s forwards; }
-
-        /* Animations */
-        @keyframes selected-pulse {
-            0%, 100% { box-shadow: 0 0 15px rgba(255, 255, 255, 0.6); }
-            50% { box-shadow: 0 0 25px rgba(255, 255, 255, 0.9); }
-        }
-
-        @keyframes cursor-move {
-            0% { top: 50px; left: 50px; opacity: 0; }
-            10% { opacity: 1; }
-            20% { top: 100px; left: 120px; }
-            40% { top: 200px; left: 280px; }
-            60% { top: 170px; left: 215px; }
-            80% { opacity: 1; }
-            100% { top: 170px; left: 215px; opacity: 0; }
-        }
-
-        @keyframes building-generate {
-            0% { transform: translate(-50%, -50%) scale(0) rotateY(0deg); }
-            50% { transform: translate(-50%, -50%) scale(1.2) rotateY(180deg); }
-            100% { transform: translate(-50%, -50%) scale(1) rotateY(360deg); }
-        }
-
-        @keyframes building-rotate {
-            0%, 100% { transform: translate(-50%, -50%) rotateY(15deg) rotateX(5deg); }
-            50% { transform: translate(-50%, -50%) rotateY(-15deg) rotateX(-5deg); }
-        }
-
-        @keyframes scan-building {
-            0%, 100% { top: 15%; opacity: 0; }
-            10% { opacity: 1; }
-            90% { opacity: 1; }
-            100% { top: 75%; opacity: 0; }
-        }
-
-        @keyframes data-extract {
-            0% { opacity: 0; transform: scale(0); }
-            50% { opacity: 1; transform: scale(1.5); }
-            100% { opacity: 1; transform: scale(1); }
-        }
-
-        @keyframes show-processing {
-            0% { opacity: 0; transform: translateY(-10px); }
-            100% { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes processing-pulse {
-            0%, 100% { opacity: 0.3; }
-            50% { opacity: 1; }
-        }
-
-        @keyframes show-score-container {
-            0% { opacity: 0; transform: translateX(-50%) translateY(-10px); }
-            100% { opacity: 1; transform: translateX(-50%) translateY(0); }
-        }
-
-        @keyframes progress-fill {
-            0% { width: 0%; }
-            25% { width: 25%; }
-            50% { width: 50%; }
-            75% { width: 75%; }
-            100% { width: 100%; }
-        }
-
-        @keyframes show-restart {
-            0% { opacity: 0; }
-            100% { opacity: 1; }
-        }
-
-        @keyframes show-status {
-            0%, 80% { opacity: 0; transform: translateX(-50%) translateY(-10px); }
-            10%, 70% { opacity: 1; transform: translateX(-50%) translateY(0); }
-            100% { opacity: 0; transform: translateX(-50%) translateY(10px); }
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
-        }
+       
 
         /* Features Section */
         .features {
@@ -554,8 +195,8 @@
         }
 
         .features-subtitle {
-            font-size: 1.2rem;
-            color: #6b7280;
+            font-size: 1.5rem;
+            color: white;
             max-width: 600px;
             margin: 0 auto;
         }
@@ -592,7 +233,7 @@
         }
 
         .feature-title {
-            font-size: 1.25rem;
+            font-size: 1.6rem;
             font-weight: 600;
             color: #1f2937;
             margin-bottom: 1rem;
@@ -631,7 +272,7 @@
         }
 
         .details-text {
-            font-size: 1.1rem;
+            font-size: 1.5rem;
             line-height: 1.8;
             color: #1f2937;
             text-align: justify;
@@ -726,12 +367,10 @@
             <div class="hero-container">
                 <div class="hero-content">
                     <div class="hero-text">
-                        <div class="hero-badge">
-                            🏢 AI-Powered Risk Assessment
-                        </div>
-                        <h1 class="hero-title">Building Risk Assessment</h1>
+                        
+                        <h1 class="hero-title">Seismic Risk Predictor</h1>
                         <p class="hero-subtitle">
-                            Advanced hybrid AI algorithms deliver fast, high-accuracy seismic risk assessments for individual structures and large-scale property portfolios.
+                            Advanced hybrid AI algorithms deliver fast seismic risk assessments for individual structures and large-scale property portfolios.
                         </p>
                         <div class="hero-cta">
                             <a href="#" class="btn-hero-primary">Start Assessment</a>
@@ -740,65 +379,7 @@
                     </div>
                     <div class="hero-visual">
                         <div class="hero-image" id="heroContainer">
-                            <!-- Stage 1: Map View -->
-                            <div class="map-stage" id="mapStage">
-                                <div class="map-building building-1"></div>
-                                <div class="map-building building-2"></div>
-                                <div class="map-building building-3"></div>
-                                <div class="map-building building-4"></div>
-                                <div class="map-building building-5"></div>
-                                <div class="map-building target-building" id="targetBuilding"></div>
-                                <div class="scan-cursor"></div>
-                            </div>
-
-                            <!-- Stage 2-5: Building Analysis -->
-                            <div class="extraction-stage" id="extractionStage">
-                                <div class="building-extraction">
-                                    <div class="building-3d"></div>
-                                    <div class="scan-lines"></div>
-                                    <div class="data-point point-1"></div>
-                                    <div class="data-point point-2"></div>
-                                    <div class="data-point point-3"></div>
-                                    <div class="data-point point-4"></div>
-                                </div>
-                            </div>
-
-                            <!-- AI Processing Display -->
-                            <div class="ai-processing">
-                                <div class="processing-line">
-                                    <div class="processing-dot"></div>
-                                    <span>Detecting structure...</span>
-                                </div>
-                                <div class="processing-line">
-                                    <div class="processing-dot"></div>
-                                    <span>Analyzing materials...</span>
-                                </div>
-                                <div class="processing-line">
-                                    <div class="processing-dot"></div>
-                                    <span>Calculating risk...</span>
-                                </div>
-                            </div>
-
-                            <!-- Risk Score with Arrow - Above Building -->
-                            <div class="risk-score-container">
-                                <div class="score-arrow"></div>
-                                <div class="risk-score">
-                                    <div class="score-value">12%</div>
-                                    <div class="score-divider"></div>
-                                    <div class="score-label">HIGH RISK</div>
-                                </div>
-                            </div>
-
-                            <!-- Progress Bar -->
-                            <div class="progress-bar">
-                                <div class="progress-fill"></div>
-                            </div>
-
-                            <!-- Status Messages -->
-                            <div class="status-text status-1">Scanning map for buildings...</div>
-                            <div class="status-text status-2">Generating 3D model...</div>
-                            <div class="status-text status-3">AI analyzing structure...</div>
-                            <div class="status-text status-4">Risk assessment complete!</div>
+                            <!-- sol10.png background image is applied via CSS -->
                         </div>
                     </div>
                 </div>
@@ -909,79 +490,6 @@
             });
         });
 
-        let animationTimeout;
-
-        function startAnimation() {
-            // Reset all elements
-            document.getElementById('mapStage').classList.remove('hidden');
-            document.getElementById('extractionStage').classList.remove('active');
-            document.getElementById('targetBuilding').classList.remove('selected');
-            
-            // Hide score at the beginning
-            const scoreContainer = document.querySelector('.risk-score-container');
-            if (scoreContainer) {
-                scoreContainer.style.opacity = '0';
-                scoreContainer.style.animation = 'none';
-            }
-            
-            // Clear any existing timeout
-            if (animationTimeout) {
-                clearTimeout(animationTimeout);
-            }
-
-            // Stage 1: Show cursor moving and selecting building
-            setTimeout(() => {
-                document.getElementById('targetBuilding').classList.add('selected');
-            }, 4500);
-
-            // Stage 2: Hide map, show 3D building
-            setTimeout(() => {
-                document.getElementById('mapStage').classList.add('hidden');
-                document.getElementById('extractionStage').classList.add('active');
-            }, 5500);
-
-            // Stage 3: Show score after AI analysis is complete
-            setTimeout(() => {
-                if (scoreContainer) {
-                    scoreContainer.style.animation = 'show-score-container 1s ease-out forwards';
-                }
-            }, 7000);
-
-            // Auto restart after complete cycle
-            animationTimeout = setTimeout(() => {
-                startAnimation();
-            }, 12000); // Reduced from 15000 to 12000 for quicker cycle
-        }
-
-        function restartAnimation() {
-            // Reset all states
-            document.getElementById('mapStage').classList.remove('hidden');
-            document.getElementById('extractionStage').classList.remove('active');
-            document.getElementById('targetBuilding').classList.remove('selected');
-            
-            // Hide score
-            const scoreContainer = document.querySelector('.risk-score-container');
-            if (scoreContainer) {
-                scoreContainer.style.opacity = '0';
-                scoreContainer.style.animation = 'none';
-            }
-            
-            // Clear timeout and restart
-            if (animationTimeout) {
-                clearTimeout(animationTimeout);
-            }
-            
-            setTimeout(startAnimation, 100);
-        }
-
-        // Auto-start animation when page loads
-        window.addEventListener('load', () => {
-            setTimeout(startAnimation, 1000);
-        });
-
-        // Click to restart - REMOVED automatic click restart
-        // document.getElementById('heroContainer').addEventListener('click', restartAnimation);
-
         // Intersection Observer for animations
         const observerOptions = {
             threshold: 0.1,
@@ -1004,7 +512,21 @@
             el.style.transition = 'all 0.6s ease';
             observer.observe(el);
         });
+
+        // Header scroll effect
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('.header');
+            if (header) {
+                if (window.scrollY > 50) {
+                    header.style.background = '#1f2937';
+                    header.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.15)';
+                } else {
+                    header.style.boxShadow = 'none';
+                }
+            }
+        });
     </script>
+        
     <script src="../js/header.js"></script>
 </body>
 </html>

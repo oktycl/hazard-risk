@@ -157,157 +157,14 @@
             width: 100%;
             max-width: 500px;
             height: 400px;
-            background: linear-gradient(135deg, var(--bright-blue), #2563eb);
             border-radius: 2rem;
             position: relative;
             overflow: hidden;
-            box-shadow: 0 20px 60px rgba(0, 151, 251, 0.3);
-            animation: float 6s ease-in-out infinite;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        /* --- BAŞLANGIç: YENİ GÖRSEL ANİMASYON CSS KODLARI --- */
-        .prediction-flow {
-            width: 200px;
-            height: 150px;
-            position: relative;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .building-outline {
-            width: 70px;
-            height: 90px;
-            border: 2px solid rgba(255, 255, 255, 0.8);
-            border-radius: 4px;
-            position: absolute;
-            left: 0;
-            top: 50%;
-            transform: translateY(-50%);
-            opacity: 0;
-            animation: fadeIn 1s ease-out 0.5s forwards;
-        }
-
-        .building-outline::before {
-            content: 'AI';
-            font-weight: 600;
-            font-size: 14px;
-            color: white;
-            position: absolute;
-            top: -25px;
-            left: 50%;
-            transform: translateX(-50%);
-        }
-
-        .result-chart {
-            width: 100px;
-            height: 100px;
-            position: absolute;
-            right: 0;
-            top: 50%;
-            transform: translateY(-50%);
-            display: flex;
-            align-items: flex-end;
-            gap: 5px;
-            padding: 5px;
-        }
-
-        .chart-bar {
-            width: 100%;
-            background: rgba(255, 255, 255, 0.3);
-            border-radius: 3px 3px 0 0;
-            position: relative;
-            overflow: hidden;
-            transform-origin: bottom;
-            animation: growBaseline 1s ease-out 1.5s forwards;
-        }
-
-        .chart-bar::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 0%;
-            background: white;
-            border-radius: 3px 3px 0 0;
-            animation: growRefined 1s ease-out 3.5s forwards;
-        }
-
-        .chart-bar:nth-child(1) { height: 50%; }
-        .chart-bar:nth-child(1)::after { animation-name: growRefined1; }
-        .chart-bar:nth-child(2) { height: 70%; animation-delay: 1.6s; }
-        .chart-bar:nth-child(2)::after { animation-name: growRefined2; }
-        .chart-bar:nth-child(3) { height: 40%; animation-delay: 1.7s; }
-        .chart-bar:nth-child(3)::after { animation-name: growRefined3; }
-
-        .user-input {
-            width: 30px;
-            height: 30px;
-            background: white;
-            border-radius: 50%;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) scale(0);
-            color: var(--bright-blue);
-            font-size: 24px;
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 0 15px white;
-            animation: popIn 0.5s ease-out 2.8s forwards;
-        }
-        
-        .result-label {
-            position: absolute;
-            bottom: 0px;
-            right: 5px;
-            font-size: 10px;
-            font-weight: 500;
-            color: white;
-            opacity: 0;
-        }
-        .baseline-label { animation: fadeLabelIn 1s ease 1.5s forwards, fadeLabelOut 1s ease 3s forwards; }
-        .refined-label { animation: fadeLabelIn 1s ease 3.5s forwards; }
-
-
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        @keyframes growBaseline { from { transform: scaleY(0); } to { transform: scaleY(1); } }
-        @keyframes popIn { from { transform: translate(-50%, -50%) scale(0); } to { transform: translate(-50%, -50%) scale(1); } }
-        
-        @keyframes growRefined1 { from { height: 0%; } to { height: 80%; } }
-        @keyframes growRefined2 { from { height: 0%; } to { height: 95%; } }
-        @keyframes growRefined3 { from { height: 0%; } to { height: 70%; } }
-
-        @keyframes fadeLabelIn { from { opacity: 0; } to { opacity: 1; } }
-        @keyframes fadeLabelOut { from { opacity: 1; } to { opacity: 0; } }
-
-        /* --- BİTİŞ: YENİ GÖRSEL ANİMASYON CSS KODLARI --- */
-
-        .hero-image::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.1) 50%, transparent 70%);
-            animation: shimmer 3s ease-in-out infinite;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
-        }
-
-        @keyframes shimmer {
-            0%, 100% { transform: translateX(-100%); }
-            50% { transform: translateX(100%); }
+            
+            background-image: url('../images/image-product-financial-loss.png');
+            background-size: cover;
+            background-position: center center;
+            background-repeat: no-repeat;
         }
 
         /* Details Section */
@@ -337,7 +194,7 @@
         }
 
         .details-text {
-            font-size: 1.1rem;
+            font-size: 1.5rem;
             line-height: 1.8;
             color: #1f2937;
             text-align: justify;
@@ -368,7 +225,7 @@
         }
 
         .features-subtitle {
-            font-size: 1.2rem;
+            font-size: 1.5rem;
             color: rgba(255, 255, 255, 0.7);
             max-width: 600px;
             margin: 0 auto;
@@ -406,13 +263,14 @@
         }
 
         .feature-title {
-            font-size: 1.25rem;
+            font-size: 1.6rem;
             font-weight: 600;
             color: #1f2937;
             margin-bottom: 1rem;
         }
 
         .feature-description {
+            font-size: 1.6rem;
             color: #6b7280;
             line-height: 1.6;
         }
@@ -486,6 +344,10 @@
             .features-grid {
                 grid-template-columns: 1fr;
             }
+
+            .hero-image {
+                height: 300px;
+            }
         }
     </style>
 </head>
@@ -497,9 +359,7 @@
             <div class="hero-container">
                 <div class="hero-content">
                     <div class="hero-text">
-                        <div class="hero-badge">
-                            💰 Economic Impact Analysis
-                        </div>
+                        
                         <h1 class="hero-title">Financial Loss and Downtime Prediction</h1>
                         <p class="hero-subtitle">
                             AI-powered economic consequence estimation combining FEMA P-58 methodology with minimal input requirements for rapid financial loss and downtime predictions.
@@ -511,18 +371,8 @@
                     </div>
                     <div class="hero-visual">
                         <div class="hero-image">
-                            <div class="prediction-flow">
-                                <div class="building-outline"></div>
-                                <div class="result-chart">
-                                    <div class="chart-bar"></div>
-                                    <div class="chart-bar"></div>
-                                    <div class="chart-bar"></div>
-                                </div>
-                                <div class="user-input">+</div>
-                                <div class="result-label baseline-label">AI Baseline</div>
-                                <div class="result-label refined-label">Refined Prediction</div>
-                            </div>
-                            </div>
+                            <!-- sol13.png background image is applied via CSS -->
+                        </div>
                     </div>
                 </div>
             </div>

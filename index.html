@@ -10,8 +10,179 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/header.css">
     <link rel="stylesheet" href="css/footer.css">
-    
     <link rel="stylesheet" href="css/style.css">
+    
+    <style>
+
+        /* Timeline Section Styles */
+        .process-timeline-section {
+            min-height: 500vh;
+            position: relative;
+            background: #1f2937;
+        }
+
+        .process-timeline-container {
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+        }
+
+        .process-timeline-content {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 60px;
+            width: 100%;
+            align-items: center;
+        }
+
+        .process-timeline-nav {
+            position: relative;
+        }
+
+        .process-timeline-nav::before {
+            content: '';
+            position: absolute;
+            left: 20px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .process-timeline-item {
+            padding: 20px 0;
+            padding-left: 50px;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            opacity: 0.5;
+            color: white;
+        }
+
+        .process-timeline-item.active {
+            opacity: 1;
+            color: white;
+        }
+
+        .process-timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .process-timeline-item.active::before {
+            background: #ff4757;
+            box-shadow: 0 0 20px rgba(255, 71, 87, 0.5);
+        }
+
+        .process-timeline-item h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: inherit;
+        }
+
+        .process-timeline-item p {
+            font-size: 14px;
+            opacity: 0.8;
+            color: inherit;
+        }
+
+        .process-timeline-visual {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 500px;
+            position: relative;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .process-visual-slide {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 40px;
+            animation: processFadeIn 0.8s ease-in-out;
+        }
+
+        .process-visual-slide.active {
+            display: flex;
+        }
+
+        .process-visual-slide img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 12px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            margin-bottom: 30px;
+        }
+
+        .process-visual-slide h2 {
+            font-size: 28px;
+            color: white;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .process-visual-slide p {
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.9);
+            max-width: 500px;
+            line-height: 1.6;
+        }
+
+        .process-visual-placeholder {
+            width: 400px;
+            height: 250px;
+            background: linear-gradient(135deg, #333333 0%, #555555 100%);
+            border-radius: 16px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            margin-bottom: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            font-size: 48px;
+        }
+
+        @keyframes processFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .process-timeline-content {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            
+            .process-timeline-nav {
+                order: 2;
+            }
+        }
+    </style>
 </head>
 <body>
     <!-- Header -->
@@ -23,56 +194,93 @@
             .then(res => res.text())
             .then(html => {
                 mount.innerHTML = html;
-
-                // header yüklendikten sonra header.js'i yükle ve init et
                 const s = document.createElement('script');
-                s.src = 'js/header.js';              // yolun doğru olduğundan emin ol
+                s.src = 'js/header.js';
                 s.defer = true;
                 s.onload = () => window.HeaderJS && window.HeaderJS.init();
                 document.body.appendChild(s);
             });
         })();
     </script>
-    <!-- Hero Section -->
+    
+    <!-- Hero Section with Video Background -->
     <section class="hero" id="hero">
+        <!-- Video Background Container -->
+        <div class="hero-video-container">
+            <!-- Video 1 -->
+            <video class="hero-video active" autoplay muted loop playsinline>
+                <source src="videos/video1.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            
+            <!-- Video 2 -->
+            <video class="hero-video" autoplay muted loop playsinline>
+                <source src="videos/video3.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            
+            <!-- Video 3 -->
+            <video class="hero-video" autoplay muted loop playsinline>
+                <source src="videos/video6.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            
+            <!-- Video 4 -->
+            <video class="hero-video" autoplay muted loop playsinline>
+                <source src="videos/video4.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            
+            <!-- Video 5 -->
+            <video class="hero-video" autoplay muted loop playsinline>
+                <source src="videos/video5.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+
+        <!-- Video Controls (Optional) -->
+        <div class="video-controls">
+            <div class="video-indicator active" data-video="0"></div>
+            <div class="video-indicator" data-video="1"></div>
+            <div class="video-indicator" data-video="2"></div>
+            <div class="video-indicator" data-video="3"></div>
+            <div class="video-indicator" data-video="4"></div>
+        </div>
+
         <div class="container">
             <div class="hero-content">
-                <div class="hero-text">
+               <div class="hero-text">
+                    <!-- Dynamic Title - Loading texti kaldırıldı -->
                     <h1 class="hero-title">
-                        Earthquake Hazard & Risk Prediction
-                        <span class="hero-subtitle">Reimagined</span>
+                        <span class="hero-title-main" id="hero-title-main"></span>
+                        <span class="hero-subtitle" id="hero-subtitle"></span>
                     </h1>
                     
-                    <p class="hero-description">
-                        Advanced AI-powered seismic risk prediction that transforms how experts assess building vulnerability to earthquakes.
-                    </p>
+                    <!-- Dynamic Description - Loading texti kaldırıldı -->
+                    <p class="hero-description" id="hero-description"></p>
                     
                     <div class="hero-actions">
                         <button class="btn btn-primary btn-large" onclick="scrollToSection('features')">
-                            Start Assessment
-                            
+                            <span id="hero-cta-text"></span>
                         </button>
-                        
                     </div>
                     
-                    <div class="hero-stats">
-                        
+                    <!-- Dynamic Stats - Loading textleri kaldırıldı -->
+                    <div class="hero-stats" id="hero-stats">
                         <div class="stat">
-                            <div class="stat-number">3,000+</div>
-                            <div class="stat-label">Buildings Assessed</div>
+                            <div class="stat-number" id="stat1-number"></div>
+                            <div class="stat-label" id="stat1-label"></div>
                         </div>
                         <div class="stat">
-                            <div class="stat-number">100+</div>
-                            <div class="stat-label">Country Covered</div>
+                            <div class="stat-number" id="stat2-number"></div>
+                            <div class="stat-label" id="stat2-label"></div>
                         </div>
                         <div class="stat">
-                            <div class="stat-number">24/7</div>
-                            <div class="stat-label">API Availability</div>
+                            <div class="stat-number" id="stat3-number"></div>
+                            <div class="stat-label" id="stat3-label"></div>
                         </div>
                     </div>
                 </div>
-                
-                
             </div>
         </div>
     </section>
@@ -201,31 +409,102 @@
                         Powered by our Hazard & Risk Engine, the assessment is based on the FEMA P-154 Rapid Visual Screening methodology, digitally adapted to provide scalable and timely predictions.<br> 
                         Within minutes, users receive a preliminary seismic risk profile that reflects potential vulnerability in the event of a major earthquake. While not a full engineering evaluation, this lightweight and transparent approach empowers planners, insurers, and policymakers with actionable insights — especially in large-scale or data-constrained environments.
                     </p>
-                
-
+                </div>
+            </div>
+        </div>
     </section>
 
-    <!-- API Integration Section -->
-    <section class="api-section" id="api-video">
-        <video class="api-bg-video" autoplay muted loop playsinline>
-            <source src="videos/2.mp4" type="video/mp4">
-            Your browser does not support the video tag.
-        </video>
-        <!-- <div class="container">
-            <div class="api-content">
-                <div class="api-text">
-                    <h2 class="api-section-title">Integrate in Minutes</h2>
-                    <p class="api-section-description">
-                        Simple, elegant API designed for seamless integration into your existing workflows. 
-                        Start predicting earthquake risks in minutes, not months.
-                    </p>
-                     -->
+    <!-- Process Timeline Section (Replaces API Video Section) -->
+    <section class="process-timeline-section" id="process">
+        <div class="process-timeline-container">
+            <div class="container">
+                <div class="process-timeline-content">
+                    <div class="process-timeline-nav">
+                        <div class="process-timeline-item active" data-slide="0">
+                            <h3>Coordinates Received</h3>
+                            <p>Single coordinate input initiates comprehensive analysis</p>
+                        </div>
+                        <div class="process-timeline-item" data-slide="1">
+                            <h3>Roof Detection</h3>
+                            <p>AI identifies building structure from satellite imagery</p>
+                        </div>
+                        <div class="process-timeline-item" data-slide="2">
+                            <h3>Street Views Gathered</h3>
+                            <p>Multiple visual perspectives collected and analyzed</p>
+                        </div>
+                        <div class="process-timeline-item" data-slide="3">
+                            <h3>All Visuals Analyzed</h3>
+                            <p>Machine learning processes structural characteristics</p>
+                        </div>
+                        <div class="process-timeline-item" data-slide="4">
+                            <h3>Report Prepared</h3>
+                            <p>FEMA P-154 compliant assessment delivered</p>
+                        </div>
+                    </div>
+                    
+                    <div class="process-timeline-visual">
+                        <div class="process-visual-slide active">
+                            <img src="../images/slide/1.png" alt="Coordinate Input" style="max-width: 400px; width: 100%; border-radius: 16px; margin-bottom: 30px; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);">
+                            <h2>Location Analysis Initiated</h2>
+                            <p>Our system begins with just a single coordinate, immediately accessing geospatial databases and satellite imagery to understand the building's location and regional seismic characteristics.</p>
+                        </div>
+                        
+                        <div class="process-visual-slide">
+                            <img src="../images/slide/2.png" alt="Roof Detection" style="max-width: 400px; width: 100%; border-radius: 16px; margin-bottom: 30px; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);">
+                            <h2>Aerial Structure Detection</h2>
+                            <p>Advanced computer vision algorithms analyze satellite and aerial imagery to identify roof structures, building footprints, and architectural features critical for seismic assessment.</p>
+                        </div>
+                        
+                        <div class="process-visual-slide">
+                            <img src="../images/slide/3.png" alt="Street Views" style="max-width: 400px; width: 100%; border-radius: 16px; margin-bottom: 30px; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);">
+                            <h2>Ground-Level Analysis</h2>
+                            <p>Street view imagery provides crucial details about building facades, structural elements, and surrounding context that influence earthquake vulnerability.</p>
+                        </div>
+                        
+                        <div class="process-visual-slide">
+                            <img src="../images/slide/4.png" alt="AI Analysis" style="max-width: 400px; width: 100%; border-radius: 16px; margin-bottom: 30px; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);">
+                            <h2>Machine Learning Assessment</h2>
+                            <p>Our trained models analyze all visual data simultaneously, identifying structural vulnerabilities, building materials, and design characteristics according to FEMA P-154 standards.</p>
+                        </div>
+                        
+                        <div class="process-visual-slide">
+                            <img src="../images/slide/5.png" alt="Risk Report" style="max-width: 400px; width: 100%; border-radius: 16px; margin-bottom: 30px; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);">
+                            <h2>Comprehensive Risk Profile</h2>
+                            <p>A detailed seismic risk assessment is generated, providing actionable insights for decision-makers, insurers, and planning authorities within minutes of initial input.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>">
+                <div class="timeline-content">
+                    <div class="timeline-nav">
+                        <div class="timeline-item active" data-slide="0">
+                            <h3>Coordinates Received</h3>
+                            <p>Single coordinate input initiates comprehensive analysis</p>
+                        </div>
+                        <div class="timeline-item" data-slide="1">
+                            <h3>Roof Detection</h3>
+                            <p>AI identifies building structure from satellite imagery</p>
+                        </div>
+                        <div class="timeline-item" data-slide="2">
+                            <h3>Street Views Gathered</h3>
+                            <p>Multiple visual perspectives collected and analyzed</p>
+                        </div>
+                        <div class="timeline-item" data-slide="3">
+                            <h3>All Visuals Analyzed</h3>
+                            <p>Machine learning processes structural characteristics</p>
+                        </div>
+                        <div class="timeline-item" data-slide="4">
+                            <h3>Report Prepared</h3>
+                            <p>FEMA P-154 compliant assessment delivered</p>
+                        </div>
+                    </div>
                     
                     
-            
-
-    </section>
-
+                </div>
+            </div>
+        </div>
     <!-- Testimonials Section -->
     <section class="testimonials" id="testimonials">
         <div class="container">
@@ -330,7 +609,98 @@
 
     <script src="js/script.js"></script>
     
-    
+    <script>
+        // Process Timeline scroll functionality
+        const processTimelineSection = document.querySelector('.process-timeline-section');
+        const processTimelineItems = document.querySelectorAll('.process-timeline-item');
+        const processVisualSlides = document.querySelectorAll('.process-visual-slide');
+        
+        function updateProcessTimeline() {
+            const sectionTop = processTimelineSection.offsetTop;
+            const sectionHeight = processTimelineSection.offsetHeight;
+            const scrolled = window.pageYOffset - sectionTop;
+            const progress = Math.max(0, Math.min(1, scrolled / (sectionHeight - window.innerHeight)));
+            
+            const totalSteps = processTimelineItems.length;
+            const currentStep = Math.floor(progress * totalSteps);
+            const clampedStep = Math.max(0, Math.min(totalSteps - 1, currentStep));
+            
+            // Update active states
+            processTimelineItems.forEach((item, index) => {
+                item.classList.toggle('active', index === clampedStep);
+            });
+            
+            processVisualSlides.forEach((slide, index) => {
+                slide.classList.toggle('active', index === clampedStep);
+            });
+        }
+        
+        // Click functionality for process timeline items
+        processTimelineItems.forEach((item, index) => {
+            item.addEventListener('click', () => {
+                const targetScroll = processTimelineSection.offsetTop + 
+                    (index / (processTimelineItems.length - 1)) * 
+                    (processTimelineSection.offsetHeight - window.innerHeight);
+                
+                window.scrollTo({
+                    top: targetScroll,
+                    behavior: 'smooth'
+                });
+            });
+        });
+        
+        // Scroll listener for process timeline
+        window.addEventListener('scroll', updateProcessTimeline);
+        
+        // Initialize process timeline
+        updateProcessTimeline();
+    </script>
+
+    <script>
+        // Timeline scroll functionality
+        const timelineSection = document.querySelector('.timeline-section');
+        const timelineItems = document.querySelectorAll('.timeline-item');
+        const visualSlides = document.querySelectorAll('.visual-slide');
+        
+        function updateTimeline() {
+            const sectionTop = timelineSection.offsetTop;
+            const sectionHeight = timelineSection.offsetHeight;
+            const scrolled = window.pageYOffset - sectionTop;
+            const progress = Math.max(0, Math.min(1, scrolled / (sectionHeight - window.innerHeight)));
+            
+            const totalSteps = timelineItems.length;
+            const currentStep = Math.floor(progress * totalSteps);
+            const clampedStep = Math.max(0, Math.min(totalSteps - 1, currentStep));
+            
+            // Update active states
+            timelineItems.forEach((item, index) => {
+                item.classList.toggle('active', index === clampedStep);
+            });
+            
+            visualSlides.forEach((slide, index) => {
+                slide.classList.toggle('active', index === clampedStep);
+            });
+        }
+        
+        // Click functionality for timeline items
+        timelineItems.forEach((item, index) => {
+            item.addEventListener('click', () => {
+                const targetScroll = timelineSection.offsetTop + 
+                    (index / (timelineItems.length - 1)) * 
+                    (timelineSection.offsetHeight - window.innerHeight);
+                
+                window.scrollTo({
+                    top: targetScroll,
+                    behavior: 'smooth'
+                });
+            });
+        });
+        
+        // Scroll listener
+        window.addEventListener('scroll', updateTimeline);
+        
+        // Initialize
+        updateTimeline();
+    </script>
 </body>
 </html>
-

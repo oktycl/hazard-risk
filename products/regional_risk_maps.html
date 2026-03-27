@@ -157,105 +157,14 @@
             width: 100%;
             max-width: 500px;
             height: 400px;
-            background: linear-gradient(135deg, var(--bright-blue), #2563eb);
             border-radius: 2rem;
             position: relative;
             overflow: hidden;
-            box-shadow: 0 20px 60px rgba(0, 151, 251, 0.3);
-            animation: float 6s ease-in-out infinite;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .regional-viz {
-            width: 90%;
-            max-width: 300px;
-            position: relative;
-            height: 0;
-            padding-bottom: 80%;
-        }
-
-        .map-background, .building-dots, .region-polygon, .scanner {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-        }
-
-        .map-background {
-            background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 80"><path d="M10 10 L30 5 L50 15 L70 10 L90 20 V70 L70 75 L50 65 L30 70 L10 60 Z" fill="%23fff" fill-opacity="0.1" /><path d="M10 35 L90 45" fill="none" stroke="%23fff" stroke-width="0.5" opacity="0.3"/><path d="M50 15 V65" fill="none" stroke="%23fff" stroke-width="0.5" opacity="0.3"/></svg>');
+            
+            background-image: url('../images/image-product-regional-risk-map.png');
             background-size: cover;
-            border-radius: 1rem;
-            opacity: 0;
-            animation: fadeIn 1s ease-out 0.5s forwards;
-        }
-        
-        .region-polygon path {
-            stroke: white;
-            stroke-width: 3;
-            fill: rgba(255, 255, 255, 0.1);
-            stroke-dasharray: 1000;
-            stroke-dashoffset: 1000;
-            animation: drawPolygon 2s ease-out 1s forwards;
-        }
-        
-        .dot {
-            position: absolute;
-            width: 5px;
-            height: 5px;
-            background: white;
-            border-radius: 50%;
-            opacity: 0;
-            transform: scale(0);
-            animation: populateDot 0.5s ease-out forwards, colorCodeDot 1.5s ease-in-out 3.5s forwards;
-        }
-        
-        .scanner {
-            left: -5%;
-            width: 5px;
-            background: linear-gradient(to bottom, transparent, rgba(255,255,255,0.7), transparent);
-            box-shadow: 0 0 10px white;
-            opacity: 0;
-            animation: scanRegion 1.5s ease-in-out 3s forwards;
-        }
-
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 0.5; } }
-        @keyframes drawPolygon { to { stroke-dashoffset: 0; } }
-        
-        @keyframes scanRegion {
-            from { left: -5%; opacity: 1; }
-            to { left: 105%; opacity: 0; }
-        }
-
-        @keyframes populateDot { to { opacity: 1; transform: scale(1); } }
-        
-        @keyframes colorCodeDot {
-            to {
-                background: var(--risk-color, #22c55e);
-            }
-        }
-        
-        .hero-image::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.1) 50%, transparent 70%);
-            animation: shimmer 3s ease-in-out infinite;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
-        }
-
-        @keyframes shimmer {
-            0%, 100% { transform: translateX(-100%); }
-            50% { transform: translateX(100%); }
+            background-position: center center;
+            background-repeat: no-repeat;
         }
 
         /* Details Section */
@@ -285,7 +194,7 @@
         }
 
         .details-text {
-            font-size: 1.1rem;
+            font-size: 1.5rem;
             line-height: 1.8;
             color: #1f2937;
             text-align: justify;
@@ -354,13 +263,14 @@
         }
 
         .feature-title {
-            font-size: 1.25rem;
+            font-size: 1.6rem;
             font-weight: 600;
             color: #1f2937;
             margin-bottom: 1rem;
         }
 
         .feature-description {
+            font-size: 1.6rem;
             color: #6b7280;
             line-height: 1.6;
         }
@@ -433,6 +343,10 @@
             .features-grid {
                 grid-template-columns: 1fr;
             }
+
+            .hero-image {
+                height: 300px;
+            }
         }
     </style>
 </head>
@@ -444,9 +358,7 @@
             <div class="hero-container">
                 <div class="hero-content">
                     <div class="hero-text">
-                        <div class="hero-badge">
-                            📍 District-Scale Analysis
-                        </div>
+                        
                         <h1 class="hero-title">Regional Risk Maps</h1>
                         <p class="hero-subtitle">
                             Comprehensive seismic risk assessments at the district scale for municipalities and government agencies, providing building-by-building analysis across defined geographic areas.
@@ -458,14 +370,7 @@
                     </div>
                     <div class="hero-visual">
                         <div class="hero-image">
-                            <div class="regional-viz" id="regional-viz-container">
-                                <div class="map-background"></div>
-                                <div class="building-dots" id="building-dots-container"></div>
-                                <svg class="region-polygon" viewBox="0 0 300 240" preserveAspectRatio="xMidYMid meet">
-                                    <path d="M 60 36 L 240 48 L 264 180 L 96 216 L 36 120 Z" />
-                                </svg>
-                                <div class="scanner"></div>
-                            </div>
+                            <!-- sol12.png background image is applied via CSS -->
                         </div>
                     </div>
                 </div>
@@ -597,112 +502,6 @@
             el.style.transform = 'translateY(30px)';
             el.style.transition = 'all 0.6s ease';
             observer.observe(el);
-        });
-
-        // Regional Risk Map Animation - Optimized
-        document.addEventListener('DOMContentLoaded', () => {
-            const vizContainer = document.getElementById('regional-viz-container');
-            const dotsContainer = document.getElementById('building-dots-container');
-            
-            if (!vizContainer || !dotsContainer) return;
-
-            setTimeout(() => {
-                // SVG viewBox koordinatları
-                const viewBoxWidth = 300;
-                const viewBoxHeight = 240;
-
-                // Gerçek container boyutları
-                const rect = vizContainer.getBoundingClientRect();
-                const actualWidth = rect.width;
-                const actualHeight = rect.height;
-                
-                // Ölçekleme faktörleri
-                const scaleX = actualWidth / viewBoxWidth;
-                const scaleY = actualHeight / viewBoxHeight;
-
-                // Beşgen noktaları (içe doğru küçültülmüş - güvenlik marjı ile)
-                const polygonPoints = [
-                    {x: 75, y: 50},   // Sol üst (içe çekilmiş)
-                    {x: 225, y: 60},  // Sağ üst (içe çekilmiş)
-                    {x: 245, y: 165}, // Sağ alt (içe çekilmiş)
-                    {x: 110, y: 200}, // Sol alt (içe çekilmiş)
-                    {x: 55, y: 130}   // Sol orta (içe çekilmiş)
-                ];
-
-                // Geliştirilmiş point-in-polygon algoritması
-                function isPointInPolygon(point, polygon) {
-                    let x = point.x, y = point.y;
-                    let inside = false;
-                    
-                    for (let i = 0, j = polygon.length - 1; i < polygon.length; j = i++) {
-                        let xi = polygon[i].x, yi = polygon[i].y;
-                        let xj = polygon[j].x, yj = polygon[j].y;
-                        
-                        if (((yi > y) !== (yj > y)) && 
-                            (x < (xj - xi) * (y - yi) / (yj - yi) + xi)) {
-                            inside = !inside;
-                        }
-                    }
-                    return inside;
-                }
-
-                // Güvenlik marjı ile sınırları hesapla
-                const margin = 20; // Daha büyük güvenlik marjı
-                const minX = Math.min(...polygonPoints.map(p => p.x)) + margin;
-                const maxX = Math.max(...polygonPoints.map(p => p.x)) - margin;
-                const minY = Math.min(...polygonPoints.map(p => p.y)) + margin;
-                const maxY = Math.max(...polygonPoints.map(p => p.y)) - margin;
-
-                const numberOfDots = 80; // Nokta sayısını azalttık
-                const riskColors = ['#ef4444', '#f97316', '#eab308', '#22c55e'];
-                
-                dotsContainer.innerHTML = '';
-
-                let dotsCreated = 0;
-                let attempts = 0;
-                const maxAttempts = numberOfDots * 20;
-
-                while (dotsCreated < numberOfDots && attempts < maxAttempts) {
-                    attempts++;
-                    
-                    // Güvenlik marjı ile nokta üret
-                    const logicalX = minX + Math.random() * (maxX - minX);
-                    const logicalY = minY + Math.random() * (maxY - minY);
-                    const point = {x: logicalX, y: logicalY};
-                    
-                    // Çift kontrol: hem küçültülmüş hem orijinal poligonda kontrol
-                    if (isPointInPolygon(point, polygonPoints)) {
-                        const dot = document.createElement('div');
-                        const dotSize = 5; // Biraz küçültüldü
-                        dot.className = 'dot';
-                        
-                        // Koordinatları gerçek pixel pozisyonuna çevir
-                        const pixelX = (logicalX * scaleX) - (dotSize / 2);
-                        const pixelY = (logicalY * scaleY) - (dotSize / 2);
-                        
-                        // Sınır kontrolü (extra güvenlik)
-                        if (pixelX >= 0 && pixelX <= actualWidth - dotSize && 
-                            pixelY >= 0 && pixelY <= actualHeight - dotSize) {
-                            
-                            dot.style.left = `${pixelX}px`;
-                            dot.style.top = `${pixelY}px`;
-                            
-                            // Animasyon gecikmeleri
-                            const populateDelay = 3 + (logicalX / viewBoxWidth) * 1.5;
-                            dot.style.animationDelay = `${populateDelay}s, 5s`;
-                            
-                            // Risk rengi ata
-                            const riskColor = riskColors[Math.floor(Math.random() * riskColors.length)];
-                            dot.style.setProperty('--risk-color', riskColor);
-
-                            dotsContainer.appendChild(dot);
-                            dotsCreated++;
-                        }
-                    }
-                }
-
-                console.log(`${dotsCreated} nokta oluşturuldu, ${attempts} deneme yapıldı.`);
-            }, 100); 
         });
     </script>
     <script src="../js/header.js"></script>
